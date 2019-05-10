@@ -1,7 +1,7 @@
 
 CC = g++
 CFLAGS = -std=c++11
-OBJ = main.o component.o cp_name.o cp_number.o entity.o user.o sources.o
+OBJ = main.o component.o cp_name.o cp_number.o entity.o user.o sources.o filter.o
 COMPONENT_SLIST = sources.h component.h
 CP_NAME_SLIST = $(COMPONENT_SLIST) cp_name.h
 CP_NUMBER_SLIST = $(COMPONENT_SLIST) cp_number.h
@@ -25,5 +25,7 @@ user.o: user.cpp $(USER_SLIST)
 	$(CC) $(CFLAGS) -c user.cpp -o user.o
 sources.o: sources.h sources.cpp
 	$(CC) $(CFLAGS) -c sources.cpp -o sources.o
+filter.o: filter.cpp filter.h $(MAIN_SLIST)
+	$(CC) $(CFLAGS) -c filter.cpp -o filter.o
 clean:
 	rm *.o *.out
