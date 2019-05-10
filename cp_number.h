@@ -9,6 +9,7 @@ class Number : public Component
 public:
   Number(int num,TYPE_NAME tp,int mn,int mx);
   bool validation() const ;
+  std::string get_value() const ;
 private:
   int number;
   int min_value;

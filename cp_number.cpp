@@ -17,3 +17,8 @@ bool Number::validation() const
     return false;
   return true;
 }
+
+string Number::get_value() const
+{
+  return to_string(number);
+}

@@ -18,3 +18,8 @@ bool Name::validation() const
     return false;
   return true;
 }
+
+string Name::get_value() const
+{
+  return content;
+}
