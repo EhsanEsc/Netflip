@@ -1,6 +1,7 @@
 
 #include "cp_headers.h"
 #include "entity_headers.h"
+#include "filter.h"
 
 using namespace std;
 
@@ -27,14 +28,50 @@ vector<Component*> get_component(vector<string> vs)
   return res;
 }
 
+namespace Filter_interface
+{
+  template<typename T> T* find_exact(vector<T*> vt, Component* cp)
+  {
+    vector<Entity*> et;
+    for(auto& u:vt)
+      et.push_back(dynamic_cast<Entity*>(u));
+    int id = Filter::find_exact(et,cp);
+    for(auto& u: vt)
+      if(u->get_id() == id)
+        return u;
+    return NULL;
+  }
+
+  template<typename T> vector<T*> filter_min(vector<T*> vt, Component* cp)
+  {
+    vector<T*>res;
+    vector<Entity*> et;
+    for(auto& u:vt)
+      et.push_back(dynamic_cast<Entity*>(u));
+    vector<int> vid = Filter::filter_min(et,cp);
+    for(auto& id:vid)
+      for(auto& u: vt)
+        if(u->get_id() == id)
+          res.push_back(u);
+    return res;
+  }
+}
+
 int main()
 {
   freopen("in.txt","r",stdin);
+
+  vector<User*>users;
   while(true)
   {
     try {
       string str;
       cin >> str;
+      vector<Entity*> et;
+      for(auto& u:users)
+      {
+        et.push_back(dynamic_cast<Entity*>(u));
+      }
       if(str == "end") break;
       if(str == "add")
       {
@@ -43,6 +80,28 @@ int main()
         vector<string> vs = {str1,str2,str3,str4};
         vector<Component*> comps = get_component(vs);
         User* new_user = new User(comps);
+        users.push_back(new_user);
+      } else if(str == "show") {
+        string str1,str2;
+        cin >> str1 >> str2;
+        Component* cp = build_component(type_name_cache[str1],str2);
+        User* guser = Filter_interface::find_exact(users,cp);
+        // User* guser = users[0];
+        if(guser==NULL)
+          cout << "User Not Found" << endl;
+        else
+          guser->show();
+        delete cp;
+      } else if(str == "showmin") {
+        string str1,str2;
+        cin >> str1 >> str2;
+        Component* cp = build_component(type_name_cache[str1],str2);
+        vector<User*> glist = Filter_interface::filter_min(users,cp);
+        cout << "##" << endl;
+        for(auto& g:glist)
+          g->show();
+        cout << "##" << endl;
+        delete cp;
       }
     } catch(Error& err) {
       cerr << "ERROR: " << err.what() << endl;
