@@ -19,3 +19,8 @@ int User::get_new_id()
   cout << "ID " << id << " Is Created! " << endl;
   return id;
 }
+
+void User::show()
+{
+  cout << "User with id " << id << " Is Called!" << endl;
+}
