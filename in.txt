@@ -1,0 +1,5 @@
+add user_name ehsan age 22
+add age 32 user_name mamad
+add user_name ESI age 123
+add user_name aaa age 2
+end
