@@ -12,16 +12,11 @@ Entity::Entity(vector<Component*> cps, vector<TYPE_NAME> pr, vector<TYPE_NAME> o
       throw "Bad Request";
 }
 
-// TODO handle template foo
-template<typename T> T* Entity::get_component(TYPE_NAME tp, T foo)
+Component* Entity::get_component(TYPE_NAME tp)
 {
-  for(auto& cp:components)
-  {
-    if(cp->get_type() == tp)
-    {
-      return dynamic_cast<T*>(cp);
-    }
-  }
+  for(auto& u:components)
+    if(u->get_type() == tp)
+      return u;
   return NULL;
 }
 
@@ -65,4 +60,9 @@ bool Entity::validation()
       return false;
   }
   return true;
+}
+
+int Entity::get_id()
+{
+  return id;
 }

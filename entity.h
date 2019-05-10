@@ -8,7 +8,9 @@ class Entity
 {
 public:
   Entity(std::vector<Component*> cps, std::vector<TYPE_NAME> pr, std::vector<TYPE_NAME> opt, std::vector<TYPE_NAME> be);
-  template<typename T> T* get_component(TYPE_NAME tp, T foo);
+  // template<typename T> T* get_component(TYPE_NAME tp);
+  Component* get_component(TYPE_NAME tp);
+  int get_id();
 protected:
   int id;
   std::vector<Component*> components;
