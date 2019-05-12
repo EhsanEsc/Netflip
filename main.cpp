@@ -28,35 +28,6 @@ vector<Component*> get_component(vector<string> vs)
   return res;
 }
 
-namespace Filter_interface
-{
-  template<typename T> T* find_exact(vector<T*> vt, Component* cp)
-  {
-    vector<Entity*> et;
-    for(auto& u:vt)
-      et.push_back(dynamic_cast<Entity*>(u));
-    int id = Filter::find_exact(et,cp);
-    for(auto& u: vt)
-      if(u->get_id() == id)
-        return u;
-    return NULL;
-  }
-
-  template<typename T> vector<T*> filter_min(vector<T*> vt, Component* cp)
-  {
-    vector<T*>res;
-    vector<Entity*> et;
-    for(auto& u:vt)
-      et.push_back(dynamic_cast<Entity*>(u));
-    vector<int> vid = Filter::filter_min(et,cp);
-    for(auto& id:vid)
-      for(auto& u: vt)
-        if(u->get_id() == id)
-          res.push_back(u);
-    return res;
-  }
-}
-
 int main()
 {
   freopen("in.txt","r",stdin);
