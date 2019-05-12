@@ -1,13 +1,13 @@
 
 CC = g++
 CFLAGS = -std=c++11
-OBJ = main.o component.o cp_name.o cp_number.o entity.o user.o sources.o filter.o
+OBJ = main.o component.o cp_name.o cp_number.o entity.o user.o sources.o filter.o command_handler.o server.o
 COMPONENT_SLIST = sources.h component.h
 CP_NAME_SLIST = $(COMPONENT_SLIST) cp_name.h
 CP_NUMBER_SLIST = $(COMPONENT_SLIST) cp_number.h
 ENTITY_SLIST = $(COMPONENT_SLIST) entity.h
 USER_SLIST = $(ENTITY_SLIST) user.h
-MAIN_SLIST = $(COMPONENT_SLIST) $(ENTITY_SLIST) $(USER_SLIST) $(CP_NAME_SLIST) $(CP_NUMBER_SLIST) filter.h
+MAIN_SLIST = $(COMPONENT_SLIST) $(ENTITY_SLIST) $(USER_SLIST) $(CP_NAME_SLIST) $(CP_NUMBER_SLIST) filter.h server.h command_handler.h
 
 a.out: $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -o a.out
@@ -27,5 +27,9 @@ sources.o: sources.h sources.cpp
 	$(CC) $(CFLAGS) -c sources.cpp -o sources.o
 filter.o: filter.cpp filter.h $(MAIN_SLIST)
 	$(CC) $(CFLAGS) -c filter.cpp -o filter.o
+command_handler.o: command_handler.cpp $(MAIN_SLIST)
+	$(CC) $(CFLAGS) -c command_handler.cpp -o command_handler.o
+server.o: server.cpp $(MAIN_SLIST)
+	$(CC) $(CFLAGS) -c server.cpp -o server.o
 clean:
 	rm *.o *.out

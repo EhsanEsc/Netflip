@@ -1,11 +1,11 @@
-add user_name ehsan age 22
-add age 32 user_name mamad
-add user_name ESI age 123
-add user_name aaa age 2
-showmin age 10
-show user_name ehsan
-show age 2
-editname aaa Soroooooosh
-show age 2
-editname aaa ey_baba
-end
+add user ? user_name ehsan age 22
+add user ? age 32 user_name mamad
+add user ? user_name ESI age 123
+add user ? user_name aaa age 2
+show more_age ? age 10
+show user ? user_name ehsan
+show user ? age 2
+edit user_name ? user_name aaa user_name soroooooosh
+show user ? age 2
+edit user_name ? user_name aaa user_name ey_baba
+end them ? age 22
