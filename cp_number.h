@@ -7,7 +7,7 @@
 class Number : public Component
 {
 public:
-  Number(int num,TYPE_NAME tp,int mn,int mx);
+  Number(std::string ct,TYPE_NAME tp);
   bool validation() const ;
   std::string get_value() const ;
 private:

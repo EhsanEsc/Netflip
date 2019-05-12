@@ -67,8 +67,8 @@ map<pair<string,string>,COMMAND_TYPE> command_type_cache = {
 
 COMMAND_TYPE CommandHandler::get_command_type(vector<string> command)
 {
-  if(command.size()<3 || command[2] != "?")
-    throw Error("Bad Request");
+  // if(command.size()<3 || command[2] != "?")
+  //   throw Error("Bad Request");
   if(command_type_cache.find({command[0],command[1]}) == command_type_cache.end())
     throw Error("Bad Request");
   return command_type_cache[{command[0], command[1]}];
@@ -76,8 +76,8 @@ COMMAND_TYPE CommandHandler::get_command_type(vector<string> command)
 
 vector<Component*> CommandHandler::get_parametrs(vector<string> command)
 {
-  if(command.size()<3 || command.size()%2 == 0)
-    throw Error("Bad Request");
+  // if(command.size()<3 || command.size()%2 == 0)
+  //   throw Error("Bad Request");
   vector<Component*> res;
   for(int i=3;i<command.size();i+=2)
     res.push_back(build_component(command[i],command[i+1]));
@@ -92,13 +92,16 @@ bool CommandHandler::check_validate(COMMAND_TYPE ctype, vector<Component*> param
 Component* CommandHandler::build_component(string key,string value)
 {
   TYPE_NAME tn = get_type_name(key);
-  if(tn == TYPE_NAME::USER_NAME)
-  {
-    Name* cp = new Name(value, tn);
-    return cp;
-  } else if(tn == TYPE_NAME::AGE) {
-    Number* cp = new Number(stoi(value),tn,1,99);
-    return cp;
+  if(tn == TYPE_NAME::USER_NAME || tn == TYPE_NAME::NAME || tn == TYPE_NAME::SUMMARY || tn == TYPE_NAME::DIRECTOR) {
+    return (new Name(value, tn));
+  } else if(tn == TYPE_NAME::EMAIL){
+    return (new Email(value, tn));
+  } else if(tn == TYPE_NAME::PASSWORD){
+    return (new Password(value, tn));
+  } else if(tn == TYPE_NAME::AGE || tn == TYPE_NAME::YEAR || tn == TYPE_NAME::LENGTH || tn == TYPE_NAME::PRICE  || tn == TYPE_NAME::MONEY) {
+    return (new Number(value,tn));
+  } else if(tn == TYPE_NAME::ISPUB) {
+    return (new Bool(value, tn));
   } else if(tn == TYPE_NAME::UNDEFINED) {
     throw Error("Bad Request");
   }

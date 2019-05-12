@@ -1,6 +1,6 @@
 add user ? user_name ehsan age 22
 add user ? age 32 user_name mamad
-add user ? user_name ESI age 123
+add user ? user_name 22ESI age 123
 add user ? user_name aaa age 2
 show more_age ? age 10
 show user ? user_name ehsan

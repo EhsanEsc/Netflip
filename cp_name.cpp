@@ -14,7 +14,7 @@ bool Name::validation() const
 {
   if(content.size()==0)
     return false;
-  if(content[0]<'a' || content[0]>'z')
+  if(content[0]>='0' && content[0]<='9')
     return false;
   return true;
 }

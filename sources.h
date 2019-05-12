@@ -10,7 +10,17 @@ extern int MAX_CNT_COMPONENT;
 enum class TYPE_NAME
 {
   USER_NAME,
+  EMAIL,
+  PASSWORD,
   AGE,
+  ISPUB,
+  NAME,
+  YEAR,
+  LENGTH,
+  PRICE,
+  SUMMARY,
+  DIRECTOR,
+  MONEY,
   UNDEFINED
 };
 extern std::map<std::string,TYPE_NAME> type_name_cache;

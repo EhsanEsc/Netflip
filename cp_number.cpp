@@ -2,12 +2,17 @@
 #include "cp_number.h"
 using namespace std;
 
-Number::Number(int num,TYPE_NAME tp,int mn=-INF,int mx=INF)
+Number::Number(string ct,TYPE_NAME tp)
 : Component(tp)
 {
+  for(auto u:ct)
+    if(u<'0' || u>'9')
+      throw Error("Bad Request");
+
+  int num = stoi(ct);
   number = num;
-  min_value = mn;
-  max_value = mx;
+  min_value = -INF;
+  max_value = INF;
   if(validation() == false)
     throw Error("Bad Request");
 }

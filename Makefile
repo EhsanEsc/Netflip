@@ -1,10 +1,14 @@
 
 CC = g++
 CFLAGS = -std=c++11
-OBJ = main.o component.o cp_name.o cp_number.o entity.o user.o sources.o filter.o command_handler.o server.o
+OBJ = main.o component.o cp_name.o cp_number.o entity.o user.o sources.o filter.o command_handler.o server.o \
+cp_bool.o cp_password.o cp_email.o
 COMPONENT_SLIST = sources.h component.h
 CP_NAME_SLIST = $(COMPONENT_SLIST) cp_name.h
 CP_NUMBER_SLIST = $(COMPONENT_SLIST) cp_number.h
+CP_EMAIL_SLIST = $(COMPONENT_SLIST) cp_email.h
+CP_BOOL_SLIST = $(COMPONENT_SLIST) cp_bool.h
+CP_PASSWORD_SLIST = $(COMPONENT_SLIST) cp_password.h
 ENTITY_SLIST = $(COMPONENT_SLIST) entity.h
 USER_SLIST = $(ENTITY_SLIST) user.h
 MAIN_SLIST = $(COMPONENT_SLIST) $(ENTITY_SLIST) $(USER_SLIST) $(CP_NAME_SLIST) $(CP_NUMBER_SLIST) filter.h server.h command_handler.h
@@ -31,5 +35,11 @@ command_handler.o: command_handler.cpp $(MAIN_SLIST)
 	$(CC) $(CFLAGS) -c command_handler.cpp -o command_handler.o
 server.o: server.cpp $(MAIN_SLIST)
 	$(CC) $(CFLAGS) -c server.cpp -o server.o
+cp_bool.o: cp_bool.cpp $(CP_BOOL_SLIST)
+	$(CC) $(CFLAGS) -c cp_bool.cpp -o cp_bool.o
+cp_password.o: cp_password.cpp $(CP_PASSWORD_SLIST)
+	$(CC) $(CFLAGS) -c cp_password.cpp -o cp_password.o
+cp_email.o: cp_email.cpp $(CP_EMAIL_SLIST)
+	$(CC) $(CFLAGS) -c cp_email.cpp -o cp_email.o
 clean:
 	rm *.o *.out

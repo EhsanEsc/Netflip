@@ -5,5 +5,8 @@
 #include "component.h"
 #include "cp_name.h"
 #include "cp_number.h"
+#include "cp_email.h"
+#include "cp_bool.h"
+#include "cp_password.h"
 
 #endif
