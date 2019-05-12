@@ -23,3 +23,8 @@ string Name::get_value() const
 {
   return content;
 }
+
+void Name::edit_name(string new_content)
+{
+  content = new_content;
+}

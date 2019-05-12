@@ -12,7 +12,7 @@ namespace Filter_interface
   template<typename T> T* find_exact(vector<T*> vt, Component* cp)
   {
     for(auto& u:vt)
-      if(*(u->get_component(cp->get_type())) == *cp)
+      if(*(u->get_component22(cp->get_type())) == *cp)
         return u;
     return NULL;
   }
@@ -20,7 +20,7 @@ namespace Filter_interface
   {
     vector<T*>res;
     for(auto& u:vt)
-      if(*cp < *(u->get_component(cp->get_type())))
+      if(*cp < *(u->get_component22(cp->get_type())))
         res.push_back(u);
     return res;
   }

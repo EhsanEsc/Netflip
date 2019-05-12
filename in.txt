@@ -5,4 +5,7 @@ add user_name aaa age 2
 showmin age 10
 show user_name ehsan
 show age 2
+editname aaa Soroooooosh
+show age 2
+editname aaa ey_baba
 end

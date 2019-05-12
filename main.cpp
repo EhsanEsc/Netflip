@@ -73,6 +73,23 @@ int main()
           g->show();
         cout << "##" << endl;
         delete cp;
+      } else if(str == "editname") {
+        string pre_username, new_username;
+        cin >> pre_username >> new_username;
+        Component* cp = build_component(TYPE_NAME::USER_NAME, pre_username);
+        User* guser = Filter_interface::find_exact(users,cp);
+        if(guser == NULL)
+          cout << "User not found" << endl;
+        else
+        {
+          cout << "#\n";
+          cout << " Before => ";
+          guser->show();
+          guser->get_component<Name>(TYPE_NAME::USER_NAME)->edit_name(new_username);
+          cout << " After => ";
+          guser->show();
+          cout << "#\n";
+        }
       }
     } catch(Error& err) {
       cerr << "ERROR: " << err.what() << endl;

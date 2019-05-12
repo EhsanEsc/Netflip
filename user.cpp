@@ -22,5 +22,6 @@ int User::get_new_id()
 
 void User::show()
 {
-  cout << "User with id " << id << " Is Called!" << endl;
+  cout << "User id: " << id << " # ";
+  cout << "User Name: " << get_component<Name>(TYPE_NAME::USER_NAME)->get_value() << endl;
 }

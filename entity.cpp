@@ -12,11 +12,11 @@ Entity::Entity(vector<Component*> cps, vector<TYPE_NAME> pr, vector<TYPE_NAME> o
       throw "Bad Request";
 }
 
-Component* Entity::get_component(TYPE_NAME tp)
+Component* Entity::get_component22(TYPE_NAME tn)
 {
-  for(auto& u:components)
-    if(u->get_type() == tp)
-      return u;
+  for(auto& cp:components)
+    if(cp->get_type() == tn)
+      return cp;
   return NULL;
 }
 
