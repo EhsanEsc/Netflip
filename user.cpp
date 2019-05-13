@@ -3,34 +3,36 @@
 #include "film.h"
 using namespace std;
 
-std::vector<TYPE_NAME> USER_PRIMARY_LIST = {TYPE_NAME::USER_NAME,TYPE_NAME::AGE} ;
-std::vector<TYPE_NAME> USER_OPTIMAL_LIST;
+std::vector<TYPE_NAME> USER_ATTRIBUTE = {TYPE_NAME::USER_NAME,TYPE_NAME::EMAIL,TYPE_NAME::PASSWORD,TYPE_NAME::AGE,TYPE_NAME::ISPUB} ;
+map<TYPE_NAME,string> attribute_default_value = {
+  {TYPE_NAME::USER_NAME, ""},
+  {TYPE_NAME::EMAIL, ""},
+  {TYPE_NAME::PASSWORD, ""},
+  {TYPE_NAME::AGE, ""},
+  {TYPE_NAME::ISPUB, "false"}
+};
 
 User::User(vector<Component*> comps)
-: Entity(comps,USER_PRIMARY_LIST,USER_OPTIMAL_LIST)
+: Entity(comps,USER_ATTRIBUTE,attribute_default_value)
 {
   id = get_new_id();
-  for(auto& tn: USER_OPTIMAL_LIST)
-  {
-    if(get_component22(tn) == NULL)
-    {
-      // if(tn == )
-    }
-  }
+  show();
 }
+
 
 int User::get_new_id()
 {
   static int id = 0;
   id++;
-  cout << "ID " << id << " Is Created! " << endl;
   return id;
 }
 
 void User::show()
 {
-  cout << "User id: " << id << " # ";
-  cout << "User Name: " << get_component<Name>(TYPE_NAME::USER_NAME)->get_value() << endl;
+  cout << "User id: " << id << " -> ";
+  for(auto& u:components)
+    cout << u->get_value() << " ";
+  cout << endl;
 }
 
-bool User::is_pubisher() { return ispub; }
+bool User::is_publisher() { return get_component<Bool>(TYPE_NAME::ISPUB)->get_value() == "true"; }

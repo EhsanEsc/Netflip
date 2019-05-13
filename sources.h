@@ -25,6 +25,7 @@ enum class TYPE_NAME
 };
 extern std::map<std::string,TYPE_NAME> type_name_cache;
 TYPE_NAME get_type_name(std::string key);
+std::ostream& operator << (std::ostream& os, const TYPE_NAME& obj);
 
 class Error
 {
@@ -34,5 +35,10 @@ public:
 private:
   std::string msg;
 };
+
+class Component;
+Component* build_component(std::string key,std::string value);
+Component* build_component(TYPE_NAME tn, std::string value);
+
 
 #endif

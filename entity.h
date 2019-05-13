@@ -7,7 +7,7 @@
 class Entity
 {
 public:
-  Entity(std::vector<Component*> cps, std::vector<TYPE_NAME> primary_list, std::vector<TYPE_NAME> optimal_list);
+  Entity(std::vector<Component*> cps,std::vector<TYPE_NAME> attributes,std::map<TYPE_NAME,std::string> attributes_default_value);
   Component* get_component22(TYPE_NAME tp);
   template<typename T> T* get_component(TYPE_NAME tp) const
   {
@@ -21,7 +21,7 @@ protected:
   int id;
   std::vector<Component*> components;
 
-  bool validation(std::vector<TYPE_NAME> primary_list, std::vector<TYPE_NAME> optimal_list);
+  void add_optimal_attribute(std::vector<TYPE_NAME> attributes,std::map<TYPE_NAME,std::string> attributes_default_value);
 };
 
 #endif

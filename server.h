@@ -12,10 +12,6 @@ public:
   static Server* get_instance();
 
   void add_user(std::vector<Component*> params);
-  void show(std::vector<Component*> params);
-  void showmin(std::vector<Component*> params);
-  void editname(std::vector<Component*> params);
-  
 private:
   static Server* instance;
   std::vector<User*> users;

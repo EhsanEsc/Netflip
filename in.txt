@@ -1,11 +1,4 @@
-add user ? user_name ehsan age 22
-add user ? age 32 user_name mamad
-add user ? user_name 22ESI age 123
-add user ? user_name aaa age 2
-show more_age ? age 10
-show user ? user_name ehsan
-show user ? age 2
-edit user_name ? user_name aaa user_name soroooooosh
-show user ? age 2
-edit user_name ? user_name aaa user_name ey_baba
-end them ? age 22
+POST signup ? email e.escandari user_name Ehsan password asdf age 22
+POST signup ? email e.escandari user_name Ehsan2 password asdf
+POST signup ?  user_name Ehsan3 password asdf age 22 publisher true email e.escandari
+POST signup ? password asdf email e.escandari user_name Ehsan4  age 22 publisher false

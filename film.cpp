@@ -3,20 +3,15 @@
 #include "user.h"
 using namespace std;
 
-std::vector<TYPE_NAME> FILM_PRIMARY_LIST = {TYPE_NAME::NAME,TYPE_NAME::AGE} ;
-std::vector<TYPE_NAME> FILM_OPTIMAL_LIST;
+std::vector<TYPE_NAME> FILM_ATTRIBUTE = {TYPE_NAME::NAME,TYPE_NAME::YEAR,TYPE_NAME::LENGTH,
+  TYPE_NAME::PRICE,TYPE_NAME::SUMMARY,TYPE_NAME::DIRECTOR} ;
+map<TYPE_NAME,string> attributes_default_value = {
+};
 
 Film::Film(vector<Component*> comps)
-: Entity(comps,FILM_PRIMARY_LIST,FILM_OPTIMAL_LIST)
+: Entity(comps,FILM_ATTRIBUTE,attributes_default_value)
 {
   id = get_new_id();
-  for(auto& tn: FILM_OPTIMAL_LIST)
-  {
-    if(get_component22(tn) == NULL)
-    {
-      // if(tn == )
-    }
-  }
 }
 
 int Film::get_new_id()

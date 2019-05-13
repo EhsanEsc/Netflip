@@ -8,10 +8,7 @@
 
 enum class COMMAND_TYPE
 {
-  ADD,
-  SHOW,
-  SHOWMIN,
-  EDITNAME
+  SIGNUP
 };
 
 class CommandHandler
@@ -25,9 +22,9 @@ private:
   std::vector<string> split_line(string line);
   COMMAND_TYPE get_command_type(std::vector<std::string> command);
   std::vector<Component*> get_parametrs(std::vector<std::string> command);
-  
+
   bool check_validate(COMMAND_TYPE ctype, std::vector<Component*> params);
-  Component* build_component(std::string key,std::string value);
+  // Component* build_component(std::string key,std::string value);
   void remove_input(std::vector<Component*> input);
 };
 

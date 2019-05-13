@@ -13,7 +13,6 @@ CommandHandler* CommandHandler::get_instance()
 void CommandHandler::run()
 {
   Server* server = Server::get_instance();
-
   string line ;
   while(getline(cin, line))
   {
@@ -24,18 +23,11 @@ void CommandHandler::run()
       if(check_validate(ctype, input) == false)
         throw Error("Bad Request");
 
-      if(ctype == COMMAND_TYPE::ADD) {
+      if(ctype == COMMAND_TYPE::SIGNUP) {
         server->add_user(input);
-      } else if(ctype == COMMAND_TYPE::SHOW) {
-        server->show(input);
-      } else if(ctype == COMMAND_TYPE::SHOWMIN) {
-        server->showmin(input);
-      } else if(ctype == COMMAND_TYPE::EDITNAME) {
-        server->editname(input);
       }
-      if(ctype != COMMAND_TYPE::ADD) {
-        remove_input(input);
-      }
+
+      cout << "OK" << endl;
     } catch(Error& err) {
       cerr << err.what() << endl;
     }
@@ -59,16 +51,23 @@ vector<string> CommandHandler::split_line(string line)
 }
 
 map<pair<string,string>,COMMAND_TYPE> command_type_cache = {
-  {{"add","user"} , COMMAND_TYPE::ADD},
-  {{"show","user"} , COMMAND_TYPE::SHOW},
-  {{"show","more_age"} , COMMAND_TYPE::SHOWMIN},
-  {{"edit","user_name"}, COMMAND_TYPE::EDITNAME}
+  {{"POST","signup"}, COMMAND_TYPE::SIGNUP}
+};
+
+map<COMMAND_TYPE, vector<TYPE_NAME>> command_primary_list = {
+  {COMMAND_TYPE::SIGNUP , vector<TYPE_NAME>{TYPE_NAME::USER_NAME,TYPE_NAME::EMAIL,TYPE_NAME::PASSWORD,TYPE_NAME::AGE}}
+  // {COMMAND_TYPE:: , vector<TYPE_NAME>{}}
+};
+
+map<COMMAND_TYPE, vector<TYPE_NAME>> command_optimal_list = {
+  {COMMAND_TYPE::SIGNUP , vector<TYPE_NAME>{TYPE_NAME::ISPUB}}
+  // {COMMAND_TYPE:: , vector<TYPE_NAME>{}}
 };
 
 COMMAND_TYPE CommandHandler::get_command_type(vector<string> command)
 {
-  // if(command.size()<3 || command[2] != "?")
-  //   throw Error("Bad Request");
+  if(command.size()<2)
+    throw Error("Bad Request");
   if(command_type_cache.find({command[0],command[1]}) == command_type_cache.end())
     throw Error("Bad Request");
   return command_type_cache[{command[0], command[1]}];
@@ -76,8 +75,10 @@ COMMAND_TYPE CommandHandler::get_command_type(vector<string> command)
 
 vector<Component*> CommandHandler::get_parametrs(vector<string> command)
 {
-  // if(command.size()<3 || command.size()%2 == 0)
-  //   throw Error("Bad Request");
+  if(command.size()<3)
+    return vector<Component*>();
+  if(command[2] != "?" || command.size()%2 == 0)
+    throw Error("Bad Request");
   vector<Component*> res;
   for(int i=3;i<command.size();i+=2)
     res.push_back(build_component(command[i],command[i+1]));
@@ -86,25 +87,35 @@ vector<Component*> CommandHandler::get_parametrs(vector<string> command)
 
 bool CommandHandler::check_validate(COMMAND_TYPE ctype, vector<Component*> params)
 {
-  return true;
-}
+  vector<TYPE_NAME> primary_list = command_primary_list[ctype];
+  vector<TYPE_NAME> optimal_list = command_optimal_list[ctype];
 
-Component* CommandHandler::build_component(string key,string value)
-{
-  TYPE_NAME tn = get_type_name(key);
-  if(tn == TYPE_NAME::USER_NAME || tn == TYPE_NAME::NAME || tn == TYPE_NAME::SUMMARY || tn == TYPE_NAME::DIRECTOR) {
-    return (new Name(value, tn));
-  } else if(tn == TYPE_NAME::EMAIL){
-    return (new Email(value, tn));
-  } else if(tn == TYPE_NAME::PASSWORD){
-    return (new Password(value, tn));
-  } else if(tn == TYPE_NAME::AGE || tn == TYPE_NAME::YEAR || tn == TYPE_NAME::LENGTH || tn == TYPE_NAME::PRICE  || tn == TYPE_NAME::MONEY) {
-    return (new Number(value,tn));
-  } else if(tn == TYPE_NAME::ISPUB) {
-    return (new Bool(value, tn));
-  } else if(tn == TYPE_NAME::UNDEFINED) {
-    throw Error("Bad Request");
+  for(int i=0;i<params.size();i++)
+    for(int j=i+1;j<params.size();j++)
+      if(params[i]->get_type() == params[j]->get_type())
+        return false;
+
+  for(auto& u:primary_list)
+  {
+    bool exist = false;
+    for(auto& cp:params)
+      exist |= (cp->get_type()==u);
+    if(exist == false)
+      return false;
   }
+
+  for(auto& cp:params)
+  {
+    bool valid = false;
+    for(auto& u:primary_list)
+      valid |= u==cp->get_type();
+    for(auto& u:optimal_list)
+      valid |= u==cp->get_type();
+    if(valid == false)
+      return false;
+  }
+  
+  return true;
 }
 
 void CommandHandler::remove_input(vector<Component*> input)

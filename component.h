@@ -14,7 +14,7 @@ public:
   bool operator==(const Component& cp) const ;
   virtual std::string get_value() const = 0;
 private:
-  TYPE_NAME type;
+  TYPE_NAME type = TYPE_NAME::UNDEFINED;
 };
 
 #endif

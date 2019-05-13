@@ -30,3 +30,31 @@ TYPE_NAME get_type_name(string key)
 
 Error::Error(string str) { msg = str; }
 string Error::what() { return msg; }
+
+Component* build_component(string key, string value)
+{
+  return build_component(get_type_name(key),value);
+}
+
+Component* build_component(TYPE_NAME tn,string value)
+{
+  if(tn == TYPE_NAME::USER_NAME || tn == TYPE_NAME::NAME || tn == TYPE_NAME::SUMMARY || tn == TYPE_NAME::DIRECTOR) {
+    return (new Name(value, tn));
+  } else if(tn == TYPE_NAME::EMAIL){
+    return (new Email(value, tn));
+  } else if(tn == TYPE_NAME::PASSWORD){
+    return (new Password(value, tn));
+  } else if(tn == TYPE_NAME::AGE || tn == TYPE_NAME::YEAR || tn == TYPE_NAME::LENGTH || tn == TYPE_NAME::PRICE  || tn == TYPE_NAME::MONEY) {
+    return (new Number(value,tn));
+  } else if(tn == TYPE_NAME::ISPUB) {
+    return (new Bool(value, tn));
+  } else if(tn == TYPE_NAME::UNDEFINED) {
+    throw Error("Bad Request");
+  }
+}
+
+std::ostream& operator << (std::ostream& os, const TYPE_NAME& obj)
+{
+   os << static_cast<std::underlying_type<TYPE_NAME>::type>(obj);
+   return os;
+}
