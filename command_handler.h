@@ -8,7 +8,8 @@
 
 enum class COMMAND_TYPE
 {
-  SIGNUP
+  SIGNUP,
+  POSTFILM
 };
 
 class CommandHandler

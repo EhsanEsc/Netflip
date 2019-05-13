@@ -12,6 +12,7 @@ Film::Film(vector<Component*> comps)
 : Entity(comps,FILM_ATTRIBUTE,attributes_default_value)
 {
   id = get_new_id();
+  cout << "FILM with id: " << id << " Created! " << endl;
 }
 
 int Film::get_new_id()

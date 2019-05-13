@@ -25,6 +25,8 @@ void CommandHandler::run()
 
       if(ctype == COMMAND_TYPE::SIGNUP) {
         server->add_user(input);
+      } else if(ctype == COMMAND_TYPE::POSTFILM) {
+        server->add_film(input);
       }
 
       cout << "OK" << endl;
@@ -51,16 +53,20 @@ vector<string> CommandHandler::split_line(string line)
 }
 
 map<pair<string,string>,COMMAND_TYPE> command_type_cache = {
-  {{"POST","signup"}, COMMAND_TYPE::SIGNUP}
+  {{"POST","signup"}, COMMAND_TYPE::SIGNUP},
+  {{"POST","films"}, COMMAND_TYPE::POSTFILM}
 };
 
 map<COMMAND_TYPE, vector<TYPE_NAME>> command_primary_list = {
-  {COMMAND_TYPE::SIGNUP , vector<TYPE_NAME>{TYPE_NAME::USER_NAME,TYPE_NAME::EMAIL,TYPE_NAME::PASSWORD,TYPE_NAME::AGE}}
+  {COMMAND_TYPE::SIGNUP , vector<TYPE_NAME>{TYPE_NAME::USER_NAME,TYPE_NAME::EMAIL,TYPE_NAME::PASSWORD,TYPE_NAME::AGE}},
+  {COMMAND_TYPE::POSTFILM , vector<TYPE_NAME>{TYPE_NAME::NAME,TYPE_NAME::YEAR,TYPE_NAME::LENGTH,
+    TYPE_NAME::PRICE,TYPE_NAME::SUMMARY,TYPE_NAME::DIRECTOR}}
   // {COMMAND_TYPE:: , vector<TYPE_NAME>{}}
 };
 
 map<COMMAND_TYPE, vector<TYPE_NAME>> command_optimal_list = {
-  {COMMAND_TYPE::SIGNUP , vector<TYPE_NAME>{TYPE_NAME::ISPUB}}
+  {COMMAND_TYPE::SIGNUP , vector<TYPE_NAME>{TYPE_NAME::ISPUB}},
+  {COMMAND_TYPE::POSTFILM , vector<TYPE_NAME>{}}
   // {COMMAND_TYPE:: , vector<TYPE_NAME>{}}
 };
 
@@ -114,7 +120,7 @@ bool CommandHandler::check_validate(COMMAND_TYPE ctype, vector<Component*> param
     if(valid == false)
       return false;
   }
-  
+
   return true;
 }
 
