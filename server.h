@@ -16,10 +16,12 @@ public:
   void edit_film(std::vector<Component*> params);
   void delete_film(std::vector<Component*> params);
   void show_followers(std::vector<Component*> params);
+  void get_money(std::vector<Component*> params);
 private:
   static Server* instance;
   std::vector<User*> users;
   std::vector<Film*> films;
+  User* current_user=NULL;
 };
 
 #endif

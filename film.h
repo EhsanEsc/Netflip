@@ -9,8 +9,8 @@ class User;
 class Film : public Entity
 {
 public:
-  Film(std::vector<Component*> params);
-
+  Film(std::vector<Component*> params, User* _publisher);
+  User* get_publisher();
 private:
   User* publisher;
   // vector<Comment*> comments;

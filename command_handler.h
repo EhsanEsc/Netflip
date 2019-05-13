@@ -13,6 +13,7 @@ enum class COMMAND_TYPE
   EDITFILM,
   DELETEFILM,
   SHOWFOLOWERS,
+  GETMONEY
 };
 
 class CommandHandler

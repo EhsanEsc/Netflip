@@ -1,10 +1,9 @@
 POST signup ? email e.escandari user_name Ehsan password asdf age 22
-POST signup ? email e.escandari user_name Ehsan2 password asdf
-POST signup ? password asdf email e.escandari user_name Ehsan3  age 22 publisher true
 POST films ? name ff year 1234 length 3333 price 100 summary nothing_really_happen director esi
-POST films ? name ff year 1234 length 3333 price 100 summary nothing_really_happen
-POST films ? name holala year 22 length 68 price 213 summary just_do_it director esi
-PUT films ? film_id 1 year 33333
-PUT films ? film_id 3 director mamad
-DELETE films ? film_id 1
+POST signup ? email e.escandari user_name Ehsan22 password asdf age 11 publisher true
+POST films ? name ff year 1234 length 3333 price 100 summary nothing_really_happen director esi
+PUT films ? film_id 1 year 999
+POST signup ? email e.escandari user_name Soroosh password asdf age 22 publisher true
+PUT films ? film_id 1 year 6789
+PUT films ? film_id 2 year 2222
 GET followers

@@ -31,5 +31,5 @@ void User::show()
     cout << u->get_value() << " ";
   cout << endl;
 }
-
+std::vector<User*> User::get_followers() { return followers; }
 bool User::is_publisher() { return get_component<Bool>(TYPE_NAME::ISPUB)->get_value() == "true"; }

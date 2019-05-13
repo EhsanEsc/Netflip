@@ -12,12 +12,18 @@ Server* Server::get_instance()
 
 void Server::add_user(std::vector<Component*> params)
 {
-  users.push_back(new User(params));
+  current_user = new User(params);
+  users.push_back(current_user);
 }
 
 void Server::add_film(std::vector<Component*> params)
 {
-  films.push_back(new Film(params));
+  if(current_user == NULL)
+    throw Error("WTF");
+  if(current_user->is_publisher() == false)
+    throw Error("Permision Denied");
+  Film* new_film = new Film(params, current_user);
+  films.push_back(new_film);
 }
 
 void Server::edit_film(std::vector<Component*> params)
@@ -26,15 +32,16 @@ void Server::edit_film(std::vector<Component*> params)
   for(auto& u:params)
     if(u->get_type() == TYPE_NAME::ID)
       cid = u;
-  if(cid == NULL)
-    throw Error("WTF");
-  Entity* et = Filter_interface::find_exact(films, cid);
-  if(et == NULL)
+  Film* fl = Filter_interface::find_exact(films, cid);
+  if(fl == NULL)
     throw Error("Not Found");
+  if(fl->get_publisher() != current_user)
+    throw Error("Permision Denied");
+
   for(auto& u:params)
     if(u->get_type() != TYPE_NAME::ID)
     {
-      Component* cp = et->get_component22(u->get_type());
+      Component* cp = fl->get_component22(u->get_type());
       cp = u;
     }
 }
@@ -54,8 +61,27 @@ void Server::delete_film(std::vector<Component*> params)
 
 void Server::show_followers(std::vector<Component*> params)
 {
-  // complete this later
-  cout << "SHOW Followers Called! " << endl;
+  vector<TYPE_NAME> format{TYPE_NAME::ID, TYPE_NAME::USER_NAME, TYPE_NAME::EMAIL};
+  vector<User*> luser = current_user->get_followers();
+  luser = Filter_interface::sort(luser, TYPE_NAME::ID);
+
+  cout << "List of Followers" << endl;
+  cout << "User Id | User Username | User Email" << endl;
+  for(auto& u: luser)
+  {
+    for(int i=0;i<format.size();i++)
+    {
+      cout << u->get_component22(format[i])->get_value() ;
+      if(i!=format.size()-1)
+        cout << " | ";
+    }
+    cout << endl;
+  }
+}
+
+void Server::get_money(std::vector<Component*> params)
+{
+
 }
 
 // User* guser = Filter_interface::find_exact(users,params[0]);

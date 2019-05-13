@@ -12,9 +12,10 @@ public:
   User(std::vector<Component*> comps);
   void show();
 
+  std::vector<User*> get_followers();
   bool is_publisher();
 private:
-  std::vector<User*> follower;
+  std::vector<User*> followers;
   std::vector<User*> following;
   // vector<Notification*> notis;
   std::vector<Film*> purchased;
