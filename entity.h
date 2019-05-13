@@ -16,9 +16,7 @@ public:
         return dynamic_cast<T*>(u);
     return NULL;
   }
-  int get_id();
 protected:
-  int id;
   std::vector<Component*> components;
 
   void add_optimal_attribute(std::vector<TYPE_NAME> attributes,std::map<TYPE_NAME,std::string> attributes_default_value);

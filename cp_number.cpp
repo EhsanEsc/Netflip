@@ -27,3 +27,8 @@ string Number::get_value() const
 {
   return to_string(number);
 }
+
+void Number::set(int x)
+{
+  number = x;
+}

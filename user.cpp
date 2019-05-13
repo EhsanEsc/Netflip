@@ -3,19 +3,16 @@
 #include "film.h"
 using namespace std;
 
-std::vector<TYPE_NAME> USER_ATTRIBUTE = {TYPE_NAME::USER_NAME,TYPE_NAME::EMAIL,TYPE_NAME::PASSWORD,TYPE_NAME::AGE,TYPE_NAME::ISPUB} ;
+std::vector<TYPE_NAME> USER_ATTRIBUTE = {TYPE_NAME::ID,TYPE_NAME::USER_NAME,TYPE_NAME::EMAIL,TYPE_NAME::PASSWORD,TYPE_NAME::AGE,TYPE_NAME::ISPUB} ;
 map<TYPE_NAME,string> attribute_default_value = {
-  {TYPE_NAME::USER_NAME, ""},
-  {TYPE_NAME::EMAIL, ""},
-  {TYPE_NAME::PASSWORD, ""},
-  {TYPE_NAME::AGE, ""},
+  {TYPE_NAME::ID, "0"},
   {TYPE_NAME::ISPUB, "false"}
 };
 
 User::User(vector<Component*> comps)
 : Entity(comps,USER_ATTRIBUTE,attribute_default_value)
 {
-  id = get_new_id();
+  get_component<Number>(TYPE_NAME::ID)->set(get_new_id());
   show();
 }
 
@@ -29,7 +26,7 @@ int User::get_new_id()
 
 void User::show()
 {
-  cout << "User id: " << id << " -> ";
+  cout << "User --> ";
   for(auto& u:components)
     cout << u->get_value() << " ";
   cout << endl;

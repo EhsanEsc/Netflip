@@ -29,8 +29,3 @@ Component* Entity::get_component22(TYPE_NAME tn)
       return cp;
   return NULL;
 }
-
-int Entity::get_id()
-{
-  return id;
-}

@@ -9,6 +9,7 @@ extern int MAX_CNT_COMPONENT;
 
 enum class TYPE_NAME
 {
+  ID,
   USER_NAME,
   EMAIL,
   PASSWORD,
