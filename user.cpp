@@ -45,6 +45,16 @@ void User::add_money(int gold)
   nu->set(nu->get()+gold);
 }
 
+void User::follow(User* us)
+{
+  following.push_back(us);
+}
+
+void User::add_follower(User* us)
+{
+  followers.push_back(us);
+}
+
 std::vector<Film*> User::get_posted_films() { return posted_films; }
 
 std::vector<User*> User::get_followers() { return followers; }

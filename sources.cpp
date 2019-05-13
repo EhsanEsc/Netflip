@@ -19,7 +19,8 @@ std::map<std::string,TYPE_NAME> type_name_cache = {
   {"summary", TYPE_NAME::SUMMARY},
   {"director", TYPE_NAME::DIRECTOR},
   {"money", TYPE_NAME::MONEY},
-  {"film_id", TYPE_NAME::ID}
+  {"film_id", TYPE_NAME::ID},
+  {"amount", TYPE_NAME::MONEY}
 };
 
 TYPE_NAME get_type_name(string key)

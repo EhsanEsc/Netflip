@@ -86,6 +86,15 @@ void Server::get_money(std::vector<Component*> params)
     fl->pay_publisher();
 }
 
+void Server::follow_user(std::vector<Component*> params)
+{
+  User* us = Filter_interface::find_exact(users, params[0]);
+  if(us->is_publisher() == false)
+    throw Error("Bad Request");
+  current_user->follow(us);
+  us->add_follower(current_user);
+}
+
 // User* guser = Filter_interface::find_exact(users,params[0]);
 // vector<User*> glist = Filter_interface::filter_min(users,params[0]);
 // guser->get_component<Name>(TYPE_NAME::USER_NAME)->edit_name(params[1]->get_value());

@@ -36,6 +36,8 @@ void CommandHandler::run()
         server->show_followers(input);
       } else if(ctype == COMMAND_TYPE::GETMONEY) {
         server->get_money(input);
+      } else if(ctype == COMMAND_TYPE::FOLLOW) {
+        server->follow_user(input);
       }
 
       cout << "OK" << endl;
@@ -67,7 +69,8 @@ map<pair<string,string>,COMMAND_TYPE> command_type_cache = {
   {{"PUT","films"}, COMMAND_TYPE::EDITFILM},
   {{"DELETE","films"}, COMMAND_TYPE::DELETEFILM},
   {{"GET","followers"}, COMMAND_TYPE::SHOWFOLOWERS},
-  {{"POST","money"}, COMMAND_TYPE::GETMONEY}
+  {{"POST","money"}, COMMAND_TYPE::GETMONEY},
+  {{"POST","followers"}, COMMAND_TYPE::FOLLOW}
 };
 
 map<COMMAND_TYPE, vector<TYPE_NAME>> command_primary_list = {
@@ -77,7 +80,8 @@ map<COMMAND_TYPE, vector<TYPE_NAME>> command_primary_list = {
   {COMMAND_TYPE::EDITFILM , vector<TYPE_NAME>{TYPE_NAME::ID}},
   {COMMAND_TYPE::DELETEFILM , vector<TYPE_NAME>{TYPE_NAME::ID}},
   {COMMAND_TYPE::SHOWFOLOWERS , vector<TYPE_NAME>{}},
-  {COMMAND_TYPE::GETMONEY , vector<TYPE_NAME>{}}
+  {COMMAND_TYPE::GETMONEY , vector<TYPE_NAME>{}},
+  {COMMAND_TYPE::FOLLOW , vector<TYPE_NAME>{TYPE_NAME::ID}}
   // {COMMAND_TYPE:: , vector<TYPE_NAME>{}}
 };
 
@@ -88,7 +92,8 @@ map<COMMAND_TYPE, vector<TYPE_NAME>> command_optimal_list = {
     TYPE_NAME::SUMMARY,TYPE_NAME::DIRECTOR}},
   {COMMAND_TYPE::DELETEFILM , vector<TYPE_NAME>{}},
   {COMMAND_TYPE::SHOWFOLOWERS , vector<TYPE_NAME>{}},
-  {COMMAND_TYPE::GETMONEY , vector<TYPE_NAME>{}}
+  {COMMAND_TYPE::GETMONEY , vector<TYPE_NAME>{}},
+  {COMMAND_TYPE::FOLLOW , vector<TYPE_NAME>{}}
   // {COMMAND_TYPE:: , vector<TYPE_NAME>{}}
 };
 
