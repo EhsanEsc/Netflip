@@ -31,6 +31,8 @@ void CommandHandler::run()
         server->edit_film(input);
       } else if(ctype == COMMAND_TYPE::DELETEFILM) {
         server->delete_film(input);
+      } else if(ctype == COMMAND_TYPE::SHOWFOLOWERS) {
+        server->show_followers(input);
       }
 
       cout << "OK" << endl;
@@ -60,7 +62,8 @@ map<pair<string,string>,COMMAND_TYPE> command_type_cache = {
   {{"POST","signup"}, COMMAND_TYPE::SIGNUP},
   {{"POST","films"}, COMMAND_TYPE::POSTFILM},
   {{"PUT","films"}, COMMAND_TYPE::EDITFILM},
-  {{"DELETE","films"}, COMMAND_TYPE::DELETEFILM}
+  {{"DELETE","films"}, COMMAND_TYPE::DELETEFILM},
+  {{"GET","followers"}, COMMAND_TYPE::SHOWFOLOWERS}
 };
 
 map<COMMAND_TYPE, vector<TYPE_NAME>> command_primary_list = {
@@ -68,7 +71,8 @@ map<COMMAND_TYPE, vector<TYPE_NAME>> command_primary_list = {
   {COMMAND_TYPE::POSTFILM , vector<TYPE_NAME>{TYPE_NAME::NAME,TYPE_NAME::YEAR,TYPE_NAME::LENGTH,
     TYPE_NAME::PRICE,TYPE_NAME::SUMMARY,TYPE_NAME::DIRECTOR}},
   {COMMAND_TYPE::EDITFILM , vector<TYPE_NAME>{TYPE_NAME::ID}},
-  {COMMAND_TYPE::DELETEFILM , vector<TYPE_NAME>{TYPE_NAME::ID}}
+  {COMMAND_TYPE::DELETEFILM , vector<TYPE_NAME>{TYPE_NAME::ID}},
+  {COMMAND_TYPE::SHOWFOLOWERS , vector<TYPE_NAME>{}}
   // {COMMAND_TYPE:: , vector<TYPE_NAME>{}}
 };
 
@@ -77,7 +81,8 @@ map<COMMAND_TYPE, vector<TYPE_NAME>> command_optimal_list = {
   {COMMAND_TYPE::POSTFILM , vector<TYPE_NAME>{}},
   {COMMAND_TYPE::EDITFILM , vector<TYPE_NAME>{TYPE_NAME::NAME,TYPE_NAME::YEAR,TYPE_NAME::LENGTH,
     TYPE_NAME::SUMMARY,TYPE_NAME::DIRECTOR}},
-  {COMMAND_TYPE::DELETEFILM , vector<TYPE_NAME>{}}
+  {COMMAND_TYPE::DELETEFILM , vector<TYPE_NAME>{}},
+  {COMMAND_TYPE::SHOWFOLOWERS , vector<TYPE_NAME>{}}
   // {COMMAND_TYPE:: , vector<TYPE_NAME>{}}
 };
 

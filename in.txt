@@ -7,3 +7,4 @@ POST films ? name holala year 22 length 68 price 213 summary just_do_it director
 PUT films ? film_id 1 year 33333
 PUT films ? film_id 3 director mamad
 DELETE films ? film_id 1
+GET followers
