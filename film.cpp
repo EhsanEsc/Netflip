@@ -4,9 +4,10 @@
 using namespace std;
 
 std::vector<TYPE_NAME> FILM_ATTRIBUTE = {TYPE_NAME::ID,TYPE_NAME::NAME,TYPE_NAME::YEAR,TYPE_NAME::LENGTH,
-  TYPE_NAME::PRICE,TYPE_NAME::SUMMARY,TYPE_NAME::DIRECTOR} ;
+  TYPE_NAME::PRICE,TYPE_NAME::SUMMARY,TYPE_NAME::DIRECTOR,TYPE_NAME::MONEY} ;
 map<TYPE_NAME,string> attributes_default_value = {
-  {TYPE_NAME::ID , "0"}
+  {TYPE_NAME::ID , "0"},
+  {TYPE_NAME::MONEY, "0"}
 };
 
 Film::Film(vector<Component*> comps, User* _publisher)
@@ -28,4 +29,11 @@ int Film::get_new_id()
 User* Film::get_publisher()
 {
   return publisher;
+}
+
+void Film::pay_publisher()
+{
+  Number* cp = get_component<Number>(TYPE_NAME::MONEY);
+  publisher->add_money(cp->get());
+  cp->set(0);
 }

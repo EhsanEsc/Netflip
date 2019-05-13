@@ -10,6 +10,7 @@ public:
   Number(std::string ct,TYPE_NAME tp);
   bool validation() const ;
   void set(int x);
+  int get();
   std::string get_value() const ;
 private:
   int number;

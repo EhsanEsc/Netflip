@@ -7,3 +7,4 @@ POST signup ? email e.escandari user_name Soroosh password asdf age 22 publisher
 PUT films ? film_id 1 year 6789
 PUT films ? film_id 2 year 2222
 GET followers
+POST money 

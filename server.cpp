@@ -23,6 +23,7 @@ void Server::add_film(std::vector<Component*> params)
   if(current_user->is_publisher() == false)
     throw Error("Permision Denied");
   Film* new_film = new Film(params, current_user);
+  current_user->add_posted_film(new_film);
   films.push_back(new_film);
 }
 
@@ -81,7 +82,8 @@ void Server::show_followers(std::vector<Component*> params)
 
 void Server::get_money(std::vector<Component*> params)
 {
-
+  for(auto& fl : current_user->get_posted_films())
+    fl->pay_publisher();
 }
 
 // User* guser = Filter_interface::find_exact(users,params[0]);

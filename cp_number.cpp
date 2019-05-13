@@ -32,3 +32,5 @@ void Number::set(int x)
 {
   number = x;
 }
+
+int Number::get() { return number; }

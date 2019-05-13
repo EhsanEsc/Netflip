@@ -11,6 +11,7 @@ class Film : public Entity
 public:
   Film(std::vector<Component*> params, User* _publisher);
   User* get_publisher();
+  void pay_publisher();
 private:
   User* publisher;
   // vector<Comment*> comments;
