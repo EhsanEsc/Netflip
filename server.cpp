@@ -12,6 +12,13 @@ Server* Server::get_instance()
 
 void Server::add_user(std::vector<Component*> params)
 {
+  Component* cid = NULL;
+  for(auto& u:params)
+    if(u->get_type() == TYPE_NAME::USER_NAME)
+      cid = u;
+  User* us = Filter_interface::find_exact(users,cid);
+  if(us != NULL)
+    throw Error("Bad Request");
   current_user = new User(params);
   users.push_back(current_user);
 }
@@ -95,6 +102,33 @@ void Server::follow_user(std::vector<Component*> params)
   us->add_follower(current_user);
 }
 
+void Server::login(std::vector<Component*> params)
+{
+  Name* username = NULL;
+  Password* pass = NULL;
+  for(auto& u:params)
+  {
+    if(u->get_type() == TYPE_NAME::USER_NAME)
+      username = dynamic_cast<Name*>(u);
+    if(u->get_type() == TYPE_NAME::PASSWORD)
+      pass = dynamic_cast<Password*>(u);
+  }
+  if(username == NULL || pass == NULL)
+    throw Error("WTF");
+  for(auto& u:users)
+  {
+    if(u->get_component<Name>(TYPE_NAME::USER_NAME)->get_value() == username->get_value())
+    {
+      if(u->get_component<Password>(TYPE_NAME::PASSWORD)->get_value() == pass->get_value())
+      {
+        current_user = u;
+        return;
+      }
+      throw Error("Bad Request");
+    }
+  }
+  throw Error("Not Found");
+}
 // User* guser = Filter_interface::find_exact(users,params[0]);
 // vector<User*> glist = Filter_interface::filter_min(users,params[0]);
 // guser->get_component<Name>(TYPE_NAME::USER_NAME)->edit_name(params[1]->get_value());

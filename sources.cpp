@@ -8,6 +8,7 @@ int MAX_CNT_COMPONENT = 22;
 
 std::map<std::string,TYPE_NAME> type_name_cache = {
   {"user_name",TYPE_NAME::USER_NAME},
+  {"username",TYPE_NAME::USER_NAME},
   {"email", TYPE_NAME::EMAIL},
   {"password", TYPE_NAME::PASSWORD},
   {"age",TYPE_NAME::AGE},
@@ -20,6 +21,7 @@ std::map<std::string,TYPE_NAME> type_name_cache = {
   {"director", TYPE_NAME::DIRECTOR},
   {"money", TYPE_NAME::MONEY},
   {"film_id", TYPE_NAME::ID},
+  {"user_id", TYPE_NAME::ID},
   {"amount", TYPE_NAME::MONEY}
 };
 
@@ -35,6 +37,7 @@ string Error::what() { return msg; }
 
 Component* build_component(string key, string value)
 {
+  // cout << key << " | " << value << endl;
   return build_component(get_type_name(key),value);
 }
 

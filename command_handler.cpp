@@ -25,6 +25,8 @@ void CommandHandler::run()
 
       if(ctype == COMMAND_TYPE::SIGNUP) {
         server->add_user(input);
+      } else if(ctype == COMMAND_TYPE::LOGIN) {
+        server->login(input);
       } else if(ctype == COMMAND_TYPE::POSTFILM) {
         server->add_film(input);
       } else if(ctype == COMMAND_TYPE::EDITFILM) {
@@ -32,7 +34,6 @@ void CommandHandler::run()
       } else if(ctype == COMMAND_TYPE::DELETEFILM) {
         server->delete_film(input);
       } else if(ctype == COMMAND_TYPE::SHOWFOLOWERS) {
-        // not checked sorting...
         server->show_followers(input);
       } else if(ctype == COMMAND_TYPE::GETMONEY) {
         server->get_money(input);
@@ -65,6 +66,7 @@ vector<string> CommandHandler::split_line(string line)
 
 map<pair<string,string>,COMMAND_TYPE> command_type_cache = {
   {{"POST","signup"}, COMMAND_TYPE::SIGNUP},
+  {{"POST","login"}, COMMAND_TYPE::LOGIN},
   {{"POST","films"}, COMMAND_TYPE::POSTFILM},
   {{"PUT","films"}, COMMAND_TYPE::EDITFILM},
   {{"DELETE","films"}, COMMAND_TYPE::DELETEFILM},
@@ -75,6 +77,7 @@ map<pair<string,string>,COMMAND_TYPE> command_type_cache = {
 
 map<COMMAND_TYPE, vector<TYPE_NAME>> command_primary_list = {
   {COMMAND_TYPE::SIGNUP , vector<TYPE_NAME>{TYPE_NAME::USER_NAME,TYPE_NAME::EMAIL,TYPE_NAME::PASSWORD,TYPE_NAME::AGE}},
+  {COMMAND_TYPE::LOGIN , vector<TYPE_NAME>{TYPE_NAME::USER_NAME,TYPE_NAME::PASSWORD}},
   {COMMAND_TYPE::POSTFILM , vector<TYPE_NAME>{TYPE_NAME::NAME,TYPE_NAME::YEAR,TYPE_NAME::LENGTH,
     TYPE_NAME::PRICE,TYPE_NAME::SUMMARY,TYPE_NAME::DIRECTOR}},
   {COMMAND_TYPE::EDITFILM , vector<TYPE_NAME>{TYPE_NAME::ID}},
@@ -87,6 +90,7 @@ map<COMMAND_TYPE, vector<TYPE_NAME>> command_primary_list = {
 
 map<COMMAND_TYPE, vector<TYPE_NAME>> command_optimal_list = {
   {COMMAND_TYPE::SIGNUP , vector<TYPE_NAME>{TYPE_NAME::ISPUB}},
+  {COMMAND_TYPE::LOGIN , vector<TYPE_NAME>{}},
   {COMMAND_TYPE::POSTFILM , vector<TYPE_NAME>{}},
   {COMMAND_TYPE::EDITFILM , vector<TYPE_NAME>{TYPE_NAME::NAME,TYPE_NAME::YEAR,TYPE_NAME::LENGTH,
     TYPE_NAME::SUMMARY,TYPE_NAME::DIRECTOR}},

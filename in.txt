@@ -1,6 +1,14 @@
-POST signup ? email e.escandari user_name Ehsan password asdf age 22 publisher true
-POST films ? name ff year 1234 length 3333 price 100 summary nothing_really_happen director esi
+POST signup ? email es user_name Ehsan2 password asdf age 22
 POST signup ? email es user_name Ehsan2 password asdf age 22
 POST signup ? email mmmm user_name Ehsan3 password asdf age 23 publisher true
 POST signup ? email hhhhh user_name Ehsan4 password asdf age 4
+POST signup ? email e.escandari user_name Ehsan password asdf age 22 publisher true
+POST films ? name ff year 1234 length 3333 price 100 summary nothing_really_happen director esi
+POST followers ? user_id 1
+POST login ? username Ehsan4 password asdf
+POST followers ? user_id 4
+POST login ? username Ehsan2 password asdf
+POST followers ? user_id 4
+POST login ? username Ehsan3 password afkjlalsg
+POST login ? username Ehsan password asdf
 GET followers

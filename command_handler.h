@@ -9,6 +9,7 @@
 enum class COMMAND_TYPE
 {
   SIGNUP,
+  LOGIN,
   POSTFILM,
   EDITFILM,
   DELETEFILM,

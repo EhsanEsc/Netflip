@@ -31,7 +31,6 @@ namespace Filter_interface
     {
       for(int j=0;j<int(vt.size())-i-1;j++)
       {
-        cout << i << " " << j << endl;
         if(*(vt[j+1]->get_component22(tn))<*(vt[j]->get_component22(tn)))
           swap(vt[j],vt[j+1]);
       }
