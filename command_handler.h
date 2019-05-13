@@ -10,7 +10,8 @@ enum class COMMAND_TYPE
 {
   SIGNUP,
   POSTFILM,
-  EDITFILM
+  EDITFILM,
+  DELETEFILM
 };
 
 class CommandHandler

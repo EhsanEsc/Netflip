@@ -13,7 +13,7 @@ User::User(vector<Component*> comps)
 : Entity(comps,USER_ATTRIBUTE,attribute_default_value)
 {
   get_component<Number>(TYPE_NAME::ID)->set(get_new_id());
-  show();
+  // show();
 }
 
 

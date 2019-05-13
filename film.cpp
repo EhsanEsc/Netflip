@@ -14,7 +14,7 @@ Film::Film(vector<Component*> comps)
 {
   get_component<Number>(TYPE_NAME::ID)->set(get_new_id());
 
-  cout << "FILM with id: " << get_component<Number>(TYPE_NAME::ID)->get_value() << " Created! " << endl;
+  // cout << "FILM with id: " << get_component<Number>(TYPE_NAME::ID)->get_value() << " Created! " << endl;
 }
 
 int Film::get_new_id()
