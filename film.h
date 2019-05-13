@@ -4,6 +4,8 @@
 
 #include "entity.h"
 
+class User;
+
 class Film : public Entity
 {
 public:

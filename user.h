@@ -4,6 +4,8 @@
 
 #include "entity.h"
 
+class Film;
+
 class User : public Entity
 {
 public:
@@ -15,8 +17,8 @@ private:
   std::vector<User*> follower;
   std::vector<User*> following;
   // vector<Notification*> notis;
-  // vector<Film*> purchased;
-  // vector<Film*> posted;
+  std::vector<Film*> purchased;
+  std::vector<Film*> posted;
   bool ispub;
 
   int get_new_id();

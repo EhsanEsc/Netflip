@@ -1,15 +1,22 @@
 
 #include "film.h"
+#include "user.h"
 using namespace std;
 
-std::vector<TYPE_NAME> USER_PRIMARY_LIST = {TYPE_NAME::USER_NAME,TYPE_NAME::AGE} ;
-std::vector<TYPE_NAME> USER_OPTIMAL_LIST;
-std::vector<TYPE_NAME> USER_BE_LIST;
+std::vector<TYPE_NAME> FILM_PRIMARY_LIST = {TYPE_NAME::NAME,TYPE_NAME::AGE} ;
+std::vector<TYPE_NAME> FILM_OPTIMAL_LIST;
 
-User::User(vector<Component*> comps)
-: Entity(comps,USER_PRIMARY_LIST,USER_OPTIMAL_LIST,USER_BE_LIST)
+Film::Film(vector<Component*> comps)
+: Entity(comps,FILM_PRIMARY_LIST,FILM_OPTIMAL_LIST)
 {
   id = get_new_id();
+  for(auto& tn: FILM_OPTIMAL_LIST)
+  {
+    if(get_component22(tn) == NULL)
+    {
+      // if(tn == )
+    }
+  }
 }
 
 int Film::get_new_id()

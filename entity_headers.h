@@ -4,5 +4,6 @@
 
 #include "entity.h"
 #include "user.h"
+#include "film.h"
 
 #endif
