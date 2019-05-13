@@ -56,10 +56,14 @@ void Server::edit_film(std::vector<Component*> params)
 
 void Server::delete_film(std::vector<Component*> params)
 {
+  if(current_user->is_publisher() == false)
+    throw Error("Permision Denied");
   for(int i=0;i<films.size();i++)
   {
     if(films[i]->get_component<Number>(TYPE_NAME::ID)->get_value() == params[0]->get_value())
     {
+      if(films[i]->get_publisher() != current_user)
+        throw Error("Permision Denied");
       films.erase(films.begin()+i);
       return ;
     }

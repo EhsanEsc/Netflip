@@ -7,8 +7,11 @@ POST films ? name ff year 1234 length 3333 price 100 summary nothing_really_happ
 POST followers ? user_id 1
 POST login ? username Ehsan4 password asdf
 POST followers ? user_id 4
+DELETE films ? film_id 1
 POST login ? username Ehsan2 password asdf
 POST followers ? user_id 4
 POST login ? username Ehsan3 password afkjlalsg
 POST login ? username Ehsan password asdf
 GET followers
+DELETE films ? film_id 2
+DELETE films ? film_id 1
