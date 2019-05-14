@@ -2,7 +2,7 @@
 CC = g++
 CFLAGS = -std=c++11
 OBJ = main.o component.o cp_name.o cp_number.o entity.o user.o sources.o filter.o command_handler.o server.o \
-cp_bool.o cp_password.o cp_email.o film.o
+cp_bool.o cp_password.o cp_email.o film.o comment.o
 COMPONENT_SLIST = sources.h component.h
 CP_NAME_SLIST = $(COMPONENT_SLIST) cp_name.h
 CP_NUMBER_SLIST = $(COMPONENT_SLIST) cp_number.h
@@ -12,6 +12,7 @@ CP_PASSWORD_SLIST = $(COMPONENT_SLIST) cp_password.h
 ENTITY_SLIST = $(COMPONENT_SLIST) entity.h
 USER_SLIST = $(ENTITY_SLIST) user.h
 FILM_SLIST = $(ENTITY_SLIST) film.h
+COMMENT_SLIST = $(ENTITY_SLIST) comment.h
 MAIN_SLIST = $(COMPONENT_SLIST) $(ENTITY_SLIST) $(USER_SLIST) $(CP_NAME_SLIST) $(CP_NUMBER_SLIST) filter.h server.h command_handler.h
 
 a.out: $(OBJ)
@@ -44,5 +45,7 @@ cp_email.o: cp_email.cpp $(CP_EMAIL_SLIST)
 	$(CC) $(CFLAGS) -c cp_email.cpp -o cp_email.o
 film.o: film.cpp $(FILM_SLIST)
 	$(CC) $(CFLAGS) -c film.cpp -o film.o
+comment.o: comment.cpp $(COMMENT_SLIST)
+	$(CC) $(CFLAGS) -c comment.cpp -o comment.o
 clean:
 	rm *.o *.out
