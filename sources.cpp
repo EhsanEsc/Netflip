@@ -24,7 +24,8 @@ std::map<std::string,TYPE_NAME> type_name_cache = {
   {"film_id", TYPE_NAME::ID},
   {"user_id", TYPE_NAME::ID},
   {"amount", TYPE_NAME::MONEY},
-  {"rate" , TYPE_NAME::RATE}
+  {"rate" , TYPE_NAME::RATE},
+  {"score", TYPE_NAME::RATE}
 };
 
 TYPE_NAME get_type_name(string key)

@@ -197,6 +197,27 @@ void Server::buy_film(std::vector<Component*> params)
   current_user->buy_film(fl);
 }
 
+void Server::rate_film(std::vector<Component*> params)
+{
+  Component* cid = NULL;
+  int score=-1;
+  for(auto& u: params)
+  {
+    if(u->get_type() == TYPE_NAME::ID)
+      cid = u;
+    if(u->get_type() == TYPE_NAME::RATE)
+      score = stoi(u->get_value());
+  }
+  if(score > 10 || score < 1)
+    throw Error("Bad Request");
+  Film* fl = Filter_interface::find_exact(films, cid);
+  if(fl == NULL)
+    throw Error("Not found");
+  if(current_user->is_purchased(fl) == false)
+    throw Error("Bad Request");
+  fl->get_component<Number>(TYPE_NAME::RATE)->push(score);
+}
+
 // User* guser = Filter_interface::find_exact(users,params[0]);
 // vector<User*> glist = Filter_interface::filter_min(users,params[0]);
 // guser->get_component<Name>(TYPE_NAME::USER_NAME)->edit_name(params[1]->get_value());

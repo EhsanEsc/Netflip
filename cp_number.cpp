@@ -39,3 +39,15 @@ void Number::add(int x)
 }
 
 int Number::get() { return number; }
+
+void Number::push(int x)
+{
+  sum += x;
+  ted++;
+}
+
+double Number::get_average()
+{
+  if(ted==0) return 0;
+  return 1.0*sum/ted;
+}

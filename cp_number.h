@@ -13,10 +13,16 @@ public:
   int get();
   void add(int x);
   std::string get_value() const ;
+
+  void push(int x);
+  double get_average() ;
 private:
   int number;
   int min_value;
   int max_value;
+
+  int sum = 0;
+  int ted = 0;
 };
 
 #endif

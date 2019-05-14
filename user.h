@@ -21,6 +21,7 @@ public:
   std::vector<User*> get_followers();
   std::vector<Film*> get_posted_films();
   bool is_publisher();
+  bool is_purchased(Film* fl);
 private:
   std::vector<User*> followers;
   std::vector<User*> following;
