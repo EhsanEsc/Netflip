@@ -22,7 +22,8 @@ std::map<std::string,TYPE_NAME> type_name_cache = {
   {"money", TYPE_NAME::MONEY},
   {"film_id", TYPE_NAME::ID},
   {"user_id", TYPE_NAME::ID},
-  {"amount", TYPE_NAME::MONEY}
+  {"amount", TYPE_NAME::MONEY},
+  {"rate" , TYPE_NAME::RATE}
 };
 
 TYPE_NAME get_type_name(string key)
@@ -37,8 +38,15 @@ string Error::what() { return msg; }
 
 Component* build_component(string key, string value)
 {
-  // cout << key << " | " << value << endl;
-  return build_component(get_type_name(key),value);
+  string bkey = key;
+  if(key.substr(0,4) == "min_" || key.substr(0,4) == "max_")
+    key = key.substr(4);
+  Component* cp = build_component(get_type_name(key),value);
+  if(bkey.substr(0,4) == "min_")
+    cp->set_filter_type(FILTER_TYPE::MIN);
+  if(bkey.substr(0,4) == "max_")
+    cp->set_filter_type(FILTER_TYPE::MAX);
+  return cp;
 }
 
 Component* build_component(TYPE_NAME tn,string value)
@@ -50,7 +58,7 @@ Component* build_component(TYPE_NAME tn,string value)
   } else if(tn == TYPE_NAME::PASSWORD){
     return (new Password(value, tn));
   } else if(tn == TYPE_NAME::AGE || tn == TYPE_NAME::YEAR || tn == TYPE_NAME::LENGTH
-     || tn == TYPE_NAME::PRICE  || tn == TYPE_NAME::MONEY || tn == TYPE_NAME::ID) {
+     || tn == TYPE_NAME::PRICE  || tn == TYPE_NAME::MONEY || tn == TYPE_NAME::ID || tn == TYPE_NAME::RATE) {
     return (new Number(value,tn));
   } else if(tn == TYPE_NAME::ISPUB) {
     return (new Bool(value, tn));

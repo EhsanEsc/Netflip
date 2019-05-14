@@ -19,6 +19,7 @@ public:
   void get_money(std::vector<Component*> params);
   void follow_user(std::vector<Component*> params);
   void login(std::vector<Component*> params);
+  void show_posted_films(std::vector<Component*> params);
 private:
   static Server* instance;
   std::vector<User*> users;

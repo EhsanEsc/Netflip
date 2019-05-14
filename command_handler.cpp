@@ -18,8 +18,8 @@ void CommandHandler::run()
   {
     try{
       vector<string> command = split_line(line);
-      COMMAND_TYPE ctype = get_command_type(command);
       vector<Component*> input = get_parametrs(command);
+      COMMAND_TYPE ctype = get_command_type(command);
       if(check_validate(ctype, input) == false)
         throw Error("Bad Request");
 
@@ -35,10 +35,12 @@ void CommandHandler::run()
         server->delete_film(input);
       } else if(ctype == COMMAND_TYPE::SHOWFOLOWERS) {
         server->show_followers(input);
-      } else if(ctype == COMMAND_TYPE::GETMONEY) {
+      } else if(ctype == COMMAND_TYPE::GETPROFIT) {
         server->get_money(input);
       } else if(ctype == COMMAND_TYPE::FOLLOW) {
         server->follow_user(input);
+      } else if(ctype == COMMAND_TYPE::SEARCHPOSTED) {
+        server->show_posted_films(input);
       }
 
       cout << "OK" << endl;
@@ -70,9 +72,13 @@ map<pair<string,string>,COMMAND_TYPE> command_type_cache = {
   {{"POST","films"}, COMMAND_TYPE::POSTFILM},
   {{"PUT","films"}, COMMAND_TYPE::EDITFILM},
   {{"DELETE","films"}, COMMAND_TYPE::DELETEFILM},
+  {{"POST","followers"}, COMMAND_TYPE::FOLLOW},
+  {{"GET","films"}, COMMAND_TYPE::SEARCHPOSTED}
+};
+
+map<pair<string,string>,COMMAND_TYPE> alone_command_cache = {
   {{"GET","followers"}, COMMAND_TYPE::SHOWFOLOWERS},
-  {{"POST","money"}, COMMAND_TYPE::GETMONEY},
-  {{"POST","followers"}, COMMAND_TYPE::FOLLOW}
+  {{"POST","money"}, COMMAND_TYPE::GETPROFIT}
 };
 
 map<COMMAND_TYPE, vector<TYPE_NAME>> command_primary_list = {
@@ -83,8 +89,9 @@ map<COMMAND_TYPE, vector<TYPE_NAME>> command_primary_list = {
   {COMMAND_TYPE::EDITFILM , vector<TYPE_NAME>{TYPE_NAME::ID}},
   {COMMAND_TYPE::DELETEFILM , vector<TYPE_NAME>{TYPE_NAME::ID}},
   {COMMAND_TYPE::SHOWFOLOWERS , vector<TYPE_NAME>{}},
-  {COMMAND_TYPE::GETMONEY , vector<TYPE_NAME>{}},
-  {COMMAND_TYPE::FOLLOW , vector<TYPE_NAME>{TYPE_NAME::ID}}
+  {COMMAND_TYPE::GETPROFIT , vector<TYPE_NAME>{}},
+  {COMMAND_TYPE::FOLLOW , vector<TYPE_NAME>{TYPE_NAME::ID}},
+  {COMMAND_TYPE::SEARCHPOSTED , vector<TYPE_NAME>{}}
   // {COMMAND_TYPE:: , vector<TYPE_NAME>{}}
 };
 
@@ -96,8 +103,10 @@ map<COMMAND_TYPE, vector<TYPE_NAME>> command_optimal_list = {
     TYPE_NAME::SUMMARY,TYPE_NAME::DIRECTOR}},
   {COMMAND_TYPE::DELETEFILM , vector<TYPE_NAME>{}},
   {COMMAND_TYPE::SHOWFOLOWERS , vector<TYPE_NAME>{}},
-  {COMMAND_TYPE::GETMONEY , vector<TYPE_NAME>{}},
-  {COMMAND_TYPE::FOLLOW , vector<TYPE_NAME>{}}
+  {COMMAND_TYPE::GETPROFIT , vector<TYPE_NAME>{}},
+  {COMMAND_TYPE::FOLLOW , vector<TYPE_NAME>{}},
+  {COMMAND_TYPE::SEARCHPOSTED , vector<TYPE_NAME>{TYPE_NAME::NAME,TYPE_NAME::PRICE,TYPE_NAME::DIRECTOR,
+    TYPE_NAME::RATE,TYPE_NAME::YEAR}}
   // {COMMAND_TYPE:: , vector<TYPE_NAME>{}}
 };
 
@@ -105,6 +114,12 @@ COMMAND_TYPE CommandHandler::get_command_type(vector<string> command)
 {
   if(command.size()<2)
     throw Error("Bad Request");
+  if(command.size()==2)
+  {
+    if(alone_command_cache.find({command[0],command[1]}) == alone_command_cache.end())
+      throw Error("Bad Request");
+    return alone_command_cache[{command[0],command[1]}];
+  }
   if(command_type_cache.find({command[0],command[1]}) == command_type_cache.end())
     throw Error("Bad Request");
   return command_type_cache[{command[0], command[1]}];
@@ -129,7 +144,7 @@ bool CommandHandler::check_validate(COMMAND_TYPE ctype, vector<Component*> param
 
   for(int i=0;i<params.size();i++)
     for(int j=i+1;j<params.size();j++)
-      if(params[i]->get_type() == params[j]->get_type())
+      if(params[i]->get_type() == params[j]->get_type() && params[i]->get_filter_type() == params[j]->get_filter_type())
         return false;
 
   for(auto& u:primary_list)

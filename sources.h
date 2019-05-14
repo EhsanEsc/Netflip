@@ -22,6 +22,7 @@ enum class TYPE_NAME
   SUMMARY,
   DIRECTOR,
   MONEY,
+  RATE,
   UNDEFINED
 };
 extern std::map<std::string,TYPE_NAME> type_name_cache;
@@ -41,5 +42,12 @@ class Component;
 Component* build_component(std::string key,std::string value);
 Component* build_component(TYPE_NAME tn, std::string value);
 
+enum class FILTER_TYPE
+{
+  EXACT,
+  MIN,
+  MAX,
+  UNDEFINED
+};
 
 #endif
