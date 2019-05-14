@@ -42,8 +42,8 @@ void CommandHandler::run()
       } else if(ctype == COMMAND_TYPE::SEARCHPOSTED) {
         server->show_posted_films(input);
       }
-
-      cout << "OK" << endl;
+      if(ctype != COMMAND_TYPE::SEARCHPOSTED && ctype != COMMAND_TYPE::SHOWFOLOWERS)
+        cout << "OK" << endl;
     } catch(Error& err) {
       cerr << err.what() << endl;
     }

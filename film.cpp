@@ -4,10 +4,11 @@
 using namespace std;
 
 std::vector<TYPE_NAME> FILM_ATTRIBUTE = {TYPE_NAME::ID,TYPE_NAME::NAME,TYPE_NAME::YEAR,TYPE_NAME::LENGTH,
-  TYPE_NAME::PRICE,TYPE_NAME::SUMMARY,TYPE_NAME::DIRECTOR,TYPE_NAME::MONEY} ;
+  TYPE_NAME::PRICE,TYPE_NAME::SUMMARY,TYPE_NAME::DIRECTOR,TYPE_NAME::MONEY,TYPE_NAME::RATE} ;
 map<TYPE_NAME,string> attributes_default_value = {
   {TYPE_NAME::ID , "0"},
-  {TYPE_NAME::MONEY, "0"}
+  {TYPE_NAME::MONEY, "0"},
+  {TYPE_NAME::RATE, "0"}
 };
 
 Film::Film(vector<Component*> comps, User* _publisher)

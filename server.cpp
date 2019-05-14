@@ -78,9 +78,11 @@ void Server::show_followers(std::vector<Component*> params)
   luser = Filter_interface::sort(luser, TYPE_NAME::ID);
 
   cout << "List of Followers" << endl;
-  cout << "User Id | User Username | User Email" << endl;
-  for(auto& u: luser)
+  cout << "#. User Id | User Username | User Email" << endl;
+  for(int j=0;j<luser.size();j++)
   {
+    User* u = luser[j];
+    cout << j+1 << ". ";
     for(int i=0;i<format.size();i++)
     {
       cout << u->get_component22(format[i])->get_value() ;
@@ -136,7 +138,29 @@ void Server::login(std::vector<Component*> params)
 
 void Server::show_posted_films(std::vector<Component*> params)
 {
-  cout << "Search is Called" << endl;
+  vector<Film*> list = current_user->get_posted_films();
+  for(auto& u:params)
+  {
+    list = Filter_interface::filter(list, u);
+  }
+  list = Filter_interface::sort(list, TYPE_NAME::ID);
+
+  // maybe add function later
+  vector<TYPE_NAME>format{TYPE_NAME::ID, TYPE_NAME::NAME, TYPE_NAME::LENGTH, TYPE_NAME::PRICE,
+    TYPE_NAME::RATE, TYPE_NAME::YEAR, TYPE_NAME::DIRECTOR};
+  cout << "#. Film Id | Film Name | Film Length | Film price | rate | Production Year | Film Director" << endl;
+  for(int j=0;j<list.size();j++)
+  {
+    Film* fl = list[j];
+    cout << j+1 << ". ";
+    for(int i=0;i<format.size();i++)
+    {
+      cout << fl->get_component22(format[i])->get_value() ;
+      if(i+1<format.size())
+        cout << " | ";
+    }
+    cout << endl;
+  }
 }
 // User* guser = Filter_interface::find_exact(users,params[0]);
 // vector<User*> glist = Filter_interface::filter_min(users,params[0]);
