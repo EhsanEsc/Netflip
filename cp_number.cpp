@@ -33,4 +33,9 @@ void Number::set(int x)
   number = x;
 }
 
+void Number::add(int x)
+{
+  number += x;
+}
+
 int Number::get() { return number; }

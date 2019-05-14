@@ -6,6 +6,7 @@ using namespace std;
 int INF = 1e7+22;
 int MAX_CNT_COMPONENT = 22;
 
+// TODO fix same TYPE_NAME error
 std::map<std::string,TYPE_NAME> type_name_cache = {
   {"user_name",TYPE_NAME::USER_NAME},
   {"username",TYPE_NAME::USER_NAME},

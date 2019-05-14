@@ -93,10 +93,15 @@ void Server::show_followers(std::vector<Component*> params)
   }
 }
 
-void Server::get_money(std::vector<Component*> params)
+void Server::get_profit(std::vector<Component*> params)
 {
   for(auto& fl : current_user->get_posted_films())
     fl->pay_publisher();
+}
+
+void Server::add_money(std::vector<Component*> params)
+{
+  current_user->get_component<Number>(TYPE_NAME::MONEY)->add(stoi(params[0]->get_value()));
 }
 
 void Server::follow_user(std::vector<Component*> params)
@@ -138,7 +143,13 @@ void Server::login(std::vector<Component*> params)
 
 void Server::show_posted_films(std::vector<Component*> params)
 {
-  vector<Film*> list = current_user->get_posted_films();
+  if(current_user->is_publisher() == false)
+    throw Error("Permision Denied");
+  show_films(current_user->get_posted_films(), params);
+}
+
+void Server::show_films(std::vector<Film*>list, std::vector<Component*> params)
+{
   for(auto& u:params)
   {
     list = Filter_interface::filter(list, u);

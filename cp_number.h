@@ -11,6 +11,7 @@ public:
   bool validation() const ;
   void set(int x);
   int get();
+  void add(int x);
   std::string get_value() const ;
 private:
   int number;

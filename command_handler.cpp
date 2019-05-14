@@ -36,11 +36,13 @@ void CommandHandler::run()
       } else if(ctype == COMMAND_TYPE::SHOWFOLOWERS) {
         server->show_followers(input);
       } else if(ctype == COMMAND_TYPE::GETPROFIT) {
-        server->get_money(input);
+        server->get_profit(input);
       } else if(ctype == COMMAND_TYPE::FOLLOW) {
         server->follow_user(input);
       } else if(ctype == COMMAND_TYPE::SEARCHPOSTED) {
         server->show_posted_films(input);
+      } else if(ctype == COMMAND_TYPE::ADDMONEY) {
+        server->add_money(input);
       }
       if(ctype != COMMAND_TYPE::SEARCHPOSTED && ctype != COMMAND_TYPE::SHOWFOLOWERS)
         cout << "OK" << endl;
@@ -73,9 +75,10 @@ map<COMMAND_TYPE,pair<string,string>> command_method_cache = {
   {COMMAND_TYPE::EDITFILM, {"PUT","films"}},
   {COMMAND_TYPE::DELETEFILM, {"DELETE","films"}},
   {COMMAND_TYPE::SHOWFOLOWERS, {"GET","followers"}},
-  {COMMAND_TYPE::GETPROFIT, {"POST","money"}}
+  {COMMAND_TYPE::GETPROFIT, {"POST","money"}},
   {COMMAND_TYPE::FOLLOW, {"POST","followers"}},
-  {COMMAND_TYPE::SEARCHPOSTED, {"GET","films"}},
+  {COMMAND_TYPE::SEARCHPOSTED, {"GET","publisher"}},
+  {COMMAND_TYPE::ADDMONEY, {"POST","money"}}
 };
 
 map<COMMAND_TYPE, vector<TYPE_NAME>> command_primary_list = {
@@ -88,7 +91,8 @@ map<COMMAND_TYPE, vector<TYPE_NAME>> command_primary_list = {
   {COMMAND_TYPE::SHOWFOLOWERS , vector<TYPE_NAME>{}},
   {COMMAND_TYPE::GETPROFIT , vector<TYPE_NAME>{}},
   {COMMAND_TYPE::FOLLOW , vector<TYPE_NAME>{TYPE_NAME::ID}},
-  {COMMAND_TYPE::SEARCHPOSTED , vector<TYPE_NAME>{}}
+  {COMMAND_TYPE::SEARCHPOSTED , vector<TYPE_NAME>{}},
+  {COMMAND_TYPE::ADDMONEY , vector<TYPE_NAME>{TYPE_NAME::MONEY}}
   // {COMMAND_TYPE:: , vector<TYPE_NAME>{}}
 };
 
@@ -103,7 +107,8 @@ map<COMMAND_TYPE, vector<TYPE_NAME>> command_optimal_list = {
   {COMMAND_TYPE::GETPROFIT , vector<TYPE_NAME>{}},
   {COMMAND_TYPE::FOLLOW , vector<TYPE_NAME>{}},
   {COMMAND_TYPE::SEARCHPOSTED , vector<TYPE_NAME>{TYPE_NAME::NAME,TYPE_NAME::PRICE,TYPE_NAME::DIRECTOR,
-    TYPE_NAME::RATE,TYPE_NAME::YEAR}}
+    TYPE_NAME::RATE,TYPE_NAME::YEAR}},
+  {COMMAND_TYPE::ADDMONEY , vector<TYPE_NAME>{}}
   // {COMMAND_TYPE:: , vector<TYPE_NAME>{}}
 };
 
