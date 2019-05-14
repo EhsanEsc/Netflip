@@ -1,0 +1,5 @@
+fix same id problem
+add component searching
+fix get_value mess
+add password hashing
+add checking to parametrs 

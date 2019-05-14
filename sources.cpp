@@ -6,7 +6,6 @@ using namespace std;
 int INF = 1e7+22;
 int MAX_CNT_COMPONENT = 22;
 
-// TODO fix same TYPE_NAME error
 std::map<std::string,TYPE_NAME> type_name_cache = {
   {"user_name",TYPE_NAME::USER_NAME},
   {"username",TYPE_NAME::USER_NAME},
@@ -25,7 +24,8 @@ std::map<std::string,TYPE_NAME> type_name_cache = {
   {"user_id", TYPE_NAME::ID},
   {"amount", TYPE_NAME::MONEY},
   {"rate" , TYPE_NAME::RATE},
-  {"score", TYPE_NAME::RATE}
+  {"score", TYPE_NAME::RATE},
+  {"content", TYPE_NAME::SUMMARY}
 };
 
 TYPE_NAME get_type_name(string key)

@@ -5,6 +5,7 @@
 #include "entity.h"
 
 class User;
+class Comment;
 
 class Film : public Entity
 {
@@ -13,11 +14,16 @@ public:
   User* get_publisher();
   void pay_publisher();
   void print_details();
+  void print_comments();
+  void add_comment(std::string content);
+  void reply_comment(int id, std::string content);
 private:
   User* publisher;
-  // vector<Comment*> comments;
+  std::vector<Comment*> comments;
+  int last_comment_id = 0;
 
   int get_new_id();
+  int get_new_comment_id();
 };
 
 #endif

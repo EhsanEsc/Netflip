@@ -53,6 +53,10 @@ void CommandHandler::run()
         server->buy_film(input);
       } else if(ctype == COMMAND_TYPE::RATEFILM) {
         server->rate_film(input);
+      } else if(ctype == COMMAND_TYPE::ADDCOMMENT) {
+        server->add_comment(input);
+      } else if(ctype == COMMAND_TYPE::REPLYCOMMENT) {
+        server->reply_comment(input);
       }
 
       if(ctype != COMMAND_TYPE::SEARCHPOSTED && ctype != COMMAND_TYPE::SHOWFOLOWERS && ctype != COMMAND_TYPE::SEARCHFILMS
@@ -95,7 +99,9 @@ map<COMMAND_TYPE,pair<string,string>> command_method_cache = {
   {COMMAND_TYPE::GETFILM, {"GET","films"}},
   {COMMAND_TYPE::ADDMONEY, {"POST","money"}},
   {COMMAND_TYPE::BUYFILM, {"POST","buy"}},
-  {COMMAND_TYPE::RATEFILM, {"POST","rate"}}
+  {COMMAND_TYPE::RATEFILM, {"POST","rate"}},
+  {COMMAND_TYPE::ADDCOMMENT, {"POST","comments"}},
+  // {COMMAND_TYPE::REPLYCOMMENT, {"POST","replies"}}
 };
 
 map<COMMAND_TYPE, vector<TYPE_NAME>> command_primary_list = {
@@ -114,7 +120,9 @@ map<COMMAND_TYPE, vector<TYPE_NAME>> command_primary_list = {
   {COMMAND_TYPE::GETFILM , vector<TYPE_NAME>{TYPE_NAME::ID}},
   {COMMAND_TYPE::ADDMONEY , vector<TYPE_NAME>{TYPE_NAME::MONEY}},
   {COMMAND_TYPE::BUYFILM , vector<TYPE_NAME>{TYPE_NAME::ID}},
-  {COMMAND_TYPE::RATEFILM , vector<TYPE_NAME>{TYPE_NAME::ID, TYPE_NAME::RATE}}
+  {COMMAND_TYPE::RATEFILM , vector<TYPE_NAME>{TYPE_NAME::ID, TYPE_NAME::RATE}},
+  {COMMAND_TYPE::ADDCOMMENT , vector<TYPE_NAME>{TYPE_NAME::ID, TYPE_NAME::SUMMARY}},
+  // {COMMAND_TYPE::REPLYCOMMENT , vector<TYPE_NAME>{TYPE_NAME::ID, TYPE_NAME::ID, TYPE_NAME::SUMMARY}}
   // {COMMAND_TYPE:: , vector<TYPE_NAME>{}}
 };
 
@@ -137,7 +145,9 @@ map<COMMAND_TYPE, vector<TYPE_NAME>> command_optimal_list = {
   {COMMAND_TYPE::GETFILM , vector<TYPE_NAME>{}},
   {COMMAND_TYPE::ADDMONEY , vector<TYPE_NAME>{}},
   {COMMAND_TYPE::BUYFILM , vector<TYPE_NAME>{}},
-  {COMMAND_TYPE::RATEFILM , vector<TYPE_NAME>{}}
+  {COMMAND_TYPE::RATEFILM , vector<TYPE_NAME>{}},
+  {COMMAND_TYPE::ADDCOMMENT , vector<TYPE_NAME>{}},
+  {COMMAND_TYPE::REPLYCOMMENT , vector<TYPE_NAME>{}}
   // {COMMAND_TYPE:: , vector<TYPE_NAME>{}}
 };
 

@@ -26,6 +26,8 @@ public:
   void add_money(std::vector<Component*> params);
   void buy_film(std::vector<Component*> params);
   void rate_film(std::vector<Component*> params);
+  void add_comment(std::vector<Component*> params);
+  void reply_comment(std::vector<Component*> params);
 
 private:
   static Server* instance;

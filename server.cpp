@@ -164,7 +164,8 @@ void Server::show_film_detail(std::vector<Component*> params)
   if(fl == NULL)
     throw Error("Not Found");
   fl->print_details();
-  // print comments
+  cout << endl;
+  fl->print_comments();
   // add recomendation
 }
 
@@ -221,6 +222,36 @@ void Server::rate_film(std::vector<Component*> params)
   if(current_user->is_purchased(fl) == false)
     throw Error("Bad Request");
   fl->get_component<Number>(TYPE_NAME::RATE)->push(score);
+}
+
+void Server::add_comment(std::vector<Component*> params)
+{
+  Component* cid = NULL;
+  string content;
+  for(auto& u: params)
+  {
+    if(u->get_type() == TYPE_NAME::ID)
+      cid = u;
+    if(u->get_type() == TYPE_NAME::SUMMARY)
+      content = u->get_value();
+  }
+  Film* fl = Filter_interface::find_exact(films, cid);
+  if(fl == NULL)
+    throw Error("Not Found");
+  if(current_user->is_purchased(fl) == false)
+    throw Error("Permision Denied");
+  fl->add_comment(content);
+}
+
+void Server::reply_comment(std::vector<Component*> params)
+{
+  // Component* cid = find();
+  Film* fl = Filter_interface::find_exact(films, cid);
+  if(fl == NULL)
+    throw Error("Not Found");
+  if(fl->get_publisher() != current_user)
+    throw Error("Permision Denied");
+  fl->reply_comment(stoi(cid->get_value()),content);
 }
 
 // User* guser = Filter_interface::find_exact(users,params[0]);
