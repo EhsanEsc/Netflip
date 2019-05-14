@@ -148,6 +148,21 @@ void Server::show_posted_films(std::vector<Component*> params)
   show_films(current_user->get_posted_films(), params);
 }
 
+void Server::show_all_films(std::vector<Component*> params)
+{
+  show_films(films, params);
+}
+
+void Server::show_film_detail(std::vector<Component*> params)
+{
+  Film* fl = Filter_interface::find_exact(films, params[0]);
+  if(fl == NULL)
+    throw Error("Not Found");
+  fl->print_details();
+  // print comments
+  // add recomendation
+}
+
 void Server::show_films(std::vector<Film*>list, std::vector<Component*> params)
 {
   for(auto& u:params)

@@ -20,6 +20,8 @@ public:
   void follow_user(std::vector<Component*> params);
   void login(std::vector<Component*> params);
   void show_posted_films(std::vector<Component*> params);
+  void show_all_films(std::vector<Component*> params);
+  void show_film_detail(std::vector<Component*> params);
   void add_money(std::vector<Component*> params);
 
 private:

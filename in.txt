@@ -1,7 +1,6 @@
 POST signup ? email e.escandari user_name Ehsan password asdf age 22 publisher true
 POST films ? name ff year 1234 length 3333 price 100 summary nothing_really_happen director esi
 POST films ? name aaaa year 20000 length 3333 price 102 summary nothing_really_happen director esi
-GET publisher ? min_year 1245
-GET publisher ? max_year 1245
-GET publisher ? director esi
-POST money ? amount 1234
+POST signup ? email e.escandari user_name Ehsan22 password asdf age 22
+GET films ? film_id 2
+GET films ? film_id 1234

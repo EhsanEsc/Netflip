@@ -38,3 +38,15 @@ void Film::pay_publisher()
   publisher->add_money(cp->get());
   cp->set(0);
 }
+
+void Film::print_details()
+{
+  cout << "Details of Film " << get_component<Name>(TYPE_NAME::NAME)->get_value() << endl;
+  cout << "Id = " << get_component<Number>(TYPE_NAME::ID)->get_value() << endl;
+  cout << "Director = " << get_component<Name>(TYPE_NAME::DIRECTOR)->get_value() << endl;
+  cout << "Length = " << get_component<Number>(TYPE_NAME::LENGTH)->get_value() << endl;
+  cout << "Year = " << get_component<Number>(TYPE_NAME::YEAR)->get_value() << endl;
+  cout << "Summary = " << get_component<Name>(TYPE_NAME::SUMMARY)->get_value() << endl;
+  cout << "Rate = " << get_component<Number>(TYPE_NAME::RATE)->get_value() << endl;
+  cout << "Price = " << get_component<Number>(TYPE_NAME::PRICE)->get_value() << endl;
+}

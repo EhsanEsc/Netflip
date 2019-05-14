@@ -12,6 +12,7 @@ public:
   Film(std::vector<Component*> params, User* _publisher);
   User* get_publisher();
   void pay_publisher();
+  void print_details();
 private:
   User* publisher;
   // vector<Comment*> comments;
