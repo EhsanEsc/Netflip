@@ -188,6 +188,15 @@ void Server::show_films(std::vector<Film*>list, std::vector<Component*> params)
     cout << endl;
   }
 }
+
+void Server::buy_film(std::vector<Component*> params)
+{
+  Film* fl = Filter_interface::find_exact(films, params[0]);
+  if(fl == NULL)
+    throw Error("Not Found");
+  current_user->buy_film(fl);
+}
+
 // User* guser = Filter_interface::find_exact(users,params[0]);
 // vector<User*> glist = Filter_interface::filter_min(users,params[0]);
 // guser->get_component<Name>(TYPE_NAME::USER_NAME)->edit_name(params[1]->get_value());

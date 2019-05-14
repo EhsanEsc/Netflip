@@ -55,6 +55,16 @@ void User::add_follower(User* us)
   followers.push_back(us);
 }
 
+void User::buy_film(Film* fl)
+{
+  int money = stoi(get_component<Number>(TYPE_NAME::MONEY)->get_value());
+  int price = stoi(fl->get_component<Number>(TYPE_NAME::PRICE)->get_value());
+  if(price > money)
+    throw Error("Permision Denied");
+  get_component<Number>(TYPE_NAME::MONEY)->add(-price);
+  purchased_films.push_back(fl);
+}
+
 std::vector<Film*> User::get_posted_films() { return posted_films; }
 
 std::vector<User*> User::get_followers() { return followers; }

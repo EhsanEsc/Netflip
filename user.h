@@ -16,6 +16,7 @@ public:
   void add_money(int gold);
   void follow(User* us);
   void add_follower(User* us);
+  void buy_film(Film* fl);
 
   std::vector<User*> get_followers();
   std::vector<Film*> get_posted_films();

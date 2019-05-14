@@ -47,6 +47,8 @@ void CommandHandler::run()
         server->show_film_detail(input);
       } else if(ctype == COMMAND_TYPE::ADDMONEY) {
         server->add_money(input);
+      } else if(ctype == COMMAND_TYPE::BUYFILM) {
+        server->buy_film(input);
       }
       if(ctype != COMMAND_TYPE::SEARCHPOSTED && ctype != COMMAND_TYPE::SHOWFOLOWERS && ctype != COMMAND_TYPE::SEARCHFILMS
         && ctype != COMMAND_TYPE::GETFILM)
@@ -85,7 +87,8 @@ map<COMMAND_TYPE,pair<string,string>> command_method_cache = {
   {COMMAND_TYPE::SEARCHPOSTED, {"GET","publisher"}},
   {COMMAND_TYPE::SEARCHFILMS, {"GET","films"}},
   {COMMAND_TYPE::GETFILM, {"GET","films"}},
-  {COMMAND_TYPE::ADDMONEY, {"POST","money"}}
+  {COMMAND_TYPE::ADDMONEY, {"POST","money"}},
+  {COMMAND_TYPE::BUYFILM, {"POST","buy"}}
 };
 
 map<COMMAND_TYPE, vector<TYPE_NAME>> command_primary_list = {
@@ -101,7 +104,8 @@ map<COMMAND_TYPE, vector<TYPE_NAME>> command_primary_list = {
   {COMMAND_TYPE::SEARCHPOSTED , vector<TYPE_NAME>{}},
   {COMMAND_TYPE::SEARCHFILMS , vector<TYPE_NAME>{}},
   {COMMAND_TYPE::GETFILM , vector<TYPE_NAME>{TYPE_NAME::ID}},
-  {COMMAND_TYPE::ADDMONEY , vector<TYPE_NAME>{TYPE_NAME::MONEY}}
+  {COMMAND_TYPE::ADDMONEY , vector<TYPE_NAME>{TYPE_NAME::MONEY}},
+  {COMMAND_TYPE::BUYFILM , vector<TYPE_NAME>{TYPE_NAME::ID}}
   // {COMMAND_TYPE:: , vector<TYPE_NAME>{}}
 };
 
@@ -120,7 +124,8 @@ map<COMMAND_TYPE, vector<TYPE_NAME>> command_optimal_list = {
   {COMMAND_TYPE::SEARCHFILMS , vector<TYPE_NAME>{TYPE_NAME::NAME,TYPE_NAME::PRICE,TYPE_NAME::DIRECTOR,
     TYPE_NAME::RATE,TYPE_NAME::YEAR}},
   {COMMAND_TYPE::GETFILM , vector<TYPE_NAME>{}},
-  {COMMAND_TYPE::ADDMONEY , vector<TYPE_NAME>{}}
+  {COMMAND_TYPE::ADDMONEY , vector<TYPE_NAME>{}},
+  {COMMAND_TYPE::BUYFILM , vector<TYPE_NAME>{}}
   // {COMMAND_TYPE:: , vector<TYPE_NAME>{}}
 };
 
