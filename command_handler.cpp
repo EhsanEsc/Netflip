@@ -43,6 +43,8 @@ void CommandHandler::run()
         server->show_posted_films(input);
       } else if(ctype == COMMAND_TYPE::SEARCHFILMS) {
         server->show_all_films(input);
+      } else if(ctype == COMMAND_TYPE::SEARCHPURCHASED) {
+        server->show_purchased_films(input);
       } else if(ctype == COMMAND_TYPE::GETFILM) {
         server->show_film_detail(input);
       } else if(ctype == COMMAND_TYPE::ADDMONEY) {
@@ -54,7 +56,7 @@ void CommandHandler::run()
       }
 
       if(ctype != COMMAND_TYPE::SEARCHPOSTED && ctype != COMMAND_TYPE::SHOWFOLOWERS && ctype != COMMAND_TYPE::SEARCHFILMS
-        && ctype != COMMAND_TYPE::GETFILM)
+        && ctype != COMMAND_TYPE::GETFILM && ctype != COMMAND_TYPE::SEARCHPURCHASED)
         cout << "OK" << endl;
     } catch(Error& err) {
       cerr << err.what() << endl;
@@ -89,6 +91,7 @@ map<COMMAND_TYPE,pair<string,string>> command_method_cache = {
   {COMMAND_TYPE::FOLLOW, {"POST","followers"}},
   {COMMAND_TYPE::SEARCHPOSTED, {"GET","publisher"}},
   {COMMAND_TYPE::SEARCHFILMS, {"GET","films"}},
+  {COMMAND_TYPE::SEARCHPURCHASED, {"GET","purchased"}},
   {COMMAND_TYPE::GETFILM, {"GET","films"}},
   {COMMAND_TYPE::ADDMONEY, {"POST","money"}},
   {COMMAND_TYPE::BUYFILM, {"POST","buy"}},
@@ -107,6 +110,7 @@ map<COMMAND_TYPE, vector<TYPE_NAME>> command_primary_list = {
   {COMMAND_TYPE::FOLLOW , vector<TYPE_NAME>{TYPE_NAME::ID}},
   {COMMAND_TYPE::SEARCHPOSTED , vector<TYPE_NAME>{}},
   {COMMAND_TYPE::SEARCHFILMS , vector<TYPE_NAME>{}},
+  {COMMAND_TYPE::SEARCHPURCHASED , vector<TYPE_NAME>{}},
   {COMMAND_TYPE::GETFILM , vector<TYPE_NAME>{TYPE_NAME::ID}},
   {COMMAND_TYPE::ADDMONEY , vector<TYPE_NAME>{TYPE_NAME::MONEY}},
   {COMMAND_TYPE::BUYFILM , vector<TYPE_NAME>{TYPE_NAME::ID}},
@@ -128,6 +132,8 @@ map<COMMAND_TYPE, vector<TYPE_NAME>> command_optimal_list = {
     TYPE_NAME::RATE,TYPE_NAME::YEAR}},
   {COMMAND_TYPE::SEARCHFILMS , vector<TYPE_NAME>{TYPE_NAME::NAME,TYPE_NAME::PRICE,TYPE_NAME::DIRECTOR,
     TYPE_NAME::RATE,TYPE_NAME::YEAR}},
+  {COMMAND_TYPE::SEARCHPURCHASED , vector<TYPE_NAME>{TYPE_NAME::NAME,TYPE_NAME::PRICE,TYPE_NAME::DIRECTOR,
+    TYPE_NAME::RATE,TYPE_NAME::YEAR}},
   {COMMAND_TYPE::GETFILM , vector<TYPE_NAME>{}},
   {COMMAND_TYPE::ADDMONEY , vector<TYPE_NAME>{}},
   {COMMAND_TYPE::BUYFILM , vector<TYPE_NAME>{}},
@@ -137,6 +143,8 @@ map<COMMAND_TYPE, vector<TYPE_NAME>> command_optimal_list = {
 
 COMMAND_TYPE CommandHandler::get_command_type(vector<string> command, vector<Component*> input)
 {
+  if(command.size() < 2)
+    throw Error("Bad Request");
   vector<COMMAND_TYPE> ct, res;
   pair<string,string> method = {command[0],command[1]};
   for(auto u:command_method_cache)

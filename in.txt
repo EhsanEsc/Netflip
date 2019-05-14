@@ -9,3 +9,7 @@ GET films ? film_id 1
 POST rate ? film_id 1 score 5
 POST rate ? film_id 22 score 10
 GET films ? film_id 1
+ad;kja;ksdflj
+a;skfdjsjdafk
+a;dslfkjfas;
+GET purchased ?

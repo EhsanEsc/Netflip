@@ -66,6 +66,7 @@ void User::buy_film(Film* fl)
 }
 
 std::vector<Film*> User::get_posted_films() { return posted_films; }
+std::vector<Film*> User::get_purchased_films() { return purchased_films; }
 
 std::vector<User*> User::get_followers() { return followers; }
 bool User::is_publisher() { return get_component<Bool>(TYPE_NAME::ISPUB)->get_value() == "true"; }

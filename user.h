@@ -20,6 +20,7 @@ public:
 
   std::vector<User*> get_followers();
   std::vector<Film*> get_posted_films();
+  std::vector<Film*> get_purchased_films();
   bool is_publisher();
   bool is_purchased(Film* fl);
 private:
