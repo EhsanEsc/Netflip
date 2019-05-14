@@ -19,7 +19,7 @@ void CommandHandler::run()
     try{
       vector<string> command = split_line(line);
       vector<Component*> input = get_parametrs(command);
-      COMMAND_TYPE ctype = get_command_type(command);
+      COMMAND_TYPE ctype = get_command_type(command,input);
       if(check_validate(ctype, input) == false)
         throw Error("Bad Request");
 
@@ -66,19 +66,16 @@ vector<string> CommandHandler::split_line(string line)
   return res;
 }
 
-map<pair<string,string>,COMMAND_TYPE> command_type_cache = {
-  {{"POST","signup"}, COMMAND_TYPE::SIGNUP},
-  {{"POST","login"}, COMMAND_TYPE::LOGIN},
-  {{"POST","films"}, COMMAND_TYPE::POSTFILM},
-  {{"PUT","films"}, COMMAND_TYPE::EDITFILM},
-  {{"DELETE","films"}, COMMAND_TYPE::DELETEFILM},
-  {{"POST","followers"}, COMMAND_TYPE::FOLLOW},
-  {{"GET","films"}, COMMAND_TYPE::SEARCHPOSTED}
-};
-
-map<pair<string,string>,COMMAND_TYPE> alone_command_cache = {
-  {{"GET","followers"}, COMMAND_TYPE::SHOWFOLOWERS},
-  {{"POST","money"}, COMMAND_TYPE::GETPROFIT}
+map<COMMAND_TYPE,pair<string,string>> command_method_cache = {
+  {COMMAND_TYPE::SIGNUP, {"POST","signup"}},
+  {COMMAND_TYPE::LOGIN, {"POST","login"}},
+  {COMMAND_TYPE::POSTFILM, {"POST","films"}},
+  {COMMAND_TYPE::EDITFILM, {"PUT","films"}},
+  {COMMAND_TYPE::DELETEFILM, {"DELETE","films"}},
+  {COMMAND_TYPE::SHOWFOLOWERS, {"GET","followers"}},
+  {COMMAND_TYPE::GETPROFIT, {"POST","money"}}
+  {COMMAND_TYPE::FOLLOW, {"POST","followers"}},
+  {COMMAND_TYPE::SEARCHPOSTED, {"GET","films"}},
 };
 
 map<COMMAND_TYPE, vector<TYPE_NAME>> command_primary_list = {
@@ -110,19 +107,21 @@ map<COMMAND_TYPE, vector<TYPE_NAME>> command_optimal_list = {
   // {COMMAND_TYPE:: , vector<TYPE_NAME>{}}
 };
 
-COMMAND_TYPE CommandHandler::get_command_type(vector<string> command)
+COMMAND_TYPE CommandHandler::get_command_type(vector<string> command, vector<Component*> input)
 {
-  if(command.size()<2)
+  vector<COMMAND_TYPE> ct, res;
+  pair<string,string> method = {command[0],command[1]};
+  for(auto u:command_method_cache)
+    if(u.second == method)
+      ct.push_back(u.first);
+  if(ct.size() == 0)
     throw Error("Bad Request");
-  if(command.size()==2)
-  {
-    if(alone_command_cache.find({command[0],command[1]}) == alone_command_cache.end())
-      throw Error("Bad Request");
-    return alone_command_cache[{command[0],command[1]}];
-  }
-  if(command_type_cache.find({command[0],command[1]}) == command_type_cache.end())
+  for(auto u:ct)
+    if(check_validate(u, input))
+      res.push_back(u);
+  if(res.size() != 1)
     throw Error("Bad Request");
-  return command_type_cache[{command[0], command[1]}];
+  return res[0];
 }
 
 vector<Component*> CommandHandler::get_parametrs(vector<string> command)

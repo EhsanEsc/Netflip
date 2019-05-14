@@ -16,7 +16,8 @@ enum class COMMAND_TYPE
   SHOWFOLOWERS,
   GETPROFIT,
   FOLLOW,
-  SEARCHPOSTED
+  SEARCHPOSTED,
+  UNDEFINED
 };
 
 class CommandHandler
@@ -28,7 +29,7 @@ private:
   static CommandHandler* instance;
 
   std::vector<string> split_line(string line);
-  COMMAND_TYPE get_command_type(std::vector<std::string> command);
+  COMMAND_TYPE get_command_type(std::vector<std::string> command, std::vector<Component*> input);
   std::vector<Component*> get_parametrs(std::vector<std::string> command);
 
   bool check_validate(COMMAND_TYPE ctype, std::vector<Component*> params);
