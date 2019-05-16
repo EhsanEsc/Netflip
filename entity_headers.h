@@ -6,5 +6,6 @@
 #include "user.h"
 #include "film.h"
 #include "comment.h"
+#include "notification.h"
 
 #endif

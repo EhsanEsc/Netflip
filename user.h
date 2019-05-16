@@ -5,6 +5,7 @@
 #include "entity.h"
 
 class Film;
+class Noti;
 
 class User : public Entity
 {
@@ -17,6 +18,9 @@ public:
   void follow(User* us);
   void add_follower(User* us);
   void buy_film(Film* fl);
+  void add_noti(Noti* nt);
+  // void read_notis();
+  // void read_seen_notis(int limit);
 
   std::vector<User*> get_followers();
   std::vector<Film*> get_posted_films();
@@ -26,7 +30,8 @@ public:
 private:
   std::vector<User*> followers;
   std::vector<User*> following;
-  // vector<Notification*> notis;
+  std::vector<Noti*> unread_notis;
+  std::vector<Noti*> seen_notis;
   std::vector<Film*> purchased_films;
   std::vector<Film*> posted_films;
 

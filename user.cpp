@@ -1,6 +1,8 @@
 
 #include "user.h"
 #include "film.h"
+#include "notification.h"
+
 using namespace std;
 
 std::vector<TYPE_NAME> USER_ATTRIBUTE = {TYPE_NAME::USERID,TYPE_NAME::USER_NAME,TYPE_NAME::EMAIL,TYPE_NAME::PASSWORD,
@@ -76,4 +78,9 @@ bool User::is_purchased(Film* fl)
     if(u == fl)
       return true;
   return false;
+}
+
+void User::add_noti(Noti* nt)
+{
+  unread_notis.push_back(nt);
 }
