@@ -2,7 +2,7 @@
 CC = g++
 CFLAGS = -std=c++11
 OBJ = main.o component.o cp_name.o cp_number.o entity.o user.o sources.o filter.o command_handler.o server.o \
-cp_bool.o cp_password.o cp_email.o film.o comment.o notification.o
+cp_bool.o cp_password.o cp_email.o film.o comment.o notification.o notihandler.o
 COMPONENT_SLIST = sources.h component.h
 CP_NAME_SLIST = $(COMPONENT_SLIST) cp_name.h
 CP_NUMBER_SLIST = $(COMPONENT_SLIST) cp_number.h
@@ -14,8 +14,9 @@ USER_SLIST = $(ENTITY_SLIST) user.h
 FILM_SLIST = $(ENTITY_SLIST) film.h
 NOTIFICATION_SLIST = $(ENTITY_SLIST) notification.h
 COMMENT_SLIST = $(ENTITY_SLIST) comment.h
+NOTIHANDLER_SLIST = sources.h $(USER_SLIST) $(NOTIFICATION_SLIST)
 MAIN_SLIST = $(COMPONENT_SLIST) $(ENTITY_SLIST) $(USER_SLIST) $(CP_NAME_SLIST) $(CP_NUMBER_SLIST) \
-$(FILM_SLIST) $(NOTIFICATION_SLIST) filter.h server.h command_handler.h
+$(FILM_SLIST) $(NOTIFICATION_SLIST) filter.h server.h command_handler.h notihandler.h
 
 a.out: $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -o a.out
@@ -51,5 +52,7 @@ comment.o: comment.cpp $(COMMENT_SLIST)
 	$(CC) $(CFLAGS) -c comment.cpp -o comment.o
 film.o: film.cpp $(FILM_SLIST)
 	$(CC) $(CFLAGS) -c film.cpp -o film.o
+notihandler.o: notihandler.cpp $(NOTIHANDLER_SLIST)
+	$(CC) $(CFLAGS) -c notihandler.cpp -o notihandler.o
 clean:
 	rm *.o *.out

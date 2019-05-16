@@ -2,6 +2,12 @@
 #include "server.h"
 using namespace std;
 
+Server::Server()
+{
+  noti_handler = NotiHandler::get_instance();
+  // noti_handler = new NotiHandler();
+}
+
 Server* Server::instance = NULL;
 Server* Server::get_instance()
 {

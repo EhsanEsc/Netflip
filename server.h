@@ -5,10 +5,12 @@
 #include "cp_headers.h"
 #include "entity_headers.h"
 #include "filter.h"
+#include "notihandler.h"
 
 class Server
 {
 public:
+  Server();
   static Server* get_instance();
 
   void add_user(std::vector<Component*> params);
@@ -35,7 +37,7 @@ private:
   std::vector<User*> users;
   std::vector<Film*> films;
   User* current_user=NULL;
-
+  NotiHandler* noti_handler;
   void show_films(std::vector<Film*> list, std::vector<Component*> params);
 };
 
