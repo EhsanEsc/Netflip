@@ -87,8 +87,12 @@ void User::add_noti(Noti* nt)
 
 void User::show_notis()
 {
-  for(int i=unread_notis.size()-1;i>=0;i--)
+  cout << "#. Notification Message" << endl;
+  for(int i=unread_notis.size()-1,j=0;i>=0;i--,j++)
+  {
+    cout << j+1 << ". ";
     unread_notis[i]->print();
+  }
   for(int i=0;i<unread_notis.size();i++)
     seen_notis.push_back(unread_notis[i]);
   unread_notis.clear();
@@ -96,6 +100,10 @@ void User::show_notis()
 
 void User::show_seen_notis(int limit)
 {
+  cout << "#. Notification Message" << endl;
   for(int i=seen_notis.size()-1,j=0 ; i>=0 && j<limit ; i--,j++)
+  {
+    cout << j+1 << ". ";
     seen_notis[i]->print();
+  }
 }

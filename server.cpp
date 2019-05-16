@@ -5,7 +5,6 @@ using namespace std;
 Server::Server()
 {
   noti_handler = NotiHandler::get_instance();
-  // noti_handler = new NotiHandler();
 }
 
 Server* Server::instance = NULL;
@@ -35,6 +34,11 @@ void Server::add_film(std::vector<Component*> params)
   Film* new_film = new Film(params, current_user);
   current_user->add_posted_film(new_film);
   films.push_back(new_film);
+
+  pair<string,string> ps = get_info(current_user);
+  vector<string> info{ps.first, ps.second};
+  for(auto& u:current_user->get_followers())
+    noti_handler->add_noti(u,NOTI_TYPE::REGISTERFILM,info);
 }
 
 void Server::edit_film(std::vector<Component*> params)
@@ -111,6 +115,10 @@ void Server::follow_user(std::vector<Component*> params)
     throw Error("Bad Request");
   current_user->follow(us);
   us->add_follower(current_user);
+
+  pair<string,string> ps = get_info(current_user);
+  vector<string> info{ps.first, ps.second};
+  noti_handler->add_noti(us,NOTI_TYPE::FOLLOW,info);
 }
 
 void Server::login(std::vector<Component*> params)
@@ -195,6 +203,11 @@ void Server::buy_film(std::vector<Component*> params)
   if(fl == NULL)
     throw Error("Not Found");
   current_user->buy_film(fl);
+
+  pair<string,string> ps = get_info(current_user);
+  pair<string,string> pf = get_info(fl);
+  vector<string> info{ps.first, ps.second, pf.first, pf.second};
+  noti_handler->add_noti(fl->get_publisher(),NOTI_TYPE::BUYFILM,info);
 }
 
 void Server::rate_film(std::vector<Component*> params)
@@ -209,6 +222,11 @@ void Server::rate_film(std::vector<Component*> params)
   if(current_user->is_purchased(fl) == false)
     throw Error("Bad Request");
   fl->get_component<Number>(TYPE_NAME::RATE)->push(score);
+
+  pair<string,string> ps = get_info(current_user);
+  pair<string,string> pf = get_info(fl);
+  vector<string> info{ps.first, ps.second, pf.first, pf.second};
+  noti_handler->add_noti(fl->get_publisher(),NOTI_TYPE::RATEFILM,info);
 }
 
 void Server::add_comment(std::vector<Component*> params)
@@ -220,7 +238,12 @@ void Server::add_comment(std::vector<Component*> params)
     throw Error("Not Found");
   if(current_user->is_purchased(fl) == false)
     throw Error("Permision Denied");
-  fl->add_comment(content);
+  fl->add_comment(content, current_user);
+
+  pair<string,string> ps = get_info(current_user);
+  pair<string,string> pf = get_info(fl);
+  vector<string> info{ps.first, ps.second, pf.first, pf.second};
+  noti_handler->add_noti(fl->get_publisher(),NOTI_TYPE::COMMENT,info);
 }
 
 void Server::reply_comment(std::vector<Component*> params)
@@ -234,6 +257,11 @@ void Server::reply_comment(std::vector<Component*> params)
   if(fl->get_publisher() != current_user)
     throw Error("Permision Denied");
   fl->reply_comment(cmid,content);
+
+  User* wr = fl->get_comment_writer(cmid);
+  pair<string,string> ps = get_info(wr);
+  vector<string> info{ps.first, ps.second};
+  noti_handler->add_noti(wr,NOTI_TYPE::REPLYCOMMENT,info);
 }
 
 void Server::delete_comment(std::vector<Component*> params)
@@ -258,6 +286,23 @@ void Server::show_seen_notis(std::vector<Component*> params)
   int limit = stoi(Filter_interface::search(params, TYPE_NAME::LIMIT)->get_value());
   current_user->show_seen_notis(limit);
 }
+
+pair<std::string,std::string> Server::get_info(User* us)
+{
+    pair<string,string> p;
+    p.first = us->get_component22(TYPE_NAME::USER_NAME)->get_value();
+    p.second = us->get_component22(TYPE_NAME::USERID)->get_value();
+    return p;
+}
+
+pair<std::string,std::string> Server::get_info(Film* us)
+{
+  pair<string,string> p;
+  p.first = us->get_component22(TYPE_NAME::NAME)->get_value();
+  p.second = us->get_component22(TYPE_NAME::FILMID)->get_value();
+  return p;
+}
+
 
 // User* guser = Filter_interface::find_exact(users,params[0]);
 // vector<User*> glist = Filter_interface::filter_min(users,params[0]);

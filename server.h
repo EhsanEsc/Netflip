@@ -41,6 +41,8 @@ private:
   User* current_user=NULL;
   NotiHandler* noti_handler;
   void show_films(std::vector<Film*> list, std::vector<Component*> params);
+  pair<std::string,std::string> get_info(User* us);
+  pair<std::string,std::string> get_info(Film* us);
 };
 
 #endif

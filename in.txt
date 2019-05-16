@@ -15,3 +15,6 @@ POST replies ? film_id 1 comment_id 1 content khaste_shodim
 GET films ? film_id 1
 DELETE comments ? film_id 1 comment_id 1
 GET films ? film_id 1
+GET notifications
+POST login ? user_name Ehsan22 password asdf
+GET notifications

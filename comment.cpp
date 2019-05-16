@@ -1,5 +1,6 @@
 
 #include "comment.h"
+#include "user.h"
 using namespace std;
 
 std::vector<TYPE_NAME> COMMENT_ATTRIBUTE = {TYPE_NAME::COMMENTID,TYPE_NAME::CONTENT} ;
@@ -8,15 +9,17 @@ map<TYPE_NAME,string> attributes_default_value = {
   {TYPE_NAME::CONTENT, ""}
 };
 
-Comment::Comment(std::vector<Component*> comps, bool rep)
+Comment::Comment(std::vector<Component*> comps, bool rep,User* wr)
 : Entity(comps, COMMENT_ATTRIBUTE, attributes_default_value)
 {
   be_reply = rep;
+  writer = wr;
 }
-Comment::Comment(int id,std::string content, bool rep)
+Comment::Comment(int id,std::string content, bool rep, User* wr)
 : Entity(vector<Component*>{new Number(to_string(id),TYPE_NAME::COMMENTID),new Name(content,TYPE_NAME::CONTENT)}, COMMENT_ATTRIBUTE, attributes_default_value)
 {
   be_reply = rep;
+  writer = wr;
 }
 
 bool Comment::is_reply(){ return be_reply; }
@@ -47,3 +50,5 @@ int Comment::get_new_reply_comment_id()
   last_reply_comment_id++;
   return last_reply_comment_id;
 }
+
+User* Comment::get_writer() { return writer; }

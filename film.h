@@ -15,9 +15,10 @@ public:
   void pay_publisher();
   void print_details();
   void print_comments();
-  void add_comment(std::string content);
+  void add_comment(std::string content, User* writer);
   void reply_comment(Component* cmid, std::string content);
   void delete_comment(Component* cmid);
+  User* get_comment_writer(Component* cmid);
 private:
   User* publisher;
   std::vector<Comment*> comments;

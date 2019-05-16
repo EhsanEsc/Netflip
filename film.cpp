@@ -59,10 +59,10 @@ void Film::print_comments()
     u->print();
 }
 
-void Film::add_comment(std::string content)
+void Film::add_comment(std::string content, User* writer)
 {
   int new_id = get_new_comment_id();
-  comments.push_back(new Comment(new_id, content, false));
+  comments.push_back(new Comment(new_id, content, false, writer));
 }
 
 void Film::reply_comment(Component* cmid, std::string content)
@@ -70,7 +70,7 @@ void Film::reply_comment(Component* cmid, std::string content)
   Comment* cm = Filter_interface::find_exact(comments, cmid);
   if(cm->is_reply())
     throw Error("Permision Denied");
-  cm->add_reply(new Comment(cm->get_new_reply_comment_id(), content, true));
+  cm->add_reply(new Comment(cm->get_new_reply_comment_id(), content, true, publisher));
 }
 
 void Film::delete_comment(Component* cmid)
@@ -84,6 +84,12 @@ void Film::delete_comment(Component* cmid)
       return;
     }
   }
+}
+
+User* Film::get_comment_writer(Component* cmid)
+{
+  Comment* cm = Filter_interface::find_exact(comments, cmid);
+  return cm->get_writer();
 }
 
 int Film::get_new_comment_id()
