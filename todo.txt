@@ -1,4 +1,5 @@
 fix same id problem
 fix get_value mess
 add password hashing
-add checking to parametrs 
+add checking to parametrs
+make an instance of Filter_interface

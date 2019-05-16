@@ -2,10 +2,10 @@
 #include "comment.h"
 using namespace std;
 
-std::vector<TYPE_NAME> COMMENT_ATTRIBUTE = {TYPE_NAME::ID,TYPE_NAME::SUMMARY} ;
+std::vector<TYPE_NAME> COMMENT_ATTRIBUTE = {TYPE_NAME::COMMENTID,TYPE_NAME::CONTENT} ;
 map<TYPE_NAME,string> attributes_default_value = {
-  {TYPE_NAME::ID, ""},
-  {TYPE_NAME::SUMMARY, ""}
+  {TYPE_NAME::COMMENTID, ""},
+  {TYPE_NAME::CONTENT, ""}
 };
 
 Comment::Comment(std::vector<Component*> comps, bool rep)
@@ -14,7 +14,7 @@ Comment::Comment(std::vector<Component*> comps, bool rep)
   be_reply = rep;
 }
 Comment::Comment(int id,std::string content, bool rep)
-: Entity(vector<Component*>{new Number(to_string(id),TYPE_NAME::ID),new Name(content,TYPE_NAME::SUMMARY)}, COMMENT_ATTRIBUTE, attributes_default_value)
+: Entity(vector<Component*>{new Number(to_string(id),TYPE_NAME::COMMENTID),new Name(content,TYPE_NAME::CONTENT)}, COMMENT_ATTRIBUTE, attributes_default_value)
 {
   be_reply = rep;
 }
@@ -30,13 +30,13 @@ void Comment::add_reply(Comment* cm)
 
 void Comment::print()
 {
-  int id = get_component<Number>(TYPE_NAME::ID)->get();
-  string content = get_component<Name>(TYPE_NAME::SUMMARY)->get_value();
+  int id = get_component<Number>(TYPE_NAME::COMMENTID)->get();
+  string content = get_component<Name>(TYPE_NAME::CONTENT)->get_value();
   cout << id << ". " << content << endl;
   for(int i=0 ; i<replys.size() ; i++)
   {
     Comment* cm = replys[i];
-    cout << cm->get_component<Number>(TYPE_NAME::ID)->get() << "." << i+1 << ".";
-    cout << cm->get_component<Name>(TYPE_NAME::SUMMARY)->get_value() << endl;
+    cout << cm->get_component<Number>(TYPE_NAME::COMMENTID)->get() << "." << i+1 << ".";
+    cout << cm->get_component<Name>(TYPE_NAME::CONTENT)->get_value() << endl;
   }
 }

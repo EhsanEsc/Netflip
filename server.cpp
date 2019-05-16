@@ -33,7 +33,7 @@ void Server::add_film(std::vector<Component*> params)
 
 void Server::edit_film(std::vector<Component*> params)
 {
-  Component* cid = Filter_interface::search(params, TYPE_NAME::ID
+  Component* cid = Filter_interface::search(params, TYPE_NAME::FILMID);
   Film* fl = Filter_interface::find_exact(films, cid);
   if(fl == NULL)
     throw Error("Not Found");
@@ -41,7 +41,7 @@ void Server::edit_film(std::vector<Component*> params)
     throw Error("Permision Denied");
 
   for(auto& u:params)
-    if(u->get_type() != TYPE_NAME::ID)
+    if(u->get_type() != TYPE_NAME::FILMID)
     {
       Component* cp = fl->get_component22(u->get_type());
       cp = u;
@@ -54,7 +54,7 @@ void Server::delete_film(std::vector<Component*> params)
     throw Error("Permision Denied");
   for(int i=0;i<films.size();i++)
   {
-    if(films[i]->get_component<Number>(TYPE_NAME::ID)->get_value() == params[0]->get_value())
+    if(films[i]->get_component<Number>(TYPE_NAME::FILMID)->get_value() == params[0]->get_value())
     {
       if(films[i]->get_publisher() != current_user)
         throw Error("Permision Denied");
@@ -67,9 +67,9 @@ void Server::delete_film(std::vector<Component*> params)
 
 void Server::show_followers(std::vector<Component*> params)
 {
-  vector<TYPE_NAME> format{TYPE_NAME::ID, TYPE_NAME::USER_NAME, TYPE_NAME::EMAIL};
+  vector<TYPE_NAME> format{TYPE_NAME::USERID, TYPE_NAME::USER_NAME, TYPE_NAME::EMAIL};
   vector<User*> luser = current_user->get_followers();
-  luser = Filter_interface::sort(luser, TYPE_NAME::ID);
+  luser = Filter_interface::sort(luser, TYPE_NAME::USERID);
 
   cout << "List of Followers" << endl;
   cout << "#. User Id | User Username | User Email" << endl;
@@ -163,10 +163,10 @@ void Server::show_films(std::vector<Film*>list, std::vector<Component*> params)
   {
     list = Filter_interface::filter(list, u);
   }
-  list = Filter_interface::sort(list, TYPE_NAME::ID);
+  list = Filter_interface::sort(list, TYPE_NAME::USERID);
 
   // maybe add function later
-  vector<TYPE_NAME>format{TYPE_NAME::ID, TYPE_NAME::NAME, TYPE_NAME::LENGTH, TYPE_NAME::PRICE,
+  vector<TYPE_NAME>format{TYPE_NAME::FILMID, TYPE_NAME::NAME, TYPE_NAME::LENGTH, TYPE_NAME::PRICE,
     TYPE_NAME::RATE, TYPE_NAME::YEAR, TYPE_NAME::DIRECTOR};
   cout << "#. Film Id | Film Name | Film Length | Film price | rate | Production Year | Film Director" << endl;
   for(int j=0;j<list.size();j++)
@@ -193,7 +193,7 @@ void Server::buy_film(std::vector<Component*> params)
 
 void Server::rate_film(std::vector<Component*> params)
 {
-  Component* cid = Filter_interface::search(params, TYPE_NAME::ID);
+  Component* cid = Filter_interface::search(params, TYPE_NAME::FILMID);
   int score = stoi(Filter_interface::search(params, TYPE_NAME::RATE)->get_value());
   if(score > 10 || score < 1)
     throw Error("Bad Request");
@@ -207,8 +207,10 @@ void Server::rate_film(std::vector<Component*> params)
 
 void Server::add_comment(std::vector<Component*> params)
 {
-  Component* cid = Filter_interface::search(params, TYPE_NAME::ID);
-  string content = Filter_interface::search(params, TYPE_NAME::SUMMARY)->get_value();
+  // cout << "#" << endl;
+  Component* cid = Filter_interface::search(params, TYPE_NAME::FILMID);
+  // cout << "@" << endl;
+  string content = Filter_interface::search(params, TYPE_NAME::CONTENT)->get_value();
   Film* fl = Filter_interface::find_exact(films, cid);
   if(fl == NULL)
     throw Error("Not Found");
