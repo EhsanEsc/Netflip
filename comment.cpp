@@ -36,7 +36,14 @@ void Comment::print()
   for(int i=0 ; i<replys.size() ; i++)
   {
     Comment* cm = replys[i];
-    cout << cm->get_component<Number>(TYPE_NAME::COMMENTID)->get() << "." << i+1 << ".";
+    cout << id << ".";
+    cout << cm->get_component<Number>(TYPE_NAME::COMMENTID)->get() << ". ";
     cout << cm->get_component<Name>(TYPE_NAME::CONTENT)->get_value() << endl;
   }
+}
+
+int Comment::get_new_reply_comment_id()
+{
+  last_reply_comment_id++;
+  return last_reply_comment_id;
 }

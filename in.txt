@@ -9,4 +9,7 @@ POST comments ? film_id 1 content holala
 POST comments ? film_id 1 content ey_baba
 POST comments ? film_id 2 content ey_baba
 POST comments ? film_id 3 content ey_baba
+POST login ? user_name Ehsan password asdf
+POST replies ? film_id 1 comment_id 1 content base_dg
+POST replies ? film_id 1 comment_id 1 content khaste_shodim
 GET films ? film_id 1

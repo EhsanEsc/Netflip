@@ -207,9 +207,7 @@ void Server::rate_film(std::vector<Component*> params)
 
 void Server::add_comment(std::vector<Component*> params)
 {
-  // cout << "#" << endl;
   Component* cid = Filter_interface::search(params, TYPE_NAME::FILMID);
-  // cout << "@" << endl;
   string content = Filter_interface::search(params, TYPE_NAME::CONTENT)->get_value();
   Film* fl = Filter_interface::find_exact(films, cid);
   if(fl == NULL)
@@ -221,13 +219,15 @@ void Server::add_comment(std::vector<Component*> params)
 
 void Server::reply_comment(std::vector<Component*> params)
 {
-  // Component* cid = find();
-  // Film* fl = Filter_interface::find_exact(films, cid);
-  // if(fl == NULL)
-  //   throw Error("Not Found");
-  // if(fl->get_publisher() != current_user)
-  //   throw Error("Permision Denied");
-  // fl->reply_comment(stoi(cid->get_value()),content);
+  Component* cid = Filter_interface::search(params, TYPE_NAME::FILMID);
+  string content = Filter_interface::search(params, TYPE_NAME::CONTENT)->get_value();
+  Component* cmid = Filter_interface::search(params, TYPE_NAME::COMMENTID);
+  Film* fl = Filter_interface::find_exact(films, cid);
+  if(fl == NULL)
+    throw Error("Not Found");
+  if(fl->get_publisher() != current_user)
+    throw Error("Permision Denied");
+  fl->reply_comment(cmid,content);
 }
 
 // User* guser = Filter_interface::find_exact(users,params[0]);

@@ -16,7 +16,7 @@ public:
   void print_details();
   void print_comments();
   void add_comment(std::string content);
-  void reply_comment(int id, std::string content);
+  void reply_comment(Component* cmid, std::string content);
 private:
   User* publisher;
   std::vector<Comment*> comments;

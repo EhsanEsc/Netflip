@@ -1,5 +1,11 @@
-fix same id problem
 fix get_value mess
+add text component
+fix number component and film get_rate
 add password hashing
 add checking to parametrs
 make an instance of Filter_interface
+delete extra headers in headers
+clean code stuff
+be robust
+check error handling
+check forum and check all 

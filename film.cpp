@@ -2,6 +2,7 @@
 #include "film.h"
 #include "user.h"
 #include "comment.h"
+#include "filter.h"
 using namespace std;
 
 std::vector<TYPE_NAME> FILM_ATTRIBUTE = {TYPE_NAME::FILMID,TYPE_NAME::NAME,TYPE_NAME::YEAR,TYPE_NAME::LENGTH,
@@ -64,9 +65,12 @@ void Film::add_comment(std::string content)
   comments.push_back(new Comment(new_id, content, false));
 }
 
-void Film::reply_comment(int id, std::string content)
+void Film::reply_comment(Component* cmid, std::string content)
 {
-  cout << "WRITE REPLY COMMENT IN FILM.CPP" << endl;
+  Comment* cm = Filter_interface::find_exact(comments, cmid);
+  if(cm->is_reply())
+    throw Error("Permision Denied");
+  cm->add_reply(new Comment(cm->get_new_reply_comment_id(), content, true));
 }
 
 int Film::get_new_comment_id()

@@ -22,6 +22,7 @@ std::map<std::string,TYPE_NAME> type_name_cache = {
   {"money", TYPE_NAME::MONEY},
   {"film_id", TYPE_NAME::FILMID},
   {"user_id", TYPE_NAME::USERID},
+  {"comment_id" , TYPE_NAME::COMMENTID},
   {"amount", TYPE_NAME::MONEY},
   {"rate" , TYPE_NAME::RATE},
   {"score", TYPE_NAME::RATE},
