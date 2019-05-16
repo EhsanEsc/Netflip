@@ -26,7 +26,8 @@ std::map<std::string,TYPE_NAME> type_name_cache = {
   {"amount", TYPE_NAME::MONEY},
   {"rate" , TYPE_NAME::RATE},
   {"score", TYPE_NAME::RATE},
-  {"content", TYPE_NAME::CONTENT}
+  {"content", TYPE_NAME::CONTENT},
+  {"limit", TYPE_NAME::LIMIT}
 };
 
 TYPE_NAME get_type_name(string key)
@@ -63,17 +64,11 @@ Component* build_component(TYPE_NAME tn,string value)
     return (new Password(value, tn));
   } else if(tn == TYPE_NAME::AGE || tn == TYPE_NAME::YEAR || tn == TYPE_NAME::LENGTH || tn == TYPE_NAME::USERID
      || tn == TYPE_NAME::PRICE  || tn == TYPE_NAME::MONEY || tn == TYPE_NAME::FILMID || tn == TYPE_NAME::RATE
-     || tn == TYPE_NAME::COMMENTID || tn == TYPE_NAME::NOTIID) {
+     || tn == TYPE_NAME::COMMENTID || tn == TYPE_NAME::NOTIID || tn == TYPE_NAME::LIMIT) {
     return (new Number(value,tn));
   } else if(tn == TYPE_NAME::ISPUB) {
     return (new Bool(value, tn));
   } else if(tn == TYPE_NAME::UNDEFINED) {
     throw Error("Bad Request");
   }
-}
-
-std::ostream& operator << (std::ostream& os, const TYPE_NAME& obj)
-{
-   os << static_cast<std::underlying_type<TYPE_NAME>::type>(obj);
-   return os;
 }

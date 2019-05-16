@@ -27,6 +27,7 @@ enum class TYPE_NAME
   MONEY,
   RATE,
   CONTENT,
+  LIMIT,
   UNDEFINED
 };
 extern std::map<std::string,TYPE_NAME> type_name_cache;

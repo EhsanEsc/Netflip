@@ -248,6 +248,17 @@ void Server::delete_comment(std::vector<Component*> params)
   fl->delete_comment(cmid);
 }
 
+void Server::show_notis(std::vector<Component*> params)
+{
+  current_user->show_notis();
+}
+
+void Server::show_seen_notis(std::vector<Component*> params)
+{
+  int limit = stoi(Filter_interface::search(params, TYPE_NAME::LIMIT)->get_value());
+  current_user->show_seen_notis(limit);
+}
+
 // User* guser = Filter_interface::find_exact(users,params[0]);
 // vector<User*> glist = Filter_interface::filter_min(users,params[0]);
 // guser->get_component<Name>(TYPE_NAME::USER_NAME)->edit_name(params[1]->get_value());

@@ -31,6 +31,8 @@ public:
   void add_comment(std::vector<Component*> params);
   void reply_comment(std::vector<Component*> params);
   void delete_comment(std::vector<Component*> params);
+  void show_notis(std::vector<Component*> params);
+  void show_seen_notis(std::vector<Component*> params);
 
 private:
   static Server* instance;

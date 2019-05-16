@@ -19,8 +19,8 @@ public:
   void add_follower(User* us);
   void buy_film(Film* fl);
   void add_noti(Noti* nt);
-  // void read_notis();
-  // void read_seen_notis(int limit);
+  void show_notis();
+  void show_seen_notis(int limit);
 
   std::vector<User*> get_followers();
   std::vector<Film*> get_posted_films();
