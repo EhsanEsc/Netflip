@@ -12,10 +12,7 @@ Server* Server::get_instance()
 
 void Server::add_user(std::vector<Component*> params)
 {
-  Component* cid = NULL;
-  for(auto& u:params)
-    if(u->get_type() == TYPE_NAME::USER_NAME)
-      cid = u;
+  Component* cid = Filter_interface::search(params, TYPE_NAME::USER_NAME);
   User* us = Filter_interface::find_exact(users,cid);
   if(us != NULL)
     throw Error("Bad Request");
@@ -36,10 +33,7 @@ void Server::add_film(std::vector<Component*> params)
 
 void Server::edit_film(std::vector<Component*> params)
 {
-  Component* cid = NULL;
-  for(auto& u:params)
-    if(u->get_type() == TYPE_NAME::ID)
-      cid = u;
+  Component* cid = Filter_interface::search(params, TYPE_NAME::ID
   Film* fl = Filter_interface::find_exact(films, cid);
   if(fl == NULL)
     throw Error("Not Found");
@@ -115,15 +109,9 @@ void Server::follow_user(std::vector<Component*> params)
 
 void Server::login(std::vector<Component*> params)
 {
-  Name* username = NULL;
-  Password* pass = NULL;
-  for(auto& u:params)
-  {
-    if(u->get_type() == TYPE_NAME::USER_NAME)
-      username = dynamic_cast<Name*>(u);
-    if(u->get_type() == TYPE_NAME::PASSWORD)
-      pass = dynamic_cast<Password*>(u);
-  }
+  Name* username = Filter_interface::search_exact<Name>(params, TYPE_NAME::USER_NAME);
+  Password* pass = Filter_interface::search_exact<Password>(params, TYPE_NAME::PASSWORD);
+
   if(username == NULL || pass == NULL)
     throw Error("WTF");
   for(auto& u:users)
@@ -205,15 +193,8 @@ void Server::buy_film(std::vector<Component*> params)
 
 void Server::rate_film(std::vector<Component*> params)
 {
-  Component* cid = NULL;
-  int score=-1;
-  for(auto& u: params)
-  {
-    if(u->get_type() == TYPE_NAME::ID)
-      cid = u;
-    if(u->get_type() == TYPE_NAME::RATE)
-      score = stoi(u->get_value());
-  }
+  Component* cid = Filter_interface::search(params, TYPE_NAME::ID);
+  int score = stoi(Filter_interface::search(params, TYPE_NAME::RATE)->get_value());
   if(score > 10 || score < 1)
     throw Error("Bad Request");
   Film* fl = Filter_interface::find_exact(films, cid);
@@ -226,15 +207,8 @@ void Server::rate_film(std::vector<Component*> params)
 
 void Server::add_comment(std::vector<Component*> params)
 {
-  Component* cid = NULL;
-  string content;
-  for(auto& u: params)
-  {
-    if(u->get_type() == TYPE_NAME::ID)
-      cid = u;
-    if(u->get_type() == TYPE_NAME::SUMMARY)
-      content = u->get_value();
-  }
+  Component* cid = Filter_interface::search(params, TYPE_NAME::ID);
+  string content = Filter_interface::search(params, TYPE_NAME::SUMMARY)->get_value();
   Film* fl = Filter_interface::find_exact(films, cid);
   if(fl == NULL)
     throw Error("Not Found");
@@ -246,12 +220,12 @@ void Server::add_comment(std::vector<Component*> params)
 void Server::reply_comment(std::vector<Component*> params)
 {
   // Component* cid = find();
-  Film* fl = Filter_interface::find_exact(films, cid);
-  if(fl == NULL)
-    throw Error("Not Found");
-  if(fl->get_publisher() != current_user)
-    throw Error("Permision Denied");
-  fl->reply_comment(stoi(cid->get_value()),content);
+  // Film* fl = Filter_interface::find_exact(films, cid);
+  // if(fl == NULL)
+  //   throw Error("Not Found");
+  // if(fl->get_publisher() != current_user)
+  //   throw Error("Permision Denied");
+  // fl->reply_comment(stoi(cid->get_value()),content);
 }
 
 // User* guser = Filter_interface::find_exact(users,params[0]);

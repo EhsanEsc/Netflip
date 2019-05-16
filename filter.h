@@ -9,6 +9,7 @@ using namespace std;
 
 namespace Filter_interface
 {
+  // FOR Entity
   template<typename T> T* find_exact(vector<T*> vt, Component* cp)
   {
     for(auto& u:vt)
@@ -72,6 +73,17 @@ namespace Filter_interface
     else if(cp->get_filter_type() == FILTER_TYPE::EXACT)
       res = filter_exact(vt,cp);
     return res;
+  }
+
+  // For Components
+  Component* search(vector<Component*> vc, TYPE_NAME tn);
+
+  template<typename T> T* search_exact(vector<Component*> vt, TYPE_NAME tn)
+  {
+    Component* cp = search(vt,tn);
+    if(cp == NULL)
+      return NULL;
+    return dynamic_cast<T*>(cp);
   }
   // template User* find_exact<User>(vector<User*> vt, Component* cp);
 }
