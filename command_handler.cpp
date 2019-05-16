@@ -57,6 +57,8 @@ void CommandHandler::run()
         server->add_comment(input);
       } else if(ctype == COMMAND_TYPE::REPLYCOMMENT) {
         server->reply_comment(input);
+      } else if(ctype == COMMAND_TYPE::DELETECOMMENT) {
+        server->delete_comment(input);
       }
 
       if(ctype != COMMAND_TYPE::SEARCHPOSTED && ctype != COMMAND_TYPE::SHOWFOLOWERS && ctype != COMMAND_TYPE::SEARCHFILMS
@@ -101,7 +103,8 @@ map<COMMAND_TYPE,pair<string,string>> command_method_cache = {
   {COMMAND_TYPE::BUYFILM, {"POST","buy"}},
   {COMMAND_TYPE::RATEFILM, {"POST","rate"}},
   {COMMAND_TYPE::ADDCOMMENT, {"POST","comments"}},
-  {COMMAND_TYPE::REPLYCOMMENT, {"POST","replies"}}
+  {COMMAND_TYPE::REPLYCOMMENT, {"POST","replies"}},
+  {COMMAND_TYPE::DELETECOMMENT, {"DELETE","comments"}}
 };
 
 map<COMMAND_TYPE, vector<TYPE_NAME>> command_primary_list = {
@@ -122,7 +125,8 @@ map<COMMAND_TYPE, vector<TYPE_NAME>> command_primary_list = {
   {COMMAND_TYPE::BUYFILM , vector<TYPE_NAME>{TYPE_NAME::FILMID}},
   {COMMAND_TYPE::RATEFILM , vector<TYPE_NAME>{TYPE_NAME::FILMID, TYPE_NAME::RATE}},
   {COMMAND_TYPE::ADDCOMMENT , vector<TYPE_NAME>{TYPE_NAME::FILMID, TYPE_NAME::CONTENT}},
-  {COMMAND_TYPE::REPLYCOMMENT , vector<TYPE_NAME>{TYPE_NAME::FILMID, TYPE_NAME::COMMENTID, TYPE_NAME::CONTENT}}
+  {COMMAND_TYPE::REPLYCOMMENT , vector<TYPE_NAME>{TYPE_NAME::FILMID, TYPE_NAME::COMMENTID, TYPE_NAME::CONTENT}},
+  {COMMAND_TYPE::DELETECOMMENT , vector<TYPE_NAME>{TYPE_NAME::FILMID, TYPE_NAME::COMMENTID}}
   // {COMMAND_TYPE:: , vector<TYPE_NAME>{}}
 };
 
@@ -147,7 +151,8 @@ map<COMMAND_TYPE, vector<TYPE_NAME>> command_optimal_list = {
   {COMMAND_TYPE::BUYFILM , vector<TYPE_NAME>{}},
   {COMMAND_TYPE::RATEFILM , vector<TYPE_NAME>{}},
   {COMMAND_TYPE::ADDCOMMENT , vector<TYPE_NAME>{}},
-  {COMMAND_TYPE::REPLYCOMMENT , vector<TYPE_NAME>{}}
+  {COMMAND_TYPE::REPLYCOMMENT , vector<TYPE_NAME>{}},
+  {COMMAND_TYPE::DELETECOMMENT , vector<TYPE_NAME>{}}
   // {COMMAND_TYPE:: , vector<TYPE_NAME>{}}
 };
 

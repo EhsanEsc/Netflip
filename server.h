@@ -28,6 +28,7 @@ public:
   void rate_film(std::vector<Component*> params);
   void add_comment(std::vector<Component*> params);
   void reply_comment(std::vector<Component*> params);
+  void delete_comment(std::vector<Component*> params);
 
 private:
   static Server* instance;

@@ -73,6 +73,19 @@ void Film::reply_comment(Component* cmid, std::string content)
   cm->add_reply(new Comment(cm->get_new_reply_comment_id(), content, true));
 }
 
+void Film::delete_comment(Component* cmid)
+{
+  for(int i=0;i<comments.size();i++)
+  {
+    Component* comment_id = comments[i]->get_component22(TYPE_NAME::COMMENTID);
+    if(*comment_id == *cmid)
+    {
+      comments.erase(comments.begin()+i);
+      return;
+    }
+  }
+}
+
 int Film::get_new_comment_id()
 {
   last_comment_id++;

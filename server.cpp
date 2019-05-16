@@ -230,6 +230,18 @@ void Server::reply_comment(std::vector<Component*> params)
   fl->reply_comment(cmid,content);
 }
 
+void Server::delete_comment(std::vector<Component*> params)
+{
+  Component* cfid = Filter_interface::search(params, TYPE_NAME::FILMID);
+  Component* cmid = Filter_interface::search(params, TYPE_NAME::COMMENTID);
+  Film* fl = Filter_interface::find_exact(films, cfid);
+  if(fl == NULL)
+    throw Error("Not Found");
+  if(fl->get_publisher() != current_user)
+    throw Error("Permision Denied");
+  fl->delete_comment(cmid);
+}
+
 // User* guser = Filter_interface::find_exact(users,params[0]);
 // vector<User*> glist = Filter_interface::filter_min(users,params[0]);
 // guser->get_component<Name>(TYPE_NAME::USER_NAME)->edit_name(params[1]->get_value());
