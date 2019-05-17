@@ -11,6 +11,7 @@ public:
   std::string get_value() const;
 private:
   std::string content;
+  std::string hash_password(std::string pass);
 };
 
 #endif
