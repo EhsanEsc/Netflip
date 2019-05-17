@@ -42,6 +42,7 @@ int Number::get() { return number; }
 
 void Number::push(int x)
 {
+  number += x;
   sum += x;
   ted++;
 }

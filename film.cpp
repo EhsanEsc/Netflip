@@ -43,7 +43,6 @@ void Film::pay_publisher()
 
 void Film::print_details()
 {
-  cout << "Details of Film " << get_component<Name>(TYPE_NAME::NAME)->get_value() << endl;
   cout << "Id = " << get_component<Number>(TYPE_NAME::FILMID)->get_value() << endl;
   cout << "Director = " << get_component<Name>(TYPE_NAME::DIRECTOR)->get_value() << endl;
   cout << "Length = " << get_component<Number>(TYPE_NAME::LENGTH)->get_value() << endl;

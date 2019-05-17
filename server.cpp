@@ -165,24 +165,22 @@ void Server::show_film_detail(std::vector<Component*> params)
   Film* fl = Filter_interface::find_exact(films, params[0]);
   if(fl == NULL)
     throw Error("Not Found");
+
+  cout << "Details of Film " << fl->get_component<Name>(TYPE_NAME::NAME)->get_value() << endl;
   fl->print_details();
   cout << endl;
+
+  cout << "Comments" << endl;
   fl->print_comments();
-  // add recomendation
+  cout << endl;
+
+  cout << "Recommendation Film" << endl;
+  show_reccomendation_films(current_user,fl);
 }
 
-void Server::show_films(std::vector<Film*>list, std::vector<Component*> params)
+void Server::print_films(string title, vector<Film*> list, vector<TYPE_NAME> format)
 {
-  for(auto& u:params)
-  {
-    list = Filter_interface::filter(list, u);
-  }
-  list = Filter_interface::sort(list, TYPE_NAME::USERID);
-
-  // maybe add function later
-  vector<TYPE_NAME>format{TYPE_NAME::FILMID, TYPE_NAME::NAME, TYPE_NAME::LENGTH, TYPE_NAME::PRICE,
-    TYPE_NAME::RATE, TYPE_NAME::YEAR, TYPE_NAME::DIRECTOR};
-  cout << "#. Film Id | Film Name | Film Length | Film price | rate | Production Year | Film Director" << endl;
+  cout << title << endl;
   for(int j=0;j<list.size();j++)
   {
     Film* fl = list[j];
@@ -195,6 +193,48 @@ void Server::show_films(std::vector<Film*>list, std::vector<Component*> params)
     }
     cout << endl;
   }
+}
+
+void Server::show_films(std::vector<Film*>list, std::vector<Component*> params)
+{
+  for(auto& u:params)
+    list = Filter_interface::filter(list, u);
+  list = Filter_interface::sort(list, TYPE_NAME::USERID);
+  vector<TYPE_NAME>format{TYPE_NAME::FILMID, TYPE_NAME::NAME, TYPE_NAME::LENGTH, TYPE_NAME::PRICE,
+    TYPE_NAME::RATE, TYPE_NAME::YEAR, TYPE_NAME::DIRECTOR};
+  string title = "#. Film Id | Film Name | Film Length | Film price | rate | Production Year | Film Director";
+  print_films(title, list, format);
+}
+
+void Server::show_reccomendation_films(User* us, Film* fl)
+{
+  vector<Film*> list, res;
+  for(auto& u: films)
+    if(us->is_purchased(u) == false && u!=fl)
+      list.push_back(u);
+  list = Filter_interface::sort(list, TYPE_NAME::RATE);
+  reverse(list.begin(),list.end());
+  for(int i=0;i<list.size();i++)
+  {
+    vector<Film*> tmp;
+    double rt = list[i]->get_component<Number>(TYPE_NAME::RATE)->get();
+    int j=i;
+    while(j<list.size() && rt==list[j]->get_component<Number>(TYPE_NAME::RATE)->get())
+    { j++; }
+    for(int k=i;k<j;k++)
+      tmp.push_back(list[k]);
+    tmp = Filter_interface::sort(tmp, TYPE_NAME::FILMID);
+
+    for(auto& u:tmp)
+      res.push_back(u);
+    i=j-1;
+  }
+
+  vector<TYPE_NAME> format = {TYPE_NAME::FILMID, TYPE_NAME::NAME, TYPE_NAME::LENGTH, TYPE_NAME::DIRECTOR};
+  string title = "#. Film Id | Film Name | Film Length | Film Director";
+  if(res.size() > 4)
+    res.resize(4);
+  print_films(title, res, format);
 }
 
 void Server::buy_film(std::vector<Component*> params)
@@ -259,7 +299,7 @@ void Server::reply_comment(std::vector<Component*> params)
   fl->reply_comment(cmid,content);
 
   User* wr = fl->get_comment_writer(cmid);
-  pair<string,string> ps = get_info(wr);
+  pair<string,string> ps = get_info(current_user);
   vector<string> info{ps.first, ps.second};
   noti_handler->add_noti(wr,NOTI_TYPE::REPLYCOMMENT,info);
 }

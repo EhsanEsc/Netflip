@@ -1,20 +1,24 @@
 POST signup ? email e.escandari user_name Ehsan password asdf age 22 publisher true
-POST films ? name ff year 1234 length 3333 price 100 summary nothing_really_happen director esi
-POST films ? name rtrttrt year 1234 length 3333 price 100 summary nothing_really_happen director esi
+POST films ? name f1 year 1234 length 3333 price 100 summary nothing_really_happen director esi
+POST films ? name f2 year 1234 length 3333 price 100 summary nothing_really_happen director esi
+POST films ? name f3 year 1234 length 3333 price 100 summary nothing_really_happen director esi
+POST films ? name f4 year 1234 length 3333 price 100 summary nothing_really_happen director esi
+POST films ? name f5 year 1234 length 3333 price 100 summary nothing_really_happen director esi
+POST films ? name f6 year 1234 length 3333 price 100 summary nothing_really_happen director esi
 POST signup ? email e.escandari user_name Ehsan22 password asdf age 22
 POST money ? amount 1234
 POST buy ? film_id 1
-GET purchased ?
-POST comments ? film_id 1 content holala
-POST comments ? film_id 1 content ey_baba
-POST comments ? film_id 2 content ey_baba
-POST comments ? film_id 3 content ey_baba
-POST login ? user_name Ehsan password asdf
-POST replies ? film_id 1 comment_id 1 content base_dg
-POST replies ? film_id 1 comment_id 1 content khaste_shodim
-GET films ? film_id 1
-DELETE comments ? film_id 1 comment_id 1
-GET films ? film_id 1
-GET notifications
-POST login ? user_name Ehsan22 password asdf
-GET notifications
+POST buy ? film_id 2
+POST buy ? film_id 3
+POST buy ? film_id 4
+POST buy ? film_id 5
+POST buy ? film_id 6
+POST rate ? film_id 1 rate 6
+POST rate ? film_id 6 rate 6
+POST rate ? film_id 4 rate 9
+POST rate ? film_id 3 rate 10
+POST rate ? film_id 2 rate 3
+POST signup ? email e.escandari user_name soroosh password asdf age 22
+POST money ? amount 21321
+POST buy ? film_id 4
+GET films ? film_id 3
