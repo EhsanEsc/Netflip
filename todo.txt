@@ -1,4 +1,3 @@
-fix get_value mess
 add text component
 fix number component and film get_rate
 add checking to parametrs
@@ -7,4 +6,3 @@ clean code stuff
 be robust
 check error handling
 check forum and check all
-Draw UML
