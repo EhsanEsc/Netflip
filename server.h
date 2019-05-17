@@ -36,10 +36,11 @@ public:
 
 private:
   static Server* instance;
+  NotiHandler* noti_handler;
+  Filter* filter;
   std::vector<User*> users;
   std::vector<Film*> films;
   User* current_user=NULL;
-  NotiHandler* noti_handler;
   void show_films(std::vector<Film*> list, std::vector<Component*> params);
   void show_reccomendation_films(User* us, Film* fl);
   void print_films(std::string title, std::vector<Film*> list, std::vector<TYPE_NAME> format);

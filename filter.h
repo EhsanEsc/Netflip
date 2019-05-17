@@ -7,8 +7,11 @@
 #include "entity_headers.h"
 using namespace std;
 
-namespace Filter_interface
+class Filter
 {
+public:
+  static Filter* get_instance();
+
   // FOR Entity
   template<typename T> T* find_exact(vector<T*> vt, Component* cp)
   {
@@ -85,7 +88,9 @@ namespace Filter_interface
       return NULL;
     return dynamic_cast<T*>(cp);
   }
-  // template User* find_exact<User>(vector<User*> vt, Component* cp);
-}
+
+private:
+  static Filter* instance;
+};
 
 #endif

@@ -5,6 +5,7 @@ using namespace std;
 Server::Server()
 {
   noti_handler = NotiHandler::get_instance();
+  filter = Filter::get_instance();
 }
 
 Server* Server::instance = NULL;
@@ -17,8 +18,8 @@ Server* Server::get_instance()
 
 void Server::add_user(std::vector<Component*> params)
 {
-  Component* cid = Filter_interface::search(params, TYPE_NAME::USER_NAME);
-  User* us = Filter_interface::find_exact(users,cid);
+  Component* cid = filter->search(params, TYPE_NAME::USER_NAME);
+  User* us = filter->find_exact(users,cid);
   if(us != NULL)
     throw Error("Bad Request");
   current_user = new User(params);
@@ -43,8 +44,8 @@ void Server::add_film(std::vector<Component*> params)
 
 void Server::edit_film(std::vector<Component*> params)
 {
-  Component* cid = Filter_interface::search(params, TYPE_NAME::FILMID);
-  Film* fl = Filter_interface::find_exact(films, cid);
+  Component* cid = filter->search(params, TYPE_NAME::FILMID);
+  Film* fl = filter->find_exact(films, cid);
   if(fl == NULL)
     throw Error("Not Found");
   if(fl->get_publisher() != current_user)
@@ -79,7 +80,7 @@ void Server::show_followers(std::vector<Component*> params)
 {
   vector<TYPE_NAME> format{TYPE_NAME::USERID, TYPE_NAME::USER_NAME, TYPE_NAME::EMAIL};
   vector<User*> luser = current_user->get_followers();
-  luser = Filter_interface::sort(luser, TYPE_NAME::USERID);
+  luser = filter->sort(luser, TYPE_NAME::USERID);
 
   cout << "List of Followers" << endl;
   cout << "#. User Id | User Username | User Email" << endl;
@@ -110,7 +111,7 @@ void Server::add_money(std::vector<Component*> params)
 
 void Server::follow_user(std::vector<Component*> params)
 {
-  User* us = Filter_interface::find_exact(users, params[0]);
+  User* us = filter->find_exact(users, params[0]);
   if(us->is_publisher() == false)
     throw Error("Bad Request");
   current_user->follow(us);
@@ -123,8 +124,8 @@ void Server::follow_user(std::vector<Component*> params)
 
 void Server::login(std::vector<Component*> params)
 {
-  Name* username = Filter_interface::search_exact<Name>(params, TYPE_NAME::USER_NAME);
-  Password* pass = Filter_interface::search_exact<Password>(params, TYPE_NAME::PASSWORD);
+  Name* username = filter->search_exact<Name>(params, TYPE_NAME::USER_NAME);
+  Password* pass = filter->search_exact<Password>(params, TYPE_NAME::PASSWORD);
 
   if(username == NULL || pass == NULL)
     throw Error("WTF");
@@ -162,7 +163,7 @@ void Server::show_purchased_films(std::vector<Component*> params)
 
 void Server::show_film_detail(std::vector<Component*> params)
 {
-  Film* fl = Filter_interface::find_exact(films, params[0]);
+  Film* fl = filter->find_exact(films, params[0]);
   if(fl == NULL)
     throw Error("Not Found");
 
@@ -198,8 +199,8 @@ void Server::print_films(string title, vector<Film*> list, vector<TYPE_NAME> for
 void Server::show_films(std::vector<Film*>list, std::vector<Component*> params)
 {
   for(auto& u:params)
-    list = Filter_interface::filter(list, u);
-  list = Filter_interface::sort(list, TYPE_NAME::USERID);
+    list = filter->filter(list, u);
+  list = filter->sort(list, TYPE_NAME::USERID);
   vector<TYPE_NAME>format{TYPE_NAME::FILMID, TYPE_NAME::NAME, TYPE_NAME::LENGTH, TYPE_NAME::PRICE,
     TYPE_NAME::RATE, TYPE_NAME::YEAR, TYPE_NAME::DIRECTOR};
   string title = "#. Film Id | Film Name | Film Length | Film price | rate | Production Year | Film Director";
@@ -212,7 +213,7 @@ void Server::show_reccomendation_films(User* us, Film* fl)
   for(auto& u: films)
     if(us->is_purchased(u) == false && u!=fl)
       list.push_back(u);
-  list = Filter_interface::sort(list, TYPE_NAME::RATE);
+  list = filter->sort(list, TYPE_NAME::RATE);
   reverse(list.begin(),list.end());
   for(int i=0;i<list.size();i++)
   {
@@ -223,7 +224,7 @@ void Server::show_reccomendation_films(User* us, Film* fl)
     { j++; }
     for(int k=i;k<j;k++)
       tmp.push_back(list[k]);
-    tmp = Filter_interface::sort(tmp, TYPE_NAME::FILMID);
+    tmp = filter->sort(tmp, TYPE_NAME::FILMID);
 
     for(auto& u:tmp)
       res.push_back(u);
@@ -239,7 +240,7 @@ void Server::show_reccomendation_films(User* us, Film* fl)
 
 void Server::buy_film(std::vector<Component*> params)
 {
-  Film* fl = Filter_interface::find_exact(films, params[0]);
+  Film* fl = filter->find_exact(films, params[0]);
   if(fl == NULL)
     throw Error("Not Found");
   current_user->buy_film(fl);
@@ -252,11 +253,11 @@ void Server::buy_film(std::vector<Component*> params)
 
 void Server::rate_film(std::vector<Component*> params)
 {
-  Component* cid = Filter_interface::search(params, TYPE_NAME::FILMID);
-  int score = stoi(Filter_interface::search(params, TYPE_NAME::RATE)->get_value());
+  Component* cid = filter->search(params, TYPE_NAME::FILMID);
+  int score = stoi(filter->search(params, TYPE_NAME::RATE)->get_value());
   if(score > 10 || score < 1)
     throw Error("Bad Request");
-  Film* fl = Filter_interface::find_exact(films, cid);
+  Film* fl = filter->find_exact(films, cid);
   if(fl == NULL)
     throw Error("Not found");
   if(current_user->is_purchased(fl) == false)
@@ -271,9 +272,9 @@ void Server::rate_film(std::vector<Component*> params)
 
 void Server::add_comment(std::vector<Component*> params)
 {
-  Component* cid = Filter_interface::search(params, TYPE_NAME::FILMID);
-  string content = Filter_interface::search(params, TYPE_NAME::CONTENT)->get_value();
-  Film* fl = Filter_interface::find_exact(films, cid);
+  Component* cid = filter->search(params, TYPE_NAME::FILMID);
+  string content = filter->search(params, TYPE_NAME::CONTENT)->get_value();
+  Film* fl = filter->find_exact(films, cid);
   if(fl == NULL)
     throw Error("Not Found");
   if(current_user->is_purchased(fl) == false)
@@ -288,10 +289,10 @@ void Server::add_comment(std::vector<Component*> params)
 
 void Server::reply_comment(std::vector<Component*> params)
 {
-  Component* cid = Filter_interface::search(params, TYPE_NAME::FILMID);
-  string content = Filter_interface::search(params, TYPE_NAME::CONTENT)->get_value();
-  Component* cmid = Filter_interface::search(params, TYPE_NAME::COMMENTID);
-  Film* fl = Filter_interface::find_exact(films, cid);
+  Component* cid = filter->search(params, TYPE_NAME::FILMID);
+  string content = filter->search(params, TYPE_NAME::CONTENT)->get_value();
+  Component* cmid = filter->search(params, TYPE_NAME::COMMENTID);
+  Film* fl = filter->find_exact(films, cid);
   if(fl == NULL)
     throw Error("Not Found");
   if(fl->get_publisher() != current_user)
@@ -306,9 +307,9 @@ void Server::reply_comment(std::vector<Component*> params)
 
 void Server::delete_comment(std::vector<Component*> params)
 {
-  Component* cfid = Filter_interface::search(params, TYPE_NAME::FILMID);
-  Component* cmid = Filter_interface::search(params, TYPE_NAME::COMMENTID);
-  Film* fl = Filter_interface::find_exact(films, cfid);
+  Component* cfid = filter->search(params, TYPE_NAME::FILMID);
+  Component* cmid = filter->search(params, TYPE_NAME::COMMENTID);
+  Film* fl = filter->find_exact(films, cfid);
   if(fl == NULL)
     throw Error("Not Found");
   if(fl->get_publisher() != current_user)
@@ -323,7 +324,7 @@ void Server::show_notis(std::vector<Component*> params)
 
 void Server::show_seen_notis(std::vector<Component*> params)
 {
-  int limit = stoi(Filter_interface::search(params, TYPE_NAME::LIMIT)->get_value());
+  int limit = stoi(filter->search(params, TYPE_NAME::LIMIT)->get_value());
   current_user->show_seen_notis(limit);
 }
 
@@ -344,6 +345,6 @@ pair<std::string,std::string> Server::get_info(Film* us)
 }
 
 
-// User* guser = Filter_interface::find_exact(users,params[0]);
-// vector<User*> glist = Filter_interface::filter_min(users,params[0]);
+// User* guser = filter->find_exact(users,params[0]);
+// vector<User*> glist = filter->filter_min(users,params[0]);
 // guser->get_component<Name>(TYPE_NAME::USER_NAME)->edit_name(params[1]->get_value());
