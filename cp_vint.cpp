@@ -21,6 +21,19 @@ void Vint::push(int x)
   sum += x;
 }
 
+void Vint::pop(int x)
+{
+  for(int i=0;i<numbers.size();i++)
+  {
+    if(numbers[i] == x)
+    {
+      sum -= x;
+      numbers.erase(numbers.begin()+i);
+      return;
+    }
+  }
+}
+
 double Vint::get_average() const
 {
   if(numbers.size()==0) return 0;

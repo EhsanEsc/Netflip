@@ -1,9 +1,6 @@
-add text component
-add checking to parametrs
+check forum and check all
+check error handling
 delete extra headers in headers
 clean code stuff
 be robust
-check error handling
-check forum and check all
-double do one thing
 check with huge test case

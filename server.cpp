@@ -28,7 +28,6 @@ void Server::add_user(std::vector<Component*> params)
 
 void Server::add_film(std::vector<Component*> params)
 {
-  // cout << "#" << endl;
   if(current_user == NULL)
     throw Error("Permision Denied");
   if(current_user->is_publisher() == false)
@@ -45,6 +44,8 @@ void Server::add_film(std::vector<Component*> params)
 
 void Server::edit_film(std::vector<Component*> params)
 {
+  if(current_user == NULL)
+    throw Error("Permision Denied");
   Component* cid = filter->search(params, TYPE_NAME::FILMID);
   Film* fl = filter->find_exact(films, cid);
   if(fl == NULL)
@@ -61,6 +62,8 @@ void Server::edit_film(std::vector<Component*> params)
 
 void Server::delete_film(std::vector<Component*> params)
 {
+  if(current_user == NULL)
+    throw Error("Permision Denied");
   if(current_user->is_publisher() == false)
     throw Error("Permision Denied");
   for(int i=0;i<films.size();i++)
@@ -100,26 +103,37 @@ void Server::show_followers(std::vector<Component*> params)
 
 void Server::get_profit(std::vector<Component*> params)
 {
+  if(current_user == NULL)
+    throw Error("Permision Denied");
   for(auto& fl : current_user->get_posted_films())
     fl->pay_publisher();
 }
 
 void Server::add_money(std::vector<Component*> params)
 {
+  if(current_user == NULL)
+    throw Error("Permision Denied");
   current_user->get_component<Number>(TYPE_NAME::MONEY)->add(stoi(params[0]->get_value()));
 }
 
 void Server::follow_user(std::vector<Component*> params)
 {
+  if(current_user == NULL)
+    throw Error("Permision Denied");
   User* us = filter->find_exact(users, params[0]);
   if(us->is_publisher() == false)
     throw Error("Bad Request");
-  current_user->follow(us);
-  us->add_follower(current_user);
 
   pair<string,string> ps = get_info(current_user);
   vector<string> info{ps.first, ps.second};
   noti_handler->add_noti(us,NOTI_TYPE::FOLLOW,info);
+
+  User* rr = filter->find_exact(us->get_followers(), current_user->get_component22(TYPE_NAME::USERID));
+  if(rr != NULL)
+    return;
+
+  current_user->follow(us);
+  us->add_follower(current_user);
 }
 
 void Server::login(std::vector<Component*> params)
@@ -243,12 +257,16 @@ void Server::buy_film(std::vector<Component*> params)
   Film* fl = filter->find_exact(films, params[0]);
   if(fl == NULL)
     throw Error("Not Found");
-  current_user->buy_film(fl);
 
   pair<string,string> ps = get_info(current_user);
   pair<string,string> pf = get_info(fl);
   vector<string> info{ps.first, ps.second, pf.first, pf.second};
   noti_handler->add_noti(fl->get_publisher(),NOTI_TYPE::BUYFILM,info);
+
+  if(filter->find_exact(current_user->get_purchased_films(),
+    fl->get_component22(TYPE_NAME::FILMID)) != NULL)
+      return;
+  current_user->buy_film(fl);
 }
 
 void Server::rate_film(std::vector<Component*> params)
@@ -262,7 +280,11 @@ void Server::rate_film(std::vector<Component*> params)
     throw Error("Not found");
   if(current_user->is_purchased(fl) == false)
     throw Error("Bad Request");
+  int pre_score = current_user->get_rate(fl);
+  if(pre_score != -1)
+    fl->get_component<Vint>(TYPE_NAME::FILMRATE)->pop(pre_score);
   fl->get_component<Vint>(TYPE_NAME::FILMRATE)->push(score);
+  current_user->add_rate(fl, score);
 
   pair<string,string> ps = get_info(current_user);
   pair<string,string> pf = get_info(fl);
@@ -343,8 +365,3 @@ pair<std::string,std::string> Server::get_info(Film* us)
   p.second = us->get_component22(TYPE_NAME::FILMID)->get_value();
   return p;
 }
-
-
-// User* guser = filter->find_exact(users,params[0]);
-// vector<User*> glist = filter->filter_min(users,params[0]);
-// guser->get_component<Name>(TYPE_NAME::USER_NAME)->edit_name(params[1]->get_value());

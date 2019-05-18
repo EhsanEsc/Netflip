@@ -13,6 +13,7 @@ public:
   std::string get_value() const ;
 
   void push(int x);
+  void pop(int x);
   double get_average() const ;
 private:
   std::vector<int> numbers;

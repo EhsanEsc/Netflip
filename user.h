@@ -27,6 +27,9 @@ public:
   std::vector<Film*> get_purchased_films();
   bool is_publisher();
   bool is_purchased(Film* fl);
+
+  int get_rate(Film* fl);
+  void add_rate(Film* fl,int score);
 private:
   std::vector<User*> followers;
   std::vector<User*> following;
@@ -34,6 +37,7 @@ private:
   std::vector<Noti*> seen_notis;
   std::vector<Film*> purchased_films;
   std::vector<Film*> posted_films;
+  std::map<Film*,int> rate_film_cache;
 
   void add_optimal_attribute();
   int get_new_id();

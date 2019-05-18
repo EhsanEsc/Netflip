@@ -178,7 +178,7 @@ COMMAND_TYPE CommandHandler::get_command_type(vector<string> command, vector<Com
     if(u.second == method)
       ct.push_back(u.first);
   if(ct.size() == 0)
-    throw Error("Bad Request");
+    throw Error("Not Found");
   for(auto u:ct)
     if(check_validate(u, input))
       res.push_back(u);

@@ -42,7 +42,8 @@ void Number::set(std::string ct)
   for(auto u:ct)
     if(u<'0' || u>'9')
       throw Error("Bad Request");
-
+  if(ct[0] == '0')
+    throw Error("Bad Request");
   int num = stoi(ct);
   number = num;
   min_value = -INF;

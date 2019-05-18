@@ -107,3 +107,14 @@ void User::show_seen_notis(int limit)
     seen_notis[i]->print();
   }
 }
+
+int User::get_rate(Film* fl)
+{
+  if(rate_film_cache.find(fl) == rate_film_cache.end())
+    return -1;
+  return rate_film_cache[fl];
+}
+void User::add_rate(Film* fl,int score)
+{
+  rate_film_cache[fl] = score;
+}
