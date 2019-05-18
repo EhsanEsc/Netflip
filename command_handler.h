@@ -6,31 +6,6 @@
 #include "cp_headers.h"
 #include "server.h"
 
-enum class COMMAND_TYPE
-{
-  SIGNUP,
-  LOGIN,
-  POSTFILM,
-  EDITFILM,
-  DELETEFILM,
-  SHOWFOLOWERS,
-  GETPROFIT,
-  FOLLOW,
-  SEARCHPOSTED,
-  SEARCHFILMS,
-  SEARCHPURCHASED,
-  GETFILM,
-  ADDMONEY,
-  BUYFILM,
-  RATEFILM,
-  ADDCOMMENT,
-  REPLYCOMMENT,
-  DELETECOMMENT,
-  SHOWNOTI,
-  SHOWSEENNOTI,
-  UNDEFINED
-};
-
 class CommandHandler
 {
 public:

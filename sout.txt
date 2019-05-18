@@ -56,14 +56,14 @@ OK
 1. 2 | the_second_film | 120 | 20000 | 10 | 2000 | director_of_film2
 OK
 #. Notification Message
-1. User user with id 2 follow you.
-2. User user with id 2 buy your film the_second_film with id 2.
-3. User user with id 2 rate your film the_second_film with id 2.
-4. User user with id 2 comment on your film the_second_film with id 2.
-5. User user with id 2 comment on your film the_second_film with id 2.
+1. User customer with id 2 comment on your film the_second_film with id 2.
+2. User customer with id 2 comment on your film the_second_film with id 2.
+3. User customer with id 2 rate your film the_second_film with id 2.
+4. User customer with id 2 buy your film the_second_film with id 2.
+5. User customer with id 2 follow you.
 List of Followers
 #. User Id | User Username | User Email
-1. 2 | user | user@gmail.com
+1. 2 | customer | user@gmail.com
 Not Found
 OK
 OK

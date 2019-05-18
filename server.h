@@ -34,6 +34,7 @@ public:
   void show_notis(std::vector<Component*> params);
   void show_seen_notis(std::vector<Component*> params);
 
+  void check_validate(COMMAND_TYPE ct, std::vector<Component*> params);
 private:
   static Server* instance;
   NotiHandler* noti_handler;

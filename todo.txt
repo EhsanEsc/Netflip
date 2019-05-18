@@ -1,6 +1,6 @@
-check forum and check all
 check error handling
 delete extra headers in headers
+write Makefile
 clean code stuff
 be robust
 check with huge test case

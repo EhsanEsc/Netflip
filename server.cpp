@@ -6,6 +6,7 @@ Server::Server()
 {
   noti_handler = NotiHandler::get_instance();
   filter = Filter::get_instance();
+  cout << fixed << setprecision(2);
 }
 
 Server* Server::instance = NULL;
@@ -14,6 +15,27 @@ Server* Server::get_instance()
   if(instance == NULL)
     instance = new Server();
   return instance;
+}
+
+void Server::check_validate(COMMAND_TYPE ct, std::vector<Component*> params)
+{
+  if(current_user == NULL)
+    if(ct != COMMAND_TYPE::SIGNUP && ct != COMMAND_TYPE::LOGIN)
+      throw Error("Permision Denied");
+  if(current_user != NULL && current_user->is_publisher() == false)
+    if(ct == COMMAND_TYPE::POSTFILM || ct == COMMAND_TYPE::EDITFILM || ct == COMMAND_TYPE::DELETEFILM
+    || ct == COMMAND_TYPE::GETPROFIT || ct == COMMAND_TYPE::SEARCHPOSTED || ct == COMMAND_TYPE::REPLYCOMMENT
+    || ct == COMMAND_TYPE::DELETECOMMENT)
+      throw Error("Permision Denied");
+  if(ct == COMMAND_TYPE::EDITFILM || ct == COMMAND_TYPE::DELETEFILM || ct == COMMAND_TYPE::GETFILM
+    || ct == COMMAND_TYPE::BUYFILM || ct == COMMAND_TYPE::RATEFILM || ct == COMMAND_TYPE::ADDCOMMENT
+    || ct == COMMAND_TYPE::REPLYCOMMENT || ct == COMMAND_TYPE::DELETECOMMENT)
+  {
+    Component* cid = filter->search(params, TYPE_NAME::FILMID);
+    Film* fl = filter->find_exact(films, cid);
+    if(fl == NULL)
+      throw Error("Not Found");
+  }
 }
 
 void Server::add_user(std::vector<Component*> params)
@@ -28,10 +50,6 @@ void Server::add_user(std::vector<Component*> params)
 
 void Server::add_film(std::vector<Component*> params)
 {
-  if(current_user == NULL)
-    throw Error("Permision Denied");
-  if(current_user->is_publisher() == false)
-    throw Error("Permision Denied");
   Film* new_film = new Film(params, current_user);
   current_user->add_posted_film(new_film);
   films.push_back(new_film);
@@ -44,12 +62,8 @@ void Server::add_film(std::vector<Component*> params)
 
 void Server::edit_film(std::vector<Component*> params)
 {
-  if(current_user == NULL)
-    throw Error("Permision Denied");
   Component* cid = filter->search(params, TYPE_NAME::FILMID);
   Film* fl = filter->find_exact(films, cid);
-  if(fl == NULL)
-    throw Error("Not Found");
   if(fl->get_publisher() != current_user)
     throw Error("Permision Denied");
   for(auto& u:params)
@@ -62,10 +76,6 @@ void Server::edit_film(std::vector<Component*> params)
 
 void Server::delete_film(std::vector<Component*> params)
 {
-  if(current_user == NULL)
-    throw Error("Permision Denied");
-  if(current_user->is_publisher() == false)
-    throw Error("Permision Denied");
   for(int i=0;i<films.size();i++)
   {
     if(films[i]->get_component<Number>(TYPE_NAME::FILMID)->get_value() == params[0]->get_value())
@@ -76,7 +86,6 @@ void Server::delete_film(std::vector<Component*> params)
       return ;
     }
   }
-  throw Error("Not Found");
 }
 
 void Server::show_followers(std::vector<Component*> params)
@@ -103,23 +112,17 @@ void Server::show_followers(std::vector<Component*> params)
 
 void Server::get_profit(std::vector<Component*> params)
 {
-  if(current_user == NULL)
-    throw Error("Permision Denied");
   for(auto& fl : current_user->get_posted_films())
     fl->pay_publisher();
 }
 
 void Server::add_money(std::vector<Component*> params)
 {
-  if(current_user == NULL)
-    throw Error("Permision Denied");
   current_user->get_component<Number>(TYPE_NAME::MONEY)->add(stoi(params[0]->get_value()));
 }
 
 void Server::follow_user(std::vector<Component*> params)
 {
-  if(current_user == NULL)
-    throw Error("Permision Denied");
   User* us = filter->find_exact(users, params[0]);
   if(us->is_publisher() == false)
     throw Error("Bad Request");
@@ -160,8 +163,6 @@ void Server::login(std::vector<Component*> params)
 
 void Server::show_posted_films(std::vector<Component*> params)
 {
-  if(current_user->is_publisher() == false)
-    throw Error("Permision Denied");
   show_films(current_user->get_posted_films(), params);
 }
 
@@ -178,8 +179,6 @@ void Server::show_purchased_films(std::vector<Component*> params)
 void Server::show_film_detail(std::vector<Component*> params)
 {
   Film* fl = filter->find_exact(films, params[0]);
-  if(fl == NULL)
-    throw Error("Not Found");
 
   cout << "Details of Film " << fl->get_component<Name>(TYPE_NAME::NAME)->get_value() << endl;
   fl->print_details();
@@ -255,8 +254,6 @@ void Server::show_reccomendation_films(User* us, Film* fl)
 void Server::buy_film(std::vector<Component*> params)
 {
   Film* fl = filter->find_exact(films, params[0]);
-  if(fl == NULL)
-    throw Error("Not Found");
 
   pair<string,string> ps = get_info(current_user);
   pair<string,string> pf = get_info(fl);
@@ -276,10 +273,8 @@ void Server::rate_film(std::vector<Component*> params)
   if(score > 10 || score < 1)
     throw Error("Bad Request");
   Film* fl = filter->find_exact(films, cid);
-  if(fl == NULL)
-    throw Error("Not found");
   if(current_user->is_purchased(fl) == false)
-    throw Error("Bad Request");
+    throw Error("Permision Denied");
   int pre_score = current_user->get_rate(fl);
   if(pre_score != -1)
     fl->get_component<Vint>(TYPE_NAME::FILMRATE)->pop(pre_score);
@@ -297,8 +292,6 @@ void Server::add_comment(std::vector<Component*> params)
   Component* cid = filter->search(params, TYPE_NAME::FILMID);
   string content = filter->search(params, TYPE_NAME::CONTENT)->get_value();
   Film* fl = filter->find_exact(films, cid);
-  if(fl == NULL)
-    throw Error("Not Found");
   if(current_user->is_purchased(fl) == false)
     throw Error("Permision Denied");
   fl->add_comment(content, current_user);
@@ -315,8 +308,6 @@ void Server::reply_comment(std::vector<Component*> params)
   string content = filter->search(params, TYPE_NAME::CONTENT)->get_value();
   Component* cmid = filter->search(params, TYPE_NAME::COMMENTID);
   Film* fl = filter->find_exact(films, cid);
-  if(fl == NULL)
-    throw Error("Not Found");
   if(fl->get_publisher() != current_user)
     throw Error("Permision Denied");
   fl->reply_comment(cmid,content);
@@ -332,8 +323,6 @@ void Server::delete_comment(std::vector<Component*> params)
   Component* cfid = filter->search(params, TYPE_NAME::FILMID);
   Component* cmid = filter->search(params, TYPE_NAME::COMMENTID);
   Film* fl = filter->find_exact(films, cfid);
-  if(fl == NULL)
-    throw Error("Not Found");
   if(fl->get_publisher() != current_user)
     throw Error("Permision Denied");
   fl->delete_comment(cmid);

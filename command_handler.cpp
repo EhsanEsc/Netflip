@@ -24,6 +24,7 @@ void CommandHandler::run()
       if(check_validate(ctype, input) == false)
         throw Error("Bad Request");
 
+      server->check_validate(ctype, input);
       if(ctype == COMMAND_TYPE::SIGNUP) {
         server->add_user(input);
       } else if(ctype == COMMAND_TYPE::LOGIN) {

@@ -11,8 +11,6 @@ Number::Number(string ct,TYPE_NAME tp)
 }
 bool Number::validation() const
 {
-  if(number < min_value || number > max_value)
-    return false;
   return true;
 }
 
@@ -42,7 +40,7 @@ void Number::set(std::string ct)
   for(auto u:ct)
     if(u<'0' || u>'9')
       throw Error("Bad Request");
-  if(ct[0] == '0')
+  if(ct[0] == '0' && ct.size()!=1 )
     throw Error("Bad Request");
   int num = stoi(ct);
   number = num;
