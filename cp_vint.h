@@ -1,0 +1,22 @@
+
+#ifndef CP_VINT_H
+#define CP_VINT_H
+
+#include "component.h"
+
+class Vint : public Component
+{
+public:
+  Vint(std::string ct,TYPE_NAME tp);
+  bool validation() const ;
+  void edit(std::string ct){}
+  std::string get_value() const ;
+
+  void push(int x);
+  double get_average() const ;
+private:
+  std::vector<int> numbers;
+  int sum = 0;
+};
+
+#endif

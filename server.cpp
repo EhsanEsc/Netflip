@@ -262,7 +262,7 @@ void Server::rate_film(std::vector<Component*> params)
     throw Error("Not found");
   if(current_user->is_purchased(fl) == false)
     throw Error("Bad Request");
-  fl->get_component<Number>(TYPE_NAME::RATE)->push(score);
+  fl->get_component<Vint>(TYPE_NAME::RATE)->push(score);
 
   pair<string,string> ps = get_info(current_user);
   pair<string,string> pf = get_info(fl);

@@ -48,7 +48,7 @@ void Film::print_details()
   cout << "Length = " << get_component<Number>(TYPE_NAME::LENGTH)->get_value() << endl;
   cout << "Year = " << get_component<Number>(TYPE_NAME::YEAR)->get_value() << endl;
   cout << "Summary = " << get_component<Name>(TYPE_NAME::SUMMARY)->get_value() << endl;
-  cout << "Rate = " << get_component<Number>(TYPE_NAME::RATE)->get_average() << endl;
+  cout << "Rate = " << get_component<Vint>(TYPE_NAME::RATE)->get_average() << endl;
   cout << "Price = " << get_component<Number>(TYPE_NAME::PRICE)->get_value() << endl;
 }
 

@@ -2,13 +2,14 @@
 CC = g++
 CFLAGS = -std=c++11
 OBJ = main.o component.o cp_name.o cp_number.o entity.o user.o sources.o filter.o command_handler.o server.o \
-cp_bool.o cp_password.o cp_email.o film.o comment.o notification.o notihandler.o
+cp_bool.o cp_password.o cp_email.o film.o comment.o notification.o notihandler.o cp_vint.o
 COMPONENT_SLIST = sources.h component.h
 CP_NAME_SLIST = $(COMPONENT_SLIST) cp_name.h
 CP_NUMBER_SLIST = $(COMPONENT_SLIST) cp_number.h
 CP_EMAIL_SLIST = $(COMPONENT_SLIST) cp_email.h
 CP_BOOL_SLIST = $(COMPONENT_SLIST) cp_bool.h
 CP_PASSWORD_SLIST = $(COMPONENT_SLIST) cp_password.h
+CP_VINT_SLIST = $(COMPONENT_SLIST) cp_vint.h
 ENTITY_SLIST = $(COMPONENT_SLIST) entity.h
 USER_SLIST = $(ENTITY_SLIST) user.h
 FILM_SLIST = $(ENTITY_SLIST) film.h
@@ -46,6 +47,8 @@ cp_password.o: cp_password.cpp $(CP_PASSWORD_SLIST)
 	$(CC) $(CFLAGS) -c cp_password.cpp -o cp_password.o
 cp_email.o: cp_email.cpp $(CP_EMAIL_SLIST)
 	$(CC) $(CFLAGS) -c cp_email.cpp -o cp_email.o
+cp_vint.o: cp_vint.cpp $(CP_VINT_SLIST)
+	$(CC) $(CFLAGS) -c cp_vint.cpp -o cp_vint.o
 notification.o: notification.cpp $(NOTIFICATION_SLIST)
 	$(CC) $(CFLAGS) -c notification.cpp -o notification.o
 comment.o: comment.cpp $(COMMENT_SLIST)

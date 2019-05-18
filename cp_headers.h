@@ -8,5 +8,6 @@
 #include "cp_email.h"
 #include "cp_bool.h"
 #include "cp_password.h"
+#include "cp_vint.h"
 
 #endif

@@ -63,11 +63,13 @@ Component* build_component(TYPE_NAME tn,string value)
   } else if(tn == TYPE_NAME::PASSWORD){
     return (new Password(value, tn));
   } else if(tn == TYPE_NAME::AGE || tn == TYPE_NAME::YEAR || tn == TYPE_NAME::LENGTH || tn == TYPE_NAME::USERID
-     || tn == TYPE_NAME::PRICE  || tn == TYPE_NAME::MONEY || tn == TYPE_NAME::FILMID || tn == TYPE_NAME::RATE
+     || tn == TYPE_NAME::PRICE  || tn == TYPE_NAME::MONEY || tn == TYPE_NAME::FILMID
      || tn == TYPE_NAME::COMMENTID || tn == TYPE_NAME::NOTIID || tn == TYPE_NAME::LIMIT) {
     return (new Number(value,tn));
   } else if(tn == TYPE_NAME::ISPUB) {
     return (new Bool(value, tn));
+  } else if(tn == TYPE_NAME::RATE) {
+    return (new Vint(value,tn));
   } else if(tn == TYPE_NAME::UNDEFINED) {
     throw Error("Bad Request");
   }
