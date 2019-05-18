@@ -3,6 +3,7 @@
 #define ENTITY_H
 
 #include "cp_headers.h"
+#include<map>
 
 class Entity
 {

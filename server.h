@@ -2,10 +2,15 @@
 #define SERVER_H
 
 #include "sources.h"
-#include "cp_headers.h"
-#include "entity_headers.h"
-#include "filter.h"
-#include "notihandler.h"
+#include<vector>
+#include<string>
+#include <utility>
+
+class User;
+class Film;
+class Component;
+class NotiHandler;
+class Filter;
 
 class Server
 {
@@ -45,8 +50,8 @@ private:
   void show_films(std::vector<Film*> list, std::vector<Component*> params);
   void show_reccomendation_films(User* us, Film* fl);
   void print_films(std::string title, std::vector<Film*> list, std::vector<TYPE_NAME> format);
-  pair<std::string,std::string> get_info(User* us);
-  pair<std::string,std::string> get_info(Film* us);
+  std::pair<std::string,std::string> get_info(User* us);
+  std::pair<std::string,std::string> get_info(Film* us);
 };
 
 #endif

@@ -1,10 +1,8 @@
 
 #include "sources.h"
 #include "cp_headers.h"
+#include<map>
 using namespace std;
-
-int INF = 1e7+22;
-int MAX_CNT_COMPONENT = 22;
 
 std::map<std::string,TYPE_NAME> type_name_cache = {
   {"user_name",TYPE_NAME::USER_NAME},

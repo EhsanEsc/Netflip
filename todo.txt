@@ -1,6 +1,5 @@
-check error handling
-delete extra headers in headers
-write Makefile
 clean code stuff
-be robust
+rename all
+review Ta Projets and mine
+write Makefile + folders
 check with huge test case

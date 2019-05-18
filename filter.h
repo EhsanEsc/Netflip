@@ -22,16 +22,10 @@ public:
   }
   template<typename T> vector<T*> filter_min(vector<T*> vt, Component* cp)
   {
-    // cout << "IN22" << endl;
     vector<T*>res;
     for(auto& u:vt)
-    {
-      // cout << cp->get_value() << " | " ;
-      // cout << u->get_component22(cp->get_type())->get_value() << endl;
       if(*cp < *(u->get_component22(cp->get_type())))
         res.push_back(u);
-    }
-    // cout << "out" << endl;
     return res;
   }
   template<typename T> vector<T*> filter_max(vector<T*> vt, Component* cp)

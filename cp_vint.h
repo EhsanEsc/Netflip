@@ -3,6 +3,8 @@
 #define CP_VINT_H
 
 #include "component.h"
+#include <vector>
+#include <string>
 
 class Vint : public Component
 {

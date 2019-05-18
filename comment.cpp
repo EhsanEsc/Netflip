@@ -1,6 +1,7 @@
 
 #include "comment.h"
 #include "user.h"
+#include <iostream>
 using namespace std;
 
 std::vector<TYPE_NAME> COMMENT_ATTRIBUTE = {TYPE_NAME::COMMENTID,TYPE_NAME::CONTENT} ;

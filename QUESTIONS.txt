@@ -1,0 +1,2 @@
+aya lazem ast dar ebtedaye har function yek validate input ra begozarim ya kheir ?
+hazf Component ha baad az estefade

@@ -2,10 +2,10 @@
 #ifndef SORCES_H
 #define SORCES_H
 
-#include<bits/stdc++.h>
+#include<string>
 
-extern int INF;
-extern int MAX_CNT_COMPONENT;
+constexpr int INF = 1e7+22;
+constexpr int MAX_CNT_COMPONENT = 22;
 
 enum class TYPE_NAME
 {
@@ -31,9 +31,7 @@ enum class TYPE_NAME
   LIMIT,
   UNDEFINED
 };
-extern std::map<std::string,TYPE_NAME> type_name_cache;
 TYPE_NAME get_type_name(std::string key);
-std::ostream& operator << (std::ostream& os, const TYPE_NAME& obj);
 
 class Error
 {

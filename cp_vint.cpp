@@ -1,5 +1,9 @@
 
 #include "cp_vint.h"
+#include <iostream>
+#include <sstream>
+#include <iomanip>
+
 using namespace std;
 
 Vint::Vint(string ct,TYPE_NAME tp)

@@ -3,6 +3,8 @@
 #define NOTIHANDLER_H
 
 #include "sources.h"
+#include <vector>
+#include <string>
 class User;
 
 enum class NOTI_TYPE

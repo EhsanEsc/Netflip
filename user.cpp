@@ -2,6 +2,7 @@
 #include "user.h"
 #include "film.h"
 #include "notification.h"
+#include<iostream>
 
 using namespace std;
 

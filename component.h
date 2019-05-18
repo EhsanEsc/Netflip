@@ -3,6 +3,7 @@
 #define COMPONENT_H
 
 #include "sources.h"
+#include<string>
 
 class Component
 {

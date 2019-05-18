@@ -3,6 +3,7 @@
 #include "user.h"
 #include "comment.h"
 #include "filter.h"
+#include <iostream>
 using namespace std;
 
 std::vector<TYPE_NAME> FILM_ATTRIBUTE = {TYPE_NAME::FILMID,TYPE_NAME::NAME,TYPE_NAME::YEAR,TYPE_NAME::LENGTH,

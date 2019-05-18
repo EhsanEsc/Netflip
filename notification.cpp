@@ -1,5 +1,6 @@
 
 #include "notification.h"
+#include <iostream>
 using namespace std;
 
 std::vector<TYPE_NAME> NOTI_ATTRIBUTE = { TYPE_NAME::CONTENT } ;

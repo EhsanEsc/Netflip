@@ -1,5 +1,12 @@
 
 #include "server.h"
+#include "cp_headers.h"
+#include "entity_headers.h"
+#include "filter.h"
+#include "notihandler.h"
+#include<iostream>
+#include <algorithm>
+#include <iomanip>
 using namespace std;
 
 Server::Server()
