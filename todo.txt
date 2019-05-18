@@ -6,3 +6,6 @@ clean code stuff
 be robust
 check error handling
 check forum and check all
+fix get_money types
+double do one thing
+check with huge test case

@@ -17,6 +17,7 @@ void CommandHandler::run()
   while(getline(cin, line))
   {
     try{
+      if(line=="") continue;
       vector<string> command = split_line(line);
       vector<Component*> input = get_parametrs(command);
       COMMAND_TYPE ctype = get_command_type(command,input);
@@ -100,7 +101,7 @@ map<COMMAND_TYPE,pair<string,string>> command_method_cache = {
   {COMMAND_TYPE::SHOWFOLOWERS, {"GET","followers"}},
   {COMMAND_TYPE::GETPROFIT, {"POST","money"}},
   {COMMAND_TYPE::FOLLOW, {"POST","followers"}},
-  {COMMAND_TYPE::SEARCHPOSTED, {"GET","publisher"}},
+  {COMMAND_TYPE::SEARCHPOSTED, {"GET","published"}},
   {COMMAND_TYPE::SEARCHFILMS, {"GET","films"}},
   {COMMAND_TYPE::SEARCHPURCHASED, {"GET","purchased"}},
   {COMMAND_TYPE::GETFILM, {"GET","films"}},

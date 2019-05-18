@@ -10,6 +10,7 @@ public:
   Component(TYPE_NAME tp);
   virtual bool validation() const = 0;
   virtual std::string get_value() const = 0;
+  virtual void edit(std::string ct) = 0;
 
   bool operator<(const Component& cp) const ;
   bool operator==(const Component& cp) const ;

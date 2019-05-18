@@ -66,7 +66,7 @@ void Film::add_comment(std::string content, User* writer)
 
 void Film::reply_comment(Component* cmid, std::string content)
 {
-  Comment* cm = Filter_interface::find_exact(comments, cmid);
+  Comment* cm = Filter::get_instance()->find_exact(comments, cmid);
   if(cm->is_reply())
     throw Error("Permision Denied");
   cm->add_reply(new Comment(cm->get_new_reply_comment_id(), content, true, publisher));
@@ -87,7 +87,8 @@ void Film::delete_comment(Component* cmid)
 
 User* Film::get_comment_writer(Component* cmid)
 {
-  Comment* cm = Filter_interface::find_exact(comments, cmid);
+
+  Comment* cm = Filter::get_instance()->find_exact(comments, cmid);
   return cm->get_writer();
 }
 

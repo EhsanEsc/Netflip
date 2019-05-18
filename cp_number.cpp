@@ -5,14 +5,7 @@ using namespace std;
 Number::Number(string ct,TYPE_NAME tp)
 : Component(tp)
 {
-  for(auto u:ct)
-    if(u<'0' || u>'9')
-      throw Error("Bad Request");
-
-  int num = stoi(ct);
-  number = num;
-  min_value = -INF;
-  max_value = INF;
+  set(ct);
   if(validation() == false)
     throw Error("Bad Request");
 }
@@ -51,4 +44,20 @@ double Number::get_average()
 {
   if(ted==0) return 0;
   return 1.0*sum/ted;
+}
+
+void Number::edit(std::string ct)
+{
+  set(ct);
+}
+void Number::set(std::string ct)
+{
+  for(auto u:ct)
+    if(u<'0' || u>'9')
+      throw Error("Bad Request");
+
+  int num = stoi(ct);
+  number = num;
+  min_value = -INF;
+  max_value = INF;
 }

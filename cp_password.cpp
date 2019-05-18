@@ -5,7 +5,7 @@ using namespace std;
 Password::Password(string ct,TYPE_NAME tp)
 : Component(tp)
 {
-  content = hash_password(ct);
+  set(ct);
   if(validation() == false)
     throw Error("Bad Request");
 }
@@ -29,4 +29,14 @@ std::string Password::hash_password(std::string pass)
       hash += 33 + rand()%92;
   }
   return to_string(hash);
+}
+
+void Password::edit(std::string ct)
+{
+  content = ct;
+}
+
+void Password::set(std::string ct)
+{
+  content = hash_password(ct);
 }

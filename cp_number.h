@@ -9,6 +9,8 @@ class Number : public Component
 public:
   Number(std::string ct,TYPE_NAME tp);
   bool validation() const ;
+  void edit(std::string ct);
+  void set(std::string ct);
   void set(int x);
   int get();
   void add(int x);

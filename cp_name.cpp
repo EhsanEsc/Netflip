@@ -5,7 +5,7 @@ using namespace std;
 Name::Name(string ct,TYPE_NAME tp)
 : Component(tp)
 {
-  content = ct;
+  set(ct);
   if(validation() == false)
     throw Error("Bad Request");
 }
@@ -24,7 +24,18 @@ string Name::get_value() const
   return content;
 }
 
+// delete this
 void Name::edit_name(string new_content)
 {
   content = new_content;
+}
+
+void Name::edit(std::string ct)
+{
+  set(ct);
+}
+
+void Name::set(std::string ct)
+{
+  content = ct;
 }

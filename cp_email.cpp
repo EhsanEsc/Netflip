@@ -5,7 +5,7 @@ using namespace std;
 Email::Email(string ct,TYPE_NAME tp)
 : Component(tp)
 {
-  content = ct;
+  set(ct);
   if(validation() == false)
     throw Error("Bad Request");
 }
@@ -19,4 +19,13 @@ bool Email::validation() const
 string Email::get_value() const
 {
   return content;
+}
+
+void Email::edit(std::string ct)
+{
+  set(ct);
+}
+void Email::set(std::string ct)
+{
+  content = ct;
 }

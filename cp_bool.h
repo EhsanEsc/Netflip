@@ -10,6 +10,9 @@ public:
   Bool(std::string ct,TYPE_NAME tp);
   bool validation() const;
   std::string get_value() const;
+  void edit(std::string ct);
+  void set(std::string ct);
+
 private:
   bool content;
 };

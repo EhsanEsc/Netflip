@@ -28,8 +28,9 @@ void Server::add_user(std::vector<Component*> params)
 
 void Server::add_film(std::vector<Component*> params)
 {
+  // cout << "#" << endl;
   if(current_user == NULL)
-    throw Error("WTF");
+    throw Error("Permision Denied");
   if(current_user->is_publisher() == false)
     throw Error("Permision Denied");
   Film* new_film = new Film(params, current_user);
@@ -50,12 +51,11 @@ void Server::edit_film(std::vector<Component*> params)
     throw Error("Not Found");
   if(fl->get_publisher() != current_user)
     throw Error("Permision Denied");
-
   for(auto& u:params)
     if(u->get_type() != TYPE_NAME::FILMID)
     {
       Component* cp = fl->get_component22(u->get_type());
-      cp = u;
+      cp->edit(u->get_value());
     }
 }
 
@@ -200,10 +200,10 @@ void Server::show_films(std::vector<Film*>list, std::vector<Component*> params)
 {
   for(auto& u:params)
     list = filter->filter(list, u);
-  list = filter->sort(list, TYPE_NAME::USERID);
+  list = filter->sort(list, TYPE_NAME::FILMID);
   vector<TYPE_NAME>format{TYPE_NAME::FILMID, TYPE_NAME::NAME, TYPE_NAME::LENGTH, TYPE_NAME::PRICE,
     TYPE_NAME::RATE, TYPE_NAME::YEAR, TYPE_NAME::DIRECTOR};
-  string title = "#. Film Id | Film Name | Film Length | Film price | rate | Production Year | Film Director";
+  string title = "#. Film Id | Film Name | Film Length | Film price | Rate | Production Year | Film Director";
   print_films(title, list, format);
 }
 

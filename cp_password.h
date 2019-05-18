@@ -9,6 +9,9 @@ public:
   Password(std::string ct,TYPE_NAME tp);
   bool validation() const;
   std::string get_value() const;
+  void set(std::string ct);
+  void edit(std::string ct);
+
 private:
   std::string content;
   std::string hash_password(std::string pass);

@@ -5,12 +5,7 @@ using namespace std;
 Bool::Bool(string ct,TYPE_NAME tp)
 : Component(tp)
 {
-  if(ct == "true")
-    content = true;
-  else if(ct == "false")
-    content = false;
-  else
-    throw Error("Bad Request");
+  set(ct);
 }
 
 bool Bool::validation() const
@@ -24,4 +19,19 @@ string Bool::get_value() const
     return "true";
   else
     return "false";
+}
+
+void Bool::edit(std::string ct)
+{
+  set(ct);
+}
+
+void Bool::set(std::string ct)
+{
+  if(ct == "true")
+    content = true;
+  else if(ct == "false")
+    content = false;
+  else
+    throw Error("Bad Request");
 }
