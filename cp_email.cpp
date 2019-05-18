@@ -1,5 +1,6 @@
 
 #include "cp_email.h"
+#include <regex>
 using namespace std;
 
 Email::Email(string ct,TYPE_NAME tp)
@@ -12,8 +13,9 @@ Email::Email(string ct,TYPE_NAME tp)
 
 bool Email::validation() const
 {
-  // check if is valid email
-  return true;
+  const regex pattern
+     ("(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+");
+  return regex_match(content, pattern);
 }
 
 string Email::get_value() const
