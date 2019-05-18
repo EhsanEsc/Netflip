@@ -113,7 +113,7 @@ map<COMMAND_TYPE,pair<string,string>> command_method_cache = {
   {COMMAND_TYPE::REPLYCOMMENT, {"POST","replies"}},
   {COMMAND_TYPE::DELETECOMMENT, {"DELETE","comments"}},
   {COMMAND_TYPE::SHOWNOTI, {"GET","notifications"}},
-  {COMMAND_TYPE::SHOWSEENNOTI, {"GET","notifications"}}
+  {COMMAND_TYPE::SHOWSEENNOTI, {"GET","notifications read"}}
 };
 
 map<COMMAND_TYPE, vector<TYPE_NAME>> command_primary_list = {
@@ -171,10 +171,19 @@ map<COMMAND_TYPE, vector<TYPE_NAME>> command_optimal_list = {
 
 COMMAND_TYPE CommandHandler::get_command_type(vector<string> command, vector<Component*> input)
 {
-  if(command.size() < 2)
+  if(command.size() == 0)
     throw Error("Bad Request");
+  string met;
+  for(int i=1;i<command.size();i++)
+  {
+    if(command[i] == "?")
+      break;
+    if(i!=1)
+      met += " ";
+    met += command[i];
+  }
   vector<COMMAND_TYPE> ct, res;
-  pair<string,string> method = {command[0],command[1]};
+  pair<string,string> method = {command[0],met};
   for(auto u:command_method_cache)
     if(u.second == method)
       ct.push_back(u.first);
@@ -190,12 +199,17 @@ COMMAND_TYPE CommandHandler::get_command_type(vector<string> command, vector<Com
 
 vector<Component*> CommandHandler::get_parametrs(vector<string> command)
 {
-  if(command.size()<3)
+  int ind=0;
+  for(;ind<command.size();ind++)
+    if(command[ind] == "?")
+      break;
+  if(ind==command.size())
     return vector<Component*>();
-  if(command[2] != "?" || command.size()%2 == 0)
+  ind++;
+  if((command.size()-ind)%2 == 1)
     throw Error("Bad Request");
   vector<Component*> res;
-  for(int i=3;i<command.size();i+=2)
+  for(int i=ind;i<command.size();i+=2)
     res.push_back(build_component(command[i],command[i+1]));
   return res;
 }
