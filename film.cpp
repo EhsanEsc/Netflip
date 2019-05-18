@@ -6,11 +6,11 @@
 using namespace std;
 
 std::vector<TYPE_NAME> FILM_ATTRIBUTE = {TYPE_NAME::FILMID,TYPE_NAME::NAME,TYPE_NAME::YEAR,TYPE_NAME::LENGTH,
-  TYPE_NAME::PRICE,TYPE_NAME::SUMMARY,TYPE_NAME::DIRECTOR,TYPE_NAME::MONEY,TYPE_NAME::RATE} ;
+  TYPE_NAME::PRICE,TYPE_NAME::SUMMARY,TYPE_NAME::DIRECTOR,TYPE_NAME::MONEY,TYPE_NAME::FILMRATE} ;
 map<TYPE_NAME,string> attributes_default_value2 = {
   {TYPE_NAME::FILMID , "0"},
   {TYPE_NAME::MONEY, "0"},
-  {TYPE_NAME::RATE, "0"}
+  {TYPE_NAME::FILMRATE, "0"}
 };
 
 Film::Film(vector<Component*> comps, User* _publisher)
@@ -37,8 +37,19 @@ User* Film::get_publisher()
 void Film::pay_publisher()
 {
   Number* cp = get_component<Number>(TYPE_NAME::MONEY);
-  publisher->add_money(cp->get());
+  publisher->add_money(calc_paid_money(cp->get()));
   cp->set(0);
+}
+
+int Film::calc_paid_money(int profit)
+{
+  double rate = get_component<Vint>(TYPE_NAME::FILMRATE)->get_average();
+  if(rate < 5)
+    return profit*8/10;
+  else if(rate < 8)
+    return profit*9/10;
+  else
+    return profit*95/100;
 }
 
 void Film::print_details()
@@ -48,7 +59,7 @@ void Film::print_details()
   cout << "Length = " << get_component<Number>(TYPE_NAME::LENGTH)->get_value() << endl;
   cout << "Year = " << get_component<Number>(TYPE_NAME::YEAR)->get_value() << endl;
   cout << "Summary = " << get_component<Name>(TYPE_NAME::SUMMARY)->get_value() << endl;
-  cout << "Rate = " << get_component<Vint>(TYPE_NAME::RATE)->get_average() << endl;
+  cout << "Rate = " << get_component<Vint>(TYPE_NAME::FILMRATE)->get_average() << endl;
   cout << "Price = " << get_component<Number>(TYPE_NAME::PRICE)->get_value() << endl;
 }
 

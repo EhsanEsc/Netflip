@@ -1,11 +1,9 @@
 add text component
-fix number component and film get_rate
 add checking to parametrs
 delete extra headers in headers
 clean code stuff
 be robust
 check error handling
 check forum and check all
-fix get_money types
 double do one thing
 check with huge test case

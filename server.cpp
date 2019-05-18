@@ -202,7 +202,7 @@ void Server::show_films(std::vector<Film*>list, std::vector<Component*> params)
     list = filter->filter(list, u);
   list = filter->sort(list, TYPE_NAME::FILMID);
   vector<TYPE_NAME>format{TYPE_NAME::FILMID, TYPE_NAME::NAME, TYPE_NAME::LENGTH, TYPE_NAME::PRICE,
-    TYPE_NAME::RATE, TYPE_NAME::YEAR, TYPE_NAME::DIRECTOR};
+    TYPE_NAME::FILMRATE, TYPE_NAME::YEAR, TYPE_NAME::DIRECTOR};
   string title = "#. Film Id | Film Name | Film Length | Film price | Rate | Production Year | Film Director";
   print_films(title, list, format);
 }
@@ -213,14 +213,14 @@ void Server::show_reccomendation_films(User* us, Film* fl)
   for(auto& u: films)
     if(us->is_purchased(u) == false && u!=fl)
       list.push_back(u);
-  list = filter->sort(list, TYPE_NAME::RATE);
+  list = filter->sort(list, TYPE_NAME::FILMRATE);
   reverse(list.begin(),list.end());
   for(int i=0;i<list.size();i++)
   {
     vector<Film*> tmp;
-    double rt = list[i]->get_component<Number>(TYPE_NAME::RATE)->get();
+    double rt = list[i]->get_component<Vint>(TYPE_NAME::FILMRATE)->get_average();
     int j=i;
-    while(j<list.size() && rt==list[j]->get_component<Number>(TYPE_NAME::RATE)->get())
+    while(j<list.size() && rt==list[j]->get_component<Vint>(TYPE_NAME::FILMRATE)->get_average())
     { j++; }
     for(int k=i;k<j;k++)
       tmp.push_back(list[k]);
@@ -262,7 +262,7 @@ void Server::rate_film(std::vector<Component*> params)
     throw Error("Not found");
   if(current_user->is_purchased(fl) == false)
     throw Error("Bad Request");
-  fl->get_component<Vint>(TYPE_NAME::RATE)->push(score);
+  fl->get_component<Vint>(TYPE_NAME::FILMRATE)->push(score);
 
   pair<string,string> ps = get_info(current_user);
   pair<string,string> pf = get_info(fl);

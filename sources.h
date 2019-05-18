@@ -24,6 +24,7 @@ enum class TYPE_NAME
   PRICE,
   SUMMARY,
   DIRECTOR,
+  FILMRATE,
   MONEY,
   RATE,
   CONTENT,

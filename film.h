@@ -26,6 +26,7 @@ private:
 
   int get_new_id();
   int get_new_comment_id();
+  int calc_paid_money(int profit);
 };
 
 #endif
