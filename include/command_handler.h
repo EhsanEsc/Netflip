@@ -4,7 +4,8 @@
 
 #include<vector>
 #include<string>
-#include "sources.h"
+#include "error.h"
+#include "server.h"
 
 class Component;
 

@@ -1,2 +1,6 @@
 aya lazem ast dar ebtedaye har function yek validate input ra begozarim ya kheir ?
+aya khoob ast tamam Const ha ro dar yek file utility berizam ?
 hazf Component ha baad az estefade
+behtar kardan makefile
+how to commit
+why makefile no?

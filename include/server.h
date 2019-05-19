@@ -1,7 +1,8 @@
 #ifndef SERVER_H
 #define SERVER_H
 
-#include "sources.h"
+#include "error.h"
+#include "component.h"
 #include<vector>
 #include<string>
 #include <utility>
@@ -11,6 +12,31 @@ class Film;
 class Component;
 class NotiHandler;
 class Filter;
+
+enum class COMMAND_TYPE
+{
+  SIGNUP,
+  LOGIN,
+  POSTFILM,
+  EDITFILM,
+  DELETEFILM,
+  SHOWFOLOWERS,
+  GETPROFIT,
+  FOLLOW,
+  SEARCHPOSTED,
+  SEARCHFILMS,
+  SEARCHPURCHASED,
+  GETFILM,
+  ADDMONEY,
+  BUYFILM,
+  RATEFILM,
+  ADDCOMMENT,
+  REPLYCOMMENT,
+  DELETECOMMENT,
+  SHOWNOTI,
+  SHOWSEENNOTI,
+  UNDEFINED
+};
 
 class Server
 {

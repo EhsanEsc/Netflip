@@ -1,7 +1,6 @@
 
 #include "command_handler.h"
 #include "component.h"
-#include "server.h"
 #include<map>
 #include<iostream>
 using namespace std;

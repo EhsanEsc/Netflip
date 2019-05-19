@@ -2,8 +2,42 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
-#include "sources.h"
+#include "error.h"
 #include<string>
+
+enum class TYPE_NAME
+{
+  FILMID,
+  USERID,
+  COMMENTID,
+  NOTIID,
+  USER_NAME,
+  EMAIL,
+  PASSWORD,
+  AGE,
+  ISPUB,
+  NAME,
+  YEAR,
+  LENGTH,
+  PRICE,
+  SUMMARY,
+  DIRECTOR,
+  FILMRATE,
+  MONEY,
+  RATE,
+  CONTENT,
+  LIMIT,
+  UNDEFINED
+};
+TYPE_NAME get_type_name(std::string key);
+
+enum class FILTER_TYPE
+{
+  EXACT,
+  MIN,
+  MAX,
+  UNDEFINED
+};
 
 class Component
 {
@@ -23,5 +57,7 @@ private:
   TYPE_NAME type = TYPE_NAME::UNDEFINED;
   FILTER_TYPE ftype = FILTER_TYPE::EXACT;
 };
+Component* build_component(std::string key,std::string value);
+Component* build_component(TYPE_NAME tn, std::string value);
 
 #endif

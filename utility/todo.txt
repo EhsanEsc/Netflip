@@ -1,6 +1,5 @@
 clean code stuff
 rename all
-review Ta Projets and mine
-update sensivity list of headers of Makefile
-check set precision
+review A5 project
+remove sources
 check with huge test case
