@@ -76,7 +76,7 @@ void CommandHandler::run()
         && ctype != COMMAND_TYPE::SHOWSEENNOTI )
         cout << "OK" << endl;
     } catch(Error& err) {
-      cerr << err.what() << endl;
+      cout << err.what() << endl;
     }
   }
 }
@@ -85,11 +85,11 @@ vector<string> CommandHandler::split_line(string line)
 {
   vector<string> res;
   int en=0;
-  for(int st=0;st<line.size();st++)
+  for(int st=0;st<int(line.size());st++)
   {
     if(line[st] == ' ') continue;
     en = st;
-    while(en<line.size() && line[en] != ' ')
+    while(en<int(line.size()) && line[en] != ' ')
     { en++; }
     res.push_back(line.substr(st,en-st));
     st=en;
@@ -178,7 +178,7 @@ COMMAND_TYPE CommandHandler::get_command_type(vector<string> command, vector<Com
   if(command.size() == 0)
     throw Error("Bad Request");
   string met;
-  for(int i=1;i<command.size();i++)
+  for(int i=1;i<int(command.size());i++)
   {
     if(command[i] == "?")
       break;
@@ -204,16 +204,16 @@ COMMAND_TYPE CommandHandler::get_command_type(vector<string> command, vector<Com
 vector<Component*> CommandHandler::get_parametrs(vector<string> command)
 {
   int ind=0;
-  for(;ind<command.size();ind++)
+  for(;ind<int(command.size());ind++)
     if(command[ind] == "?")
       break;
-  if(ind==command.size())
+  if(ind==int(command.size()))
     return vector<Component*>();
   ind++;
   if((command.size()-ind)%2 == 1)
     throw Error("Bad Request");
   vector<Component*> res;
-  for(int i=ind;i<command.size();i+=2)
+  for(int i=ind;i<int(command.size());i+=2)
     res.push_back(build_component(command[i],command[i+1]));
   return res;
 }
@@ -223,8 +223,8 @@ bool CommandHandler::check_validate(COMMAND_TYPE ctype, vector<Component*> param
   vector<TYPE_NAME> primary_list = command_primary_list[ctype];
   vector<TYPE_NAME> optimal_list = command_optimal_list[ctype];
 
-  for(int i=0;i<params.size();i++)
-    for(int j=i+1;j<params.size();j++)
+  for(int i=0;i<int(params.size());i++)
+    for(int j=i+1;j<int(params.size());j++)
       if(params[i]->get_type() == params[j]->get_type() && params[i]->get_filter_type() == params[j]->get_filter_type())
         return false;
 
@@ -249,10 +249,4 @@ bool CommandHandler::check_validate(COMMAND_TYPE ctype, vector<Component*> param
   }
 
   return true;
-}
-
-void CommandHandler::remove_input(vector<Component*> input)
-{
-  for(auto& u:input)
-    delete u;
 }

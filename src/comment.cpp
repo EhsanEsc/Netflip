@@ -37,7 +37,7 @@ void Comment::print()
   int id = get_component<Number>(TYPE_NAME::COMMENTID)->get();
   string content = get_component<Name>(TYPE_NAME::CONTENT)->get_value();
   cout << id << ". " << content << endl;
-  for(int i=0 ; i<replys.size() ; i++)
+  for(int i=0 ; i<int(replys.size()) ; i++)
   {
     Comment* cm = replys[i];
     cout << id << ".";

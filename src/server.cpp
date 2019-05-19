@@ -28,12 +28,12 @@ void Server::check_validate(COMMAND_TYPE ct, std::vector<Component*> params)
 {
   if(current_user == NULL)
     if(ct != COMMAND_TYPE::SIGNUP && ct != COMMAND_TYPE::LOGIN)
-      throw Error("Permision Denied");
+      throw Error("Permission Denied");
   if(current_user != NULL && current_user->is_publisher() == false)
     if(ct == COMMAND_TYPE::POSTFILM || ct == COMMAND_TYPE::EDITFILM || ct == COMMAND_TYPE::DELETEFILM
     || ct == COMMAND_TYPE::GETPROFIT || ct == COMMAND_TYPE::SEARCHPOSTED || ct == COMMAND_TYPE::REPLYCOMMENT
     || ct == COMMAND_TYPE::DELETECOMMENT)
-      throw Error("Permision Denied");
+      throw Error("Permission Denied");
   if(ct == COMMAND_TYPE::EDITFILM || ct == COMMAND_TYPE::DELETEFILM || ct == COMMAND_TYPE::GETFILM
     || ct == COMMAND_TYPE::BUYFILM || ct == COMMAND_TYPE::RATEFILM || ct == COMMAND_TYPE::ADDCOMMENT
     || ct == COMMAND_TYPE::REPLYCOMMENT || ct == COMMAND_TYPE::DELETECOMMENT)
@@ -72,7 +72,7 @@ void Server::edit_film(std::vector<Component*> params)
   Component* cid = filter->search(params, TYPE_NAME::FILMID);
   Film* fl = filter->find_exact(films, cid);
   if(fl->get_publisher() != current_user)
-    throw Error("Permision Denied");
+    throw Error("Permission Denied");
   for(auto& u:params)
     if(u->get_type() != TYPE_NAME::FILMID)
     {
@@ -83,12 +83,12 @@ void Server::edit_film(std::vector<Component*> params)
 
 void Server::delete_film(std::vector<Component*> params)
 {
-  for(int i=0;i<films.size();i++)
+  for(int i=0;i<int(films.size());i++)
   {
     if(films[i]->get_component<Number>(TYPE_NAME::FILMID)->get_value() == params[0]->get_value())
     {
       if(films[i]->get_publisher() != current_user)
-        throw Error("Permision Denied");
+        throw Error("Permission Denied");
       films.erase(films.begin()+i);
       return ;
     }
@@ -103,14 +103,14 @@ void Server::show_followers(std::vector<Component*> params)
 
   cout << "List of Followers" << endl;
   cout << "#. User Id | User Username | User Email" << endl;
-  for(int j=0;j<luser.size();j++)
+  for(int j=0;j<int(luser.size());j++)
   {
     User* u = luser[j];
     cout << j+1 << ". ";
-    for(int i=0;i<format.size();i++)
+    for(int i=0;i<int(format.size());i++)
     {
       cout << u->get_component22(format[i])->get_value() ;
-      if(i!=format.size()-1)
+      if(i!=int(format.size())-1)
         cout << " | ";
     }
     cout << endl;
@@ -202,14 +202,14 @@ void Server::show_film_detail(std::vector<Component*> params)
 void Server::print_films(string title, vector<Film*> list, vector<TYPE_NAME> format)
 {
   cout << title << endl;
-  for(int j=0;j<list.size();j++)
+  for(int j=0;j<int(list.size());j++)
   {
     Film* fl = list[j];
     cout << j+1 << ". ";
-    for(int i=0;i<format.size();i++)
+    for(int i=0;i<int(format.size());i++)
     {
       cout << fl->get_component22(format[i])->get_value() ;
-      if(i+1<format.size())
+      if(i+1<int(format.size()))
         cout << " | ";
     }
     cout << endl;
@@ -235,12 +235,12 @@ void Server::show_reccomendation_films(User* us, Film* fl)
       list.push_back(u);
   list = filter->sort(list, TYPE_NAME::FILMRATE);
   reverse(list.begin(),list.end());
-  for(int i=0;i<list.size();i++)
+  for(int i=0;i<int(list.size());i++)
   {
     vector<Film*> tmp;
     double rt = list[i]->get_component<Vint>(TYPE_NAME::FILMRATE)->get_average();
     int j=i;
-    while(j<list.size() && rt==list[j]->get_component<Vint>(TYPE_NAME::FILMRATE)->get_average())
+    while(j<int(list.size()) && rt==list[j]->get_component<Vint>(TYPE_NAME::FILMRATE)->get_average())
     { j++; }
     for(int k=i;k<j;k++)
       tmp.push_back(list[k]);
@@ -281,7 +281,7 @@ void Server::rate_film(std::vector<Component*> params)
     throw Error("Bad Request");
   Film* fl = filter->find_exact(films, cid);
   if(current_user->is_purchased(fl) == false)
-    throw Error("Permision Denied");
+    throw Error("Permission Denied");
   int pre_score = current_user->get_rate(fl);
   if(pre_score != -1)
     fl->get_component<Vint>(TYPE_NAME::FILMRATE)->pop(pre_score);
@@ -300,7 +300,7 @@ void Server::add_comment(std::vector<Component*> params)
   string content = filter->search(params, TYPE_NAME::CONTENT)->get_value();
   Film* fl = filter->find_exact(films, cid);
   if(current_user->is_purchased(fl) == false)
-    throw Error("Permision Denied");
+    throw Error("Permission Denied");
   fl->add_comment(content, current_user);
 
   pair<string,string> ps = get_info(current_user);
@@ -316,7 +316,7 @@ void Server::reply_comment(std::vector<Component*> params)
   Component* cmid = filter->search(params, TYPE_NAME::COMMENTID);
   Film* fl = filter->find_exact(films, cid);
   if(fl->get_publisher() != current_user)
-    throw Error("Permision Denied");
+    throw Error("Permission Denied");
   fl->reply_comment(cmid,content);
 
   User* wr = fl->get_comment_writer(cmid);
@@ -331,7 +331,7 @@ void Server::delete_comment(std::vector<Component*> params)
   Component* cmid = filter->search(params, TYPE_NAME::COMMENTID);
   Film* fl = filter->find_exact(films, cfid);
   if(fl->get_publisher() != current_user)
-    throw Error("Permision Denied");
+    throw Error("Permission Denied");
   fl->delete_comment(cmid);
 }
 

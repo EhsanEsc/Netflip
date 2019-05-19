@@ -63,7 +63,7 @@ void User::buy_film(Film* fl)
   int money = stoi(get_component<Number>(TYPE_NAME::MONEY)->get_value());
   int price = stoi(fl->get_component<Number>(TYPE_NAME::PRICE)->get_value());
   if(price > money)
-    throw Error("Permision Denied");
+    throw Error("Permission Denied");
   get_component<Number>(TYPE_NAME::MONEY)->add(-price);
   purchased_films.push_back(fl);
 }
@@ -94,7 +94,7 @@ void User::show_notis()
     cout << j+1 << ". ";
     unread_notis[i]->print();
   }
-  for(int i=0;i<unread_notis.size();i++)
+  for(int i=0;i<int(unread_notis.size());i++)
     seen_notis.push_back(unread_notis[i]);
   unread_notis.clear();
 }

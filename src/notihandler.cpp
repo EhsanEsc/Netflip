@@ -23,7 +23,7 @@ NotiHandler* NotiHandler::get_instance()
 
 void NotiHandler::add_noti(User* user, NOTI_TYPE nt, std::vector<string> input)
 {
-  if(input.size() != noti_size_cache[nt])
+  if(int(input.size()) != noti_size_cache[nt])
     throw Error("Wtf");
   string msg;
   if(nt == NOTI_TYPE::REPLYCOMMENT) {

@@ -30,7 +30,7 @@ void Vint::push(int x)
 
 void Vint::pop(int x)
 {
-  for(int i=0;i<numbers.size();i++)
+  for(int i=0;i<int(numbers.size());i++)
   {
     if(numbers[i] == x)
     {

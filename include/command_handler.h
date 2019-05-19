@@ -21,7 +21,6 @@ private:
   std::vector<Component*> get_parametrs(std::vector<std::string> command);
 
   bool check_validate(COMMAND_TYPE ctype, std::vector<Component*> params);
-  void remove_input(std::vector<Component*> input);
 };
 
 #endif

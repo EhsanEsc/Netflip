@@ -1,5 +1,6 @@
 clean code stuff
 rename all
 review Ta Projets and mine
-write Makefile + folders
+update sensivity list of headers of Makefile
+check set precision
 check with huge test case

@@ -80,13 +80,13 @@ void Film::reply_comment(Component* cmid, std::string content)
 {
   Comment* cm = Filter::get_instance()->find_exact(comments, cmid);
   if(cm->is_reply())
-    throw Error("Permision Denied");
+    throw Error("Permission Denied");
   cm->add_reply(new Comment(cm->get_new_reply_comment_id(), content, true, publisher));
 }
 
 void Film::delete_comment(Component* cmid)
 {
-  for(int i=0;i<comments.size();i++)
+  for(int i=0;i<int(comments.size());i++)
   {
     Component* comment_id = comments[i]->get_component22(TYPE_NAME::COMMENTID);
     if(*comment_id == *cmid)

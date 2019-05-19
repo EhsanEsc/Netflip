@@ -71,4 +71,5 @@ Component* build_component(TYPE_NAME tn,string value)
   } else if(tn == TYPE_NAME::UNDEFINED) {
     throw Error("Bad Request");
   }
+  return NULL;
 }

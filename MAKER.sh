@@ -1,4 +1,4 @@
 
 make
-./a.out
-read -p "Press To Continue!!!"
+./Netflip.out < in.txt
+read -p "*************************"
