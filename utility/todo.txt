@@ -1,5 +1,3 @@
 clean code stuff
-rename all
-review A5 project
-remove sources
+add md5
 check with huge test case

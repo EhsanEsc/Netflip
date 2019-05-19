@@ -1,5 +1,7 @@
 
 #include "cp_password.h"
+#include "md5.h"
+
 using namespace std;
 
 Password::Password(string ct,TYPE_NAME tp)
@@ -22,13 +24,7 @@ string Password::get_value() const
 
 std::string Password::hash_password(std::string pass)
 {
-  long long hash = 0;
-  for (auto& c:pass)
-  {
-      srand(pass.size()*c);
-      hash += 33 + rand()%92;
-  }
-  return to_string(hash);
+  return md5(pass);
 }
 
 void Password::edit(std::string ct)
