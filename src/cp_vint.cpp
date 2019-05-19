@@ -17,7 +17,7 @@ bool Vint::validation() const
 string Vint::get_value() const
 {
   stringstream res;
-  res << fixed << setprecision(2);
+  res << setprecision(2);
   res << get_average();
   return res.str();
 }

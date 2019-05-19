@@ -1,10 +1,12 @@
 make
 
+rm TestCases/oo/*.out
 for((i=1;i<=2;i++));
 do
   ./Netflip.out < TestCases/input/$i.in > TestCases/oo/$i.out;
 
-  if(diff -b -q TestCases/oo/$i.out TestCases/output/$i.out);
+# -q for desabaling printing diffrences
+  if(diff -b TestCases/oo/$i.out TestCases/output/$i.out);
   then
     echo "Test case " $i " is Corrcet! :)";
   else
@@ -13,4 +15,3 @@ do
 done
 
 read -p "*************************"
-rm TestCases/oo/*.out

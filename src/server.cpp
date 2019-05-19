@@ -13,7 +13,7 @@ Server::Server()
 {
   noti_handler = NotiHandler::get_instance();
   filter = Filter::get_instance();
-  cout << fixed << setprecision(2);
+  cout << setprecision(2);
 }
 
 Server* Server::instance = NULL;
