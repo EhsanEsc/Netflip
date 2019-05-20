@@ -31,6 +31,7 @@ public:
   int get_rate(Film* fl);
   void add_rate(Film* fl,int score);
   void charge_account(int money);
+  void spend_money(int money);
 private:
   std::vector<User*> followers;
   std::vector<User*> following;

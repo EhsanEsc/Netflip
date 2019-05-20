@@ -40,6 +40,12 @@ void Film::pay_publisher()
   cp->set(0);
 }
 
+void Film::sold_out()
+{
+  int price = get_component<Number>(TYPE_NAME::PRICE)->get();
+  get_component<Number>(TYPE_NAME::MONEY)->add(price);
+}
+
 int Film::calc_paid_money(int profit)
 {
   double rate = get_component<Vint>(TYPE_NAME::FILMRATE)->get_average();

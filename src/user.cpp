@@ -64,7 +64,8 @@ void User::buy_film(Film* fl)
   int price = stoi(fl->get_component<Number>(TYPE_NAME::PRICE)->get_value());
   if(price > money)
     throw Error(PERMISSION_DENIED_MSG);
-  get_component<Number>(TYPE_NAME::MONEY)->add(-price);
+  spend_money(money);
+  fl->sold_out();
   purchased_films.push_back(fl);
 }
 
@@ -123,4 +124,9 @@ void User::add_rate(Film* fl,int score)
 void User::charge_account(int money)
 {
   get_component<Number>(TYPE_NAME::MONEY)->add(money);
+}
+
+void User::spend_money(int money)
+{
+  get_component<Number>(TYPE_NAME::MONEY)->add(-money);
 }
