@@ -118,7 +118,7 @@ void Server::show_followers(Parametrs params)
 void Server::get_profit(Parametrs params)
 {
   for(auto& fl : current_user->get_posted_films())
-    fl->pay_publisher();
+    fl->pay_publisher(admin);
 }
 
 void Server::add_money(Parametrs params)
@@ -161,6 +161,8 @@ void Server::login(Parametrs params)
 
 void Server::logout(Parametrs params)
 {
+  if(current_user == NULL)
+    throw Error(BAD_REQUEST_MSG);
   current_user = NULL;
 }
 
@@ -246,7 +248,7 @@ void Server::buy_film(Parametrs params)
 
   if(filter->find_exact(current_user->get_purchased_films(),
   fl->get_component_bytype(TYPE_NAME::FILMID)) == NULL)
-    current_user->buy_film(fl);
+    current_user->buy_film(fl, admin);
 
   send_noti_film(current_user, fl , NOTI_TYPE::BUYFILM);
 }
@@ -315,6 +317,11 @@ void Server::show_seen_notis(Parametrs params)
 {
   int limit = filter->search_exact<Number>(params, TYPE_NAME::LIMIT)->get();
   current_user->show_seen_notis(limit);
+}
+
+void Server::show_money(Parametrs params)
+{
+  cout << current_user->get_component<Number>(TYPE_NAME::MONEY)->get() << endl;
 }
 
 pair<std::string,std::string> Server::get_info(User* us)

@@ -38,6 +38,7 @@ enum class COMMAND_TYPE
   DELETECOMMENT,
   SHOWNOTI,
   SHOWSEENNOTI,
+  SHOWMONEY,
   UNDEFINED
 };
 
@@ -68,6 +69,7 @@ public:
   void delete_comment(Parametrs params);
   void show_notis(Parametrs params);
   void show_seen_notis(Parametrs params);
+  void show_money(Parametrs params);
 
   void check_validate(COMMAND_TYPE ct, Parametrs params);
 private:

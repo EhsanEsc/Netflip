@@ -93,6 +93,9 @@ void CommandHandler::run()
         case COMMAND_TYPE::SHOWSEENNOTI:
           server->show_seen_notis(input);
           break;
+        case COMMAND_TYPE::SHOWMONEY:
+          server->show_money(input);
+          break;
         case COMMAND_TYPE::UNDEFINED:
           throw Error(BAD_REQUEST_MSG);
           break;
@@ -100,7 +103,7 @@ void CommandHandler::run()
 
       if(ctype != COMMAND_TYPE::SEARCHPOSTED && ctype != COMMAND_TYPE::SHOWFOLOWERS && ctype != COMMAND_TYPE::SEARCHFILMS
         && ctype != COMMAND_TYPE::GETFILM && ctype != COMMAND_TYPE::SEARCHPURCHASED && ctype != COMMAND_TYPE::SHOWNOTI
-        && ctype != COMMAND_TYPE::SHOWSEENNOTI )
+        && ctype != COMMAND_TYPE::SHOWSEENNOTI && ctype != COMMAND_TYPE::SHOWMONEY)
         cout << SUCCESS_COMMAND_MSG << endl;
 
     } catch(Error& err) {
@@ -146,7 +149,8 @@ map<COMMAND_TYPE,pair<string,string>> command_method_cache = {
   {COMMAND_TYPE::REPLYCOMMENT, {"POST","replies"}},
   {COMMAND_TYPE::DELETECOMMENT, {"POST","delete_comments"}},
   {COMMAND_TYPE::SHOWNOTI, {"GET","notifications"}},
-  {COMMAND_TYPE::SHOWSEENNOTI, {"GET","notifications read"}}
+  {COMMAND_TYPE::SHOWSEENNOTI, {"GET","notifications read"}},
+  {COMMAND_TYPE::SHOWMONEY, {"GET","money"}}
 };
 
 map<COMMAND_TYPE, Typelist> command_primary_list = {
@@ -171,7 +175,8 @@ map<COMMAND_TYPE, Typelist> command_primary_list = {
   {COMMAND_TYPE::REPLYCOMMENT , Typelist{TYPE_NAME::FILMID, TYPE_NAME::COMMENTID, TYPE_NAME::CONTENT}},
   {COMMAND_TYPE::DELETECOMMENT , Typelist{TYPE_NAME::FILMID, TYPE_NAME::COMMENTID}},
   {COMMAND_TYPE::SHOWNOTI , Typelist{}},
-  {COMMAND_TYPE::SHOWSEENNOTI , Typelist{TYPE_NAME::LIMIT}}
+  {COMMAND_TYPE::SHOWSEENNOTI , Typelist{TYPE_NAME::LIMIT}},
+  {COMMAND_TYPE::SHOWMONEY , Typelist{}}
   // {COMMAND_TYPE:: , Typelist{}}
 };
 
@@ -200,7 +205,8 @@ map<COMMAND_TYPE, Typelist> command_optimal_list = {
   {COMMAND_TYPE::REPLYCOMMENT , Typelist{}},
   {COMMAND_TYPE::DELETECOMMENT , Typelist{}},
   {COMMAND_TYPE::SHOWNOTI , Typelist{}},
-  {COMMAND_TYPE::SHOWSEENNOTI , Typelist{}}
+  {COMMAND_TYPE::SHOWSEENNOTI , Typelist{}},
+  {COMMAND_TYPE::SHOWMONEY , Typelist{}}
   // {COMMAND_TYPE:: , Typelist{}}
 };
 

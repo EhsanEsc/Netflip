@@ -17,7 +17,7 @@ public:
   void add_money(int gold);
   void follow(User* us);
   void add_follower(User* us);
-  void buy_film(Film* fl);
+  void buy_film(Film* fl, User* admin);
   void add_noti(Noti* nt);
   void show_notis();
   void show_seen_notis(int limit);

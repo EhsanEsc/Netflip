@@ -33,11 +33,12 @@ User* Film::get_publisher()
   return publisher;
 }
 
-void Film::pay_publisher()
+void Film::pay_publisher(User* admin)
 {
-  Number* cp = get_component<Number>(TYPE_NAME::MONEY);
-  publisher->add_money(calc_paid_money(cp->get()));
-  cp->set(0);
+  int profit = get_component<Number>(TYPE_NAME::MONEY)->get();
+  publisher->add_money(calc_paid_money(profit));
+  admin->spend_money(calc_paid_money(profit));
+  get_component<Number>(TYPE_NAME::MONEY)->set(0);
 }
 
 void Film::sold_out()

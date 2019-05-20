@@ -58,14 +58,15 @@ void User::add_follower(User* us)
   followers.push_back(us);
 }
 
-void User::buy_film(Film* fl)
+void User::buy_film(Film* fl, User* admin)
 {
   int money = stoi(get_component<Number>(TYPE_NAME::MONEY)->get_value());
   int price = stoi(fl->get_component<Number>(TYPE_NAME::PRICE)->get_value());
   if(price > money)
     throw Error(PERMISSION_DENIED_MSG);
-  spend_money(money);
+  spend_money(price);
   fl->sold_out();
+  admin->charge_account(price);
   purchased_films.push_back(fl);
 }
 

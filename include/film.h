@@ -12,7 +12,7 @@ class Film : public Entity
 public:
   Film(Parametrs params, User* _publisher);
 
-  void pay_publisher();
+  void pay_publisher(User* admin);
   void sold_out();
   void print_details();
   void print_comments();

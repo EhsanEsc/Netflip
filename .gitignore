@@ -1,2 +1,4 @@
 *.o
-*.out
+TestCases/oo/*.out
+Netflip.out
+in.txt
