@@ -4,6 +4,7 @@
 #include "entity_headers.h"
 #include "filter.h"
 #include "notihandler.h"
+#include "recomender.h"
 #include<iostream>
 #include <algorithm>
 #include <iomanip>
@@ -13,7 +14,10 @@ Server::Server()
 {
   noti_handler = NotiHandler::get_instance();
   filter = Filter::get_instance();
+  recomender = Recomender::get_instance();
+
   cout << setprecision(2);
+
   admin = new User(Parametrs{
     new Number("0",TYPE_NAME::USERID),
     new Name("admin",TYPE_NAME::USER_NAME),
@@ -74,6 +78,8 @@ void Server::add_film(Parametrs params)
   films.push_back(new_film);
 
   send_noti_new_film(current_user);
+  int fid = new_film->get_component<Number>(TYPE_NAME::FILMID)->get();
+  recomender->add_node(fid);
 }
 
 void Server::edit_film(Parametrs params)
@@ -98,6 +104,7 @@ void Server::delete_film(Parametrs params)
     {
       if(films[i]->get_publisher() != current_user)
         throw Error(PERMISSION_DENIED_MSG);
+      recomender->delete_node(films[i]->get_component<Number>(TYPE_NAME::FILMID)->get());
       films.erase(films.begin()+i);
       return ;
     }
@@ -226,16 +233,14 @@ void Server::show_films(std::vector<Film*>list, Parametrs params)
 
 void Server::show_reccomendation_films(User* us, Film* fl)
 {
-  vector<Film*> list, res;
-  for(auto& u: films)
-    if(us->is_purchased(u) == false && u!=fl)
-      list.push_back(u);
-  list = filter->sort(list, TYPE_NAME::FILMRATE);
-  reverse(list.begin(),list.end());
-  res = sort_samerate_films_byid(list);
+  vector<int> restricted_film_ids = get_film_ids(us->get_purchased_films());
+  vector<int> best_ids = recomender->get_recomend_ids(fl->get_id(), restricted_film_ids);
 
-  if(res.size() > 4)
-    res.resize(4);
+  vector<Film*> res;
+  for(auto& u: best_ids)
+    for(auto& f : films)
+      if(f->get_id() == u)
+        res.push_back(f);
 
   Typelist format = {TYPE_NAME::FILMID, TYPE_NAME::NAME, TYPE_NAME::LENGTH, TYPE_NAME::DIRECTOR};
   string title = "#. Film Id | Film Name | Film Length | Film Director";
@@ -248,8 +253,12 @@ void Server::buy_film(Parametrs params)
 
   if(filter->find_exact(current_user->get_purchased_films(),
   fl->get_component_bytype(TYPE_NAME::FILMID)) == NULL)
-    current_user->buy_film(fl, admin);
+  {
+    vector<int> purchased_film_ids = get_film_ids(current_user->get_purchased_films());
+    recomender->add_weight(fl->get_id(), purchased_film_ids);
 
+    current_user->buy_film(fl, admin);
+  }
   send_noti_film(current_user, fl , NOTI_TYPE::BUYFILM);
 }
 
@@ -332,11 +341,11 @@ pair<std::string,std::string> Server::get_info(User* us)
     return p;
 }
 
-pair<std::string,std::string> Server::get_info(Film* us)
+pair<std::string,std::string> Server::get_info(Film* fl)
 {
   pair<string,string> p;
-  p.first = us->get_component_bytype(TYPE_NAME::NAME)->get_value();
-  p.second = us->get_component_bytype(TYPE_NAME::FILMID)->get_value();
+  p.first = fl->get_component_bytype(TYPE_NAME::NAME)->get_value();
+  p.second = fl->get_component_bytype(TYPE_NAME::FILMID)->get_value();
   return p;
 }
 
@@ -401,5 +410,13 @@ vector<Film*> Server::sort_samerate_films_byid(vector<Film*> list)
       res.push_back(u);
     i=j-1;
   }
+  return res;
+}
+
+std::vector<int> Server::get_film_ids(std::vector<Film*> list)
+{
+  vector<int> res;
+  for(auto& u: list)
+    res.push_back(u->get_component<Number>(TYPE_NAME::FILMID)->get());
   return res;
 }
