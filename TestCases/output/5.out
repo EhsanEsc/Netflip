@@ -1,0 +1,56 @@
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+Details of Film film5
+Id = 5
+Director = director_of_film1
+Length = 120
+Year = 1999
+Summary = summary|of|film1
+Rate = 0
+Price = 100
+
+Comments
+
+Recommendation Film
+#. Film Id | Film Name | Film Length | Film Director
+1. 2 | film2 | 120 | director_of_film1
+2. 3 | film3 | 120 | director_of_film1
+3. 1 | film1 | 120 | director_of_film1
+OK
+Details of Film film4
+Id = 4
+Director = director_of_film1
+Length = 120
+Year = 1999
+Summary = summary|of|film1
+Rate = 0
+Price = 100
+
+Comments
+
+Recommendation Film
+#. Film Id | Film Name | Film Length | Film Director
+1. 5 | film5 | 120 | director_of_film1
+2. 2 | film2 | 120 | director_of_film1
+3. 3 | film3 | 120 | director_of_film1
+4. 1 | film1 | 120 | director_of_film1

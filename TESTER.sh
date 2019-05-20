@@ -1,7 +1,7 @@
 make
 
 rm TestCases/oo/*.out
-for((i=1;i<=4;i++));
+for((i=1;i<=5;i++));
 do
   ./Netflip.out < TestCases/input/$i.in > TestCases/oo/$i.out;
 
