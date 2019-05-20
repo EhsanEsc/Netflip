@@ -24,7 +24,7 @@ NotiHandler* NotiHandler::get_instance()
 void NotiHandler::add_noti(User* user, NOTI_TYPE nt, std::vector<string> input)
 {
   if(int(input.size()) != noti_size_cache[nt])
-    throw Error("Wtf");
+    throw Error(WIERD_ERROR_MSG);
   string msg;
   if(nt == NOTI_TYPE::REPLYCOMMENT) {
     msg = "Publisher " + input[0] + " with id " + input[1] + " reply to your comment.";
@@ -40,7 +40,6 @@ void NotiHandler::add_noti(User* user, NOTI_TYPE nt, std::vector<string> input)
     msg = "User " + input[0] + " with id " + input[1] + " comment on your film " + input[2] + " with id " + input[3] + ".";
   }
 
-  // Name => Text
-  Noti* new_noti = new Noti(vector<Component*>{new Name(msg,TYPE_NAME::CONTENT)});
+  Noti* new_noti = new Noti(Parametrs{new Name(msg,TYPE_NAME::CONTENT)});
   user->add_noti(new_noti);
 }

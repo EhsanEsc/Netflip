@@ -10,7 +10,7 @@ class Noti;
 class User : public Entity
 {
 public:
-  User(std::vector<Component*> comps);
+  User(Parametrs comps);
   void show();
 
   void add_posted_film(Film* fl);
@@ -30,6 +30,7 @@ public:
 
   int get_rate(Film* fl);
   void add_rate(Film* fl,int score);
+  void charge_account(int money);
 private:
   std::vector<User*> followers;
   std::vector<User*> following;

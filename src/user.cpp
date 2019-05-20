@@ -6,7 +6,7 @@
 
 using namespace std;
 
-std::vector<TYPE_NAME> USER_ATTRIBUTE = {TYPE_NAME::USERID,TYPE_NAME::USER_NAME,TYPE_NAME::EMAIL,TYPE_NAME::PASSWORD,
+Typelist USER_ATTRIBUTE = {TYPE_NAME::USERID,TYPE_NAME::USER_NAME,TYPE_NAME::EMAIL,TYPE_NAME::PASSWORD,
   TYPE_NAME::AGE,TYPE_NAME::ISPUB,TYPE_NAME::MONEY} ;
 map<TYPE_NAME,string> attribute_default_value = {
   {TYPE_NAME::USERID, "0"},
@@ -63,7 +63,7 @@ void User::buy_film(Film* fl)
   int money = stoi(get_component<Number>(TYPE_NAME::MONEY)->get_value());
   int price = stoi(fl->get_component<Number>(TYPE_NAME::PRICE)->get_value());
   if(price > money)
-    throw Error("Permission Denied");
+    throw Error(PERMISSION_DENIED_MSG);
   get_component<Number>(TYPE_NAME::MONEY)->add(-price);
   purchased_films.push_back(fl);
 }
@@ -118,4 +118,9 @@ int User::get_rate(Film* fl)
 void User::add_rate(Film* fl,int score)
 {
   rate_film_cache[fl] = score;
+}
+
+void User::charge_account(int money)
+{
+  get_component<Number>(TYPE_NAME::MONEY)->add(money);
 }

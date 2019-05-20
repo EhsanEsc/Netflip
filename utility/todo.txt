@@ -1,3 +1,4 @@
-clean code stuff
-add md5
+review projects for CleanCode
+check A6
 check with huge test case
+start phase2

@@ -3,14 +3,18 @@
 using namespace std;
 
 Bool::Bool(string ct,TYPE_NAME tp)
-: Component(tp)
+: Component(ct,tp)
 {
+  if(validation() == false)
+    return;
   set(ct);
 }
 
 bool Bool::validation() const
 {
-  return true;
+  if(raw_content=="true" || raw_content=="false")
+    return true;
+  return false;
 }
 
 string Bool::get_value() const
@@ -21,17 +25,12 @@ string Bool::get_value() const
     return "false";
 }
 
-void Bool::edit(std::string ct)
-{
-  set(ct);
-}
-
+bool Bool::get() { return content; }
+void Bool::edit(std::string ct) { set(ct); }
 void Bool::set(std::string ct)
 {
   if(ct == "true")
     content = true;
   else if(ct == "false")
     content = false;
-  else
-    throw Error("Bad Request");
 }

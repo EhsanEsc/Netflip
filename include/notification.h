@@ -8,7 +8,7 @@
 class Noti : public Entity
 {
 public:
-  Noti(std::vector<Component*> params);
+  Noti(Parametrs params);
   void print();
 private:
 };

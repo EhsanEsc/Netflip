@@ -7,12 +7,9 @@
 using namespace std;
 
 Vint::Vint(string ct,TYPE_NAME tp)
-: Component(tp)
+: Component(ct,tp)
 {}
-bool Vint::validation() const
-{
-  return true;
-}
+bool Vint::validation() const { return true; }
 
 string Vint::get_value() const
 {
@@ -22,11 +19,7 @@ string Vint::get_value() const
   return res.str();
 }
 
-void Vint::push(int x)
-{
-  numbers.push_back(x);
-  sum += x;
-}
+void Vint::push(int x) { numbers.push_back(x); }
 
 void Vint::pop(int x)
 {
@@ -34,7 +27,6 @@ void Vint::pop(int x)
   {
     if(numbers[i] == x)
     {
-      sum -= x;
       numbers.erase(numbers.begin()+i);
       return;
     }
@@ -44,5 +36,13 @@ void Vint::pop(int x)
 double Vint::get_average() const
 {
   if(numbers.size()==0) return 0;
-  return 1.0*sum/numbers.size();
+  return 1.0*get_sum()/numbers.size();
+}
+
+int Vint::get_sum() const
+{
+  int sum=0;
+  for(auto& u:numbers)
+    sum += u;
+  return sum;
 }

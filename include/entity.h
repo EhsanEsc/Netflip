@@ -8,16 +8,15 @@
 class Entity
 {
 public:
-  Entity(std::vector<Component*> cps,std::vector<TYPE_NAME> attributes,std::map<TYPE_NAME,std::string> attributes_default_value);
-  Component* get_component22(TYPE_NAME tp);
-  template<typename T> T* get_component(TYPE_NAME tp)
-  {
-    return dynamic_cast<T*>(get_component22(tp));
-  }
+  Entity(Parametrs cps,Typelist attributes,std::map<TYPE_NAME,std::string> attributes_default_value);
+  Component* get_component_bytype(TYPE_NAME tp);
+  template<typename T> T* get_component(TYPE_NAME tp) { return dynamic_cast<T*>(get_component_bytype(tp)); }
+  bool is_ok();
 protected:
-  std::vector<Component*> components;
+  Parametrs components;
 
-  void add_optimal_attribute(std::vector<TYPE_NAME> attributes,std::map<TYPE_NAME,std::string> attributes_default_value);
+  void add_optimal_attribute(Typelist attributes,std::map<TYPE_NAME,std::string> attributes_default_value);
+  bool valid;
 };
 
 #endif

@@ -115,4 +115,4 @@ $(INCLUDE_DIR)/error.h :
 $(INCLUDE_DIR)/md5.h :
 
 $(INCLUDE_DIR)/command_handler.h : $(INCLUDE_DIR)/error.h $(INCLUDE_DIR)/server.h
-$(INCLUDE_DIR)/server.h : $(INCLUDE_DIR)/error.h $(INCLUDE_DIR)/component.h
+$(INCLUDE_DIR)/server.h : $(INCLUDE_DIR)/error.h $(INCLUDE_DIR)/component.h $(INCLUDE_DIR)/notihandler.h

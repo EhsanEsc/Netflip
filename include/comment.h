@@ -9,7 +9,7 @@ class User;
 class Comment : public Entity
 {
 public:
-  Comment(std::vector<Component*> comps, bool rep, User* wr);
+  Comment(Parametrs comps, bool rep, User* wr);
   Comment(int id,std::string content, bool rep,User* wr);
 
   User* get_writer();

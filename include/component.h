@@ -4,6 +4,7 @@
 
 #include "error.h"
 #include<string>
+#include<vector>
 
 enum class TYPE_NAME
 {
@@ -42,7 +43,7 @@ enum class FILTER_TYPE
 class Component
 {
 public:
-  Component(TYPE_NAME tp);
+  Component(std::string rct, TYPE_NAME tp);
   virtual bool validation() const = 0;
   virtual std::string get_value() const = 0;
   virtual void edit(std::string ct) = 0;
@@ -53,11 +54,14 @@ public:
   TYPE_NAME get_type();
   void set_filter_type(FILTER_TYPE ft);
   FILTER_TYPE get_filter_type();
-private:
+protected:
   TYPE_NAME type = TYPE_NAME::UNDEFINED;
   FILTER_TYPE ftype = FILTER_TYPE::EXACT;
+  std::string raw_content;
 };
 Component* build_component(std::string key,std::string value);
 Component* build_component(TYPE_NAME tn, std::string value);
 
+typedef std::vector<Component*> Parametrs;
+typedef std::vector<TYPE_NAME> Typelist; 
 #endif

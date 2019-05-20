@@ -17,9 +17,9 @@ public:
   void push(int x);
   void pop(int x);
   double get_average() const ;
+  int get_sum() const ;
 private:
   std::vector<int> numbers;
-  int sum = 0;
 };
 
 #endif

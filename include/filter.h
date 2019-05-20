@@ -16,7 +16,7 @@ public:
   template<typename T> T* find_exact(vector<T*> vt, Component* cp)
   {
     for(auto& u:vt)
-      if(*(u->get_component22(cp->get_type())) == *cp)
+      if(*(u->get_component_bytype(cp->get_type())) == *cp)
         return u;
     return NULL;
   }
@@ -24,7 +24,7 @@ public:
   {
     vector<T*>res;
     for(auto& u:vt)
-      if(*cp < *(u->get_component22(cp->get_type())))
+      if(*cp < *(u->get_component_bytype(cp->get_type())))
         res.push_back(u);
     return res;
   }
@@ -32,18 +32,15 @@ public:
   {
     vector<T*>res;
     for(auto& u:vt)
-    {
-
-      if(*(u->get_component22(cp->get_type())) < *cp)
+      if(*(u->get_component_bytype(cp->get_type())) < *cp)
         res.push_back(u);
-    }
     return res;
   }
   template<typename T> vector<T*> filter_exact(vector<T*> vt, Component* cp)
   {
     vector<T*>res;
     for(auto& u:vt)
-      if(*cp == *(u->get_component22(cp->get_type())))
+      if(*cp == *(u->get_component_bytype(cp->get_type())))
         res.push_back(u);
     return res;
   }
@@ -51,13 +48,9 @@ public:
   {
     // bubble sort
     for(int i=0;i<int(vt.size())-1;i++)
-    {
       for(int j=0;j<int(vt.size())-i-1;j++)
-      {
-        if(*(vt[j+1]->get_component22(tn))<*(vt[j]->get_component22(tn)))
+        if(*(vt[j+1]->get_component_bytype(tn))<*(vt[j]->get_component_bytype(tn)))
           swap(vt[j],vt[j+1]);
-      }
-    }
     return vt;
   }
   template<typename T> vector<T*> filter(vector<T*> vt, Component* cp)
@@ -77,10 +70,7 @@ public:
 
   template<typename T> T* search_exact(vector<Component*> vt, TYPE_NAME tn)
   {
-    Component* cp = search(vt,tn);
-    if(cp == NULL)
-      return NULL;
-    return dynamic_cast<T*>(cp);
+    return dynamic_cast<T*>(search(vt,tn));
   }
 
 private:

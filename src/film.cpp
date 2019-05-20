@@ -6,7 +6,7 @@
 #include <iostream>
 using namespace std;
 
-std::vector<TYPE_NAME> FILM_ATTRIBUTE = {TYPE_NAME::FILMID,TYPE_NAME::NAME,TYPE_NAME::YEAR,TYPE_NAME::LENGTH,
+Typelist FILM_ATTRIBUTE = {TYPE_NAME::FILMID,TYPE_NAME::NAME,TYPE_NAME::YEAR,TYPE_NAME::LENGTH,
   TYPE_NAME::PRICE,TYPE_NAME::SUMMARY,TYPE_NAME::DIRECTOR,TYPE_NAME::MONEY,TYPE_NAME::FILMRATE} ;
 map<TYPE_NAME,string> attributes_default_value2 = {
   {TYPE_NAME::FILMID , "0"},
@@ -14,13 +14,11 @@ map<TYPE_NAME,string> attributes_default_value2 = {
   {TYPE_NAME::FILMRATE, "0"}
 };
 
-Film::Film(vector<Component*> comps, User* _publisher)
+Film::Film(Parametrs comps, User* _publisher)
 : Entity(comps,FILM_ATTRIBUTE,attributes_default_value2)
 {
   get_component<Number>(TYPE_NAME::FILMID)->set(get_new_id());
   publisher = _publisher;
-
-  // cout << "FILM with id: " << get_component<Number>(TYPE_NAME::ID)->get_value() << " Created! " << endl;
 }
 
 int Film::get_new_id()
@@ -79,8 +77,8 @@ void Film::add_comment(std::string content, User* writer)
 void Film::reply_comment(Component* cmid, std::string content)
 {
   Comment* cm = Filter::get_instance()->find_exact(comments, cmid);
-  if(cm->is_reply())
-    throw Error("Permission Denied");
+  if(cm == NULL)
+    throw Error(NOT_FOUND_MSG);
   cm->add_reply(new Comment(cm->get_new_reply_comment_id(), content, true, publisher));
 }
 
@@ -88,19 +86,21 @@ void Film::delete_comment(Component* cmid)
 {
   for(int i=0;i<int(comments.size());i++)
   {
-    Component* comment_id = comments[i]->get_component22(TYPE_NAME::COMMENTID);
+    Component* comment_id = comments[i]->get_component_bytype(TYPE_NAME::COMMENTID);
     if(*comment_id == *cmid)
     {
       comments.erase(comments.begin()+i);
       return;
     }
   }
+  throw Error(NOT_FOUND_MSG);
 }
 
 User* Film::get_comment_writer(Component* cmid)
 {
-
   Comment* cm = Filter::get_instance()->find_exact(comments, cmid);
+  if(cm == NULL)
+    return NULL;
   return cm->get_writer();
 }
 

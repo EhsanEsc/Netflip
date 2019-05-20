@@ -2,30 +2,36 @@
 #include "entity.h"
 using namespace std;
 
-Entity::Entity(vector<Component*> cps,vector<TYPE_NAME> attributes,map<TYPE_NAME,string> attributes_default_value)
+Entity::Entity(Parametrs cps,Typelist attributes,map<TYPE_NAME,string> attributes_default_value)
 {
-    components = cps;
-    add_optimal_attribute(attributes, attributes_default_value);
+  valid = true;
+  components = cps;
+  add_optimal_attribute(attributes, attributes_default_value);
 }
 
-void Entity::add_optimal_attribute(vector<TYPE_NAME> attributes,map<TYPE_NAME,string> attributes_default_value)
+void Entity::add_optimal_attribute(Typelist attributes,map<TYPE_NAME,string> attributes_default_value)
 {
   for(auto& at:attributes)
   {
-    if(get_component22(at) == NULL)
+    if(get_component_bytype(at) == NULL)
     {
       string value = attributes_default_value[at];
       if(value == "")
-        throw Error("Bad Request");
+      {
+        valid = false;
+        return;
+      }
       components.push_back(build_component(at,value));
     }
   }
 }
 
-Component* Entity::get_component22(TYPE_NAME tn)
+Component* Entity::get_component_bytype(TYPE_NAME tn)
 {
   for(auto& cp:components)
     if(cp->get_type() == tn)
       return cp;
   return NULL;
 }
+
+bool Entity::is_ok() { return valid; }

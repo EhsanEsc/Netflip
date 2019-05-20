@@ -3,10 +3,12 @@
 
 #include "error.h"
 #include "component.h"
+#include "notihandler.h"
 #include<vector>
 #include<string>
 #include <utility>
 
+class Entity;
 class User;
 class Film;
 class Component;
@@ -44,28 +46,28 @@ public:
   Server();
   static Server* get_instance();
 
-  void add_user(std::vector<Component*> params);
-  void add_film(std::vector<Component*> params);
-  void edit_film(std::vector<Component*> params);
-  void delete_film(std::vector<Component*> params);
-  void show_followers(std::vector<Component*> params);
-  void get_profit(std::vector<Component*> params);
-  void follow_user(std::vector<Component*> params);
-  void login(std::vector<Component*> params);
-  void show_posted_films(std::vector<Component*> params);
-  void show_all_films(std::vector<Component*> params);
-  void show_purchased_films(std::vector<Component*> params);
-  void show_film_detail(std::vector<Component*> params);
-  void add_money(std::vector<Component*> params);
-  void buy_film(std::vector<Component*> params);
-  void rate_film(std::vector<Component*> params);
-  void add_comment(std::vector<Component*> params);
-  void reply_comment(std::vector<Component*> params);
-  void delete_comment(std::vector<Component*> params);
-  void show_notis(std::vector<Component*> params);
-  void show_seen_notis(std::vector<Component*> params);
+  void add_user(Parametrs params);
+  void add_film(Parametrs params);
+  void edit_film(Parametrs params);
+  void delete_film(Parametrs params);
+  void show_followers(Parametrs params);
+  void get_profit(Parametrs params);
+  void follow_user(Parametrs params);
+  void login(Parametrs params);
+  void show_posted_films(Parametrs params);
+  void show_all_films(Parametrs params);
+  void show_purchased_films(Parametrs params);
+  void show_film_detail(Parametrs params);
+  void add_money(Parametrs params);
+  void buy_film(Parametrs params);
+  void rate_film(Parametrs params);
+  void add_comment(Parametrs params);
+  void reply_comment(Parametrs params);
+  void delete_comment(Parametrs params);
+  void show_notis(Parametrs params);
+  void show_seen_notis(Parametrs params);
 
-  void check_validate(COMMAND_TYPE ct, std::vector<Component*> params);
+  void check_validate(COMMAND_TYPE ct, Parametrs params);
 private:
   static Server* instance;
   NotiHandler* noti_handler;
@@ -73,11 +75,21 @@ private:
   std::vector<User*> users;
   std::vector<Film*> films;
   User* current_user=NULL;
-  void show_films(std::vector<Film*> list, std::vector<Component*> params);
+
+  void show_films(std::vector<Film*> list, Parametrs params);
   void show_reccomendation_films(User* us, Film* fl);
-  void print_films(std::string title, std::vector<Film*> list, std::vector<TYPE_NAME> format);
+  void print_entities(std::string title, std::vector<Entity*> list, Typelist format);
+  void send_noti_new_film(User* user);
+  void send_noti_follow_user(User* us1, User* us2);
+  void send_noti_film(User* user, Film* fl , NOTI_TYPE nt);
+  void send_noti_reply_comment(User* user, User* wr);
+
   std::pair<std::string,std::string> get_info(User* us);
   std::pair<std::string,std::string> get_info(Film* us);
+  std::vector<Entity*>transform_to_entity(std::vector<Film*> flist);
+  std::vector<Entity*>transform_to_entity(std::vector<User*> ulist);
+  std::vector<Film*> sort_samerate_films_byid(std::vector<Film*> list);
+
 };
 
 #endif

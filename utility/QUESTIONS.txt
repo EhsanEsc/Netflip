@@ -4,3 +4,5 @@ hazf Component ha baad az estefade
 behtar kardan makefile
 how to commit
 why makefile no?
+tarif component baraye kamkardan functionha va bejaye yek khat neveshtan tabe kardan onha?!!
+voroodi dorost ya check kardna onha?

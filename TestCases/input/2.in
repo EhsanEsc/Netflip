@@ -1,2 +1,2 @@
-POST films ? name film1 year 1999 length 120 price 10000 summary summary|of|film1 director director_of_film1
 POST signup ? username pub password 123 email pub@gmail.com age 20 publisher true
+POST followers ? user_id 12
