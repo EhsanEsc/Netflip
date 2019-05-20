@@ -1,0 +1,25 @@
+POST signup ? username pub password 123 email pub@gmail.com age 20 publisher true
+POST films ? name film1 year 1999 length 120 price 100 summary summary|of|film1 director director_of_film1
+POST films ? name film2 year 1999 length 120 price 100 summary summary|of|film1 director director_of_film1
+POST films ? name film3 year 1999 length 120 price 100 summary summary|of|film1 director director_of_film1
+POST films ? name film4 year 1999 length 120 price 100 summary summary|of|film1 director director_of_film1
+POST films ? name film5 year 1999 length 120 price 100 summary summary|of|film1 director director_of_film1
+POST money ? amount 100000
+POST buy ? film_id 1
+POST buy ? film_id 2
+POST buy ? film_id 3
+POST buy ? film_id 4
+POST buy ? film_id 5
+POST signup ? username u1 password 123 email pub@gmail.com age 20 publisher true
+POST money ? amount 100000
+POST buy ? film_id 2
+POST buy ? film_id 3
+POST buy ? film_id 4
+POST buy ? film_id 5
+POST signup ? username u2 password 123 email pub@gmail.com age 20 publisher true
+POST money ? amount 100000
+POST buy ? film_id 4
+POST buy ? film_id 5
+GET films ? film_id 5
+POST signup ? username u3 password 123 email pub@gmail.com age 20 publisher true
+GET films ? film_id 4
