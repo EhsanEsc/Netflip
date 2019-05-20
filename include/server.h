@@ -19,6 +19,7 @@ enum class COMMAND_TYPE
 {
   SIGNUP,
   LOGIN,
+  LOGOUT,
   POSTFILM,
   EDITFILM,
   DELETEFILM,
@@ -54,6 +55,7 @@ public:
   void get_profit(Parametrs params);
   void follow_user(Parametrs params);
   void login(Parametrs params);
+  void logout(Parametrs params);
   void show_posted_films(Parametrs params);
   void show_all_films(Parametrs params);
   void show_purchased_films(Parametrs params);
@@ -75,6 +77,7 @@ private:
   std::vector<User*> users;
   std::vector<Film*> films;
   User* current_user=NULL;
+  User* admin = NULL;
 
   void show_films(std::vector<Film*> list, Parametrs params);
   void show_reccomendation_films(User* us, Film* fl);

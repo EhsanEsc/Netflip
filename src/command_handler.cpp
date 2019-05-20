@@ -36,6 +36,9 @@ void CommandHandler::run()
         case COMMAND_TYPE::LOGIN:
           server->login(input);
           break;
+        case COMMAND_TYPE::LOGOUT:
+          server->logout(input);
+          break;
         case COMMAND_TYPE::POSTFILM:
           server->add_film(input);
           break;
@@ -125,6 +128,7 @@ vector<string> CommandHandler::split_line(string line)
 map<COMMAND_TYPE,pair<string,string>> command_method_cache = {
   {COMMAND_TYPE::SIGNUP, {"POST","signup"}},
   {COMMAND_TYPE::LOGIN, {"POST","login"}},
+  {COMMAND_TYPE::LOGOUT, {"POST","logout"}},
   {COMMAND_TYPE::POSTFILM, {"POST","films"}},
   {COMMAND_TYPE::EDITFILM, {"POST","put_films"}},
   {COMMAND_TYPE::DELETEFILM, {"POST","delete_films"}},
@@ -148,6 +152,7 @@ map<COMMAND_TYPE,pair<string,string>> command_method_cache = {
 map<COMMAND_TYPE, Typelist> command_primary_list = {
   {COMMAND_TYPE::SIGNUP , Typelist{TYPE_NAME::USER_NAME,TYPE_NAME::EMAIL,TYPE_NAME::PASSWORD,TYPE_NAME::AGE}},
   {COMMAND_TYPE::LOGIN , Typelist{TYPE_NAME::USER_NAME,TYPE_NAME::PASSWORD}},
+  {COMMAND_TYPE::LOGOUT , Typelist{}},
   {COMMAND_TYPE::POSTFILM , Typelist{TYPE_NAME::NAME,TYPE_NAME::YEAR,TYPE_NAME::LENGTH,
     TYPE_NAME::PRICE,TYPE_NAME::SUMMARY,TYPE_NAME::DIRECTOR}},
   {COMMAND_TYPE::EDITFILM , Typelist{TYPE_NAME::FILMID}},
@@ -173,6 +178,7 @@ map<COMMAND_TYPE, Typelist> command_primary_list = {
 map<COMMAND_TYPE, Typelist> command_optimal_list = {
   {COMMAND_TYPE::SIGNUP , Typelist{TYPE_NAME::ISPUB}},
   {COMMAND_TYPE::LOGIN , Typelist{}},
+  {COMMAND_TYPE::LOGOUT , Typelist{}},
   {COMMAND_TYPE::POSTFILM , Typelist{}},
   {COMMAND_TYPE::EDITFILM , Typelist{TYPE_NAME::NAME,TYPE_NAME::YEAR,TYPE_NAME::LENGTH,
     TYPE_NAME::SUMMARY,TYPE_NAME::DIRECTOR}},

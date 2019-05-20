@@ -152,6 +152,11 @@ void Server::login(Parametrs params)
     throw Error(BAD_REQUEST_MSG);
 }
 
+void Server::logout(Parametrs params)
+{
+  current_user = NULL;
+}
+
 void Server::show_posted_films(Parametrs params)
 {
   show_films(current_user->get_posted_films(), params);
