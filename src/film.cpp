@@ -28,6 +28,11 @@ int Film::get_new_id()
   return id;
 }
 
+int Film::get_id()
+{
+  return get_component<Number>(TYPE_NAME::FILMID)->get();
+}
+
 User* Film::get_publisher()
 {
   return publisher;

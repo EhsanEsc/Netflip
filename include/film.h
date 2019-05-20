@@ -21,6 +21,7 @@ public:
   void reply_comment(Component* cmid, std::string content);
   void delete_comment(Component* cmid);
 
+  int get_id();
   User* get_publisher();
   User* get_comment_writer(Component* cmid);
 private:

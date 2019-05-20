@@ -14,6 +14,7 @@ class Film;
 class Component;
 class NotiHandler;
 class Filter;
+class Recomender;
 
 enum class COMMAND_TYPE
 {
@@ -76,6 +77,7 @@ private:
   static Server* instance;
   NotiHandler* noti_handler;
   Filter* filter;
+  Recomender* recomender;
   std::vector<User*> users;
   std::vector<Film*> films;
   User* current_user=NULL;
@@ -94,7 +96,7 @@ private:
   std::vector<Entity*>transform_to_entity(std::vector<Film*> flist);
   std::vector<Entity*>transform_to_entity(std::vector<User*> ulist);
   std::vector<Film*> sort_samerate_films_byid(std::vector<Film*> list);
-
+  std::vector<int> get_film_ids(std::vector<Film*> list);
 };
 
 #endif
