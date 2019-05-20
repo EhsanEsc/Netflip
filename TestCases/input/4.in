@@ -1,10 +1,17 @@
 POST signup ? username pub password 123 email pub@gmail.com age 20 publisher true
 POST films ? name film1 year 1999 length 120 price 100 summary summary|of|film1 director director_of_film1
-POST replies ? film_id 1 comment_id 2 content Tnx
-POST replies ? film_id 2 comment_id 2 content Tnx
 POST signup ? username u1 password 123 email pub@gmail.com age 20 publisher true
 POST money ? amount 100000
+GET money
 POST buy ? film_id 1
-POST comments ? film_id 1 content holala
-GET purchased
-GET films ? film_id 1
+GET money
+POST logout
+GET money
+POST login ? username admin password admin
+GET money
+POST login ? username pub password 123
+GET money
+POST money
+GET money
+POST login ? username admin password admin
+GET money

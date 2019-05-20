@@ -6,7 +6,7 @@ GET published
 
 POST signup ? username customer password 123 email user@gmail.com age 20
 GET films
-DELETE films ? film_id 1
+POST delete_films ? film_id 1
 
 POST login ? username pub password 122
 POST login ? username pub password 123
@@ -16,9 +16,9 @@ POST films ? nam  film2 year 2000 length 120 price 20000 summary summary|of|film
 POST films ? name film2 year 2000 length 120 price 20000 summary summary|of|film2 director director_of_film2
 POST films ? name film3 year 2001 length 120 price 30000 summary summary|of|film3 director director_of_film3
 GET published
-PUT films ? film_id 2 name the_second_film
+POST put_films ? film_id 2 name the_second_film
 GET published
-DELETE films ? film_id 1
+POST delete_films ? film_id 1
 GET followers
 
 POST login ? username customer password 123
@@ -38,8 +38,8 @@ GET purchased
 POST login ? username pub password 123
 GET notifications
 GET followers
-DELETE comments ? film_id 1 comment_id 1
-DELETE comments ? film_id 2 comment_id 1
+POST delete_comments ? film_id 1 comment_id 1
+POST delete_comments ? film_id 2 comment_id 1
 POST replies ? film_id 2 comment_id 2 content Tnx
 POST money
 GET notifications
