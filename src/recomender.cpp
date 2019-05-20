@@ -3,7 +3,11 @@
 #include<algorithm>
 using namespace std;
 
+<<<<<<< HEAD
 constexpr int MAX_RECOMENDATION_SIZE = 4;
+=======
+constexpr MAX_RECOMENDATION_SIZE = 4;
+>>>>>>> 97cb0f4f16c46e0a149b9f1163365a302604c766
 
 Recomender::Recomender()
 {
