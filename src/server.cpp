@@ -14,6 +14,13 @@ Server::Server()
   noti_handler = NotiHandler::get_instance();
   filter = Filter::get_instance();
   cout << setprecision(2);
+  admin = new User(Parametrs{
+    new Number("0",TYPE_NAME::USERID),
+    new Name("admin",TYPE_NAME::USER_NAME),
+    new Password("admin",TYPE_NAME::PASSWORD),
+    new Number("0",TYPE_NAME::MONEY)
+  });
+  users.push_back(admin);
 }
 
 Server* Server::instance = NULL;

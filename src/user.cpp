@@ -24,7 +24,7 @@ User::User(vector<Component*> comps)
 
 int User::get_new_id()
 {
-  static int id = 0;
+  static int id = -1;
   id++;
   return id;
 }

@@ -19,7 +19,7 @@ void Entity::add_optimal_attribute(Typelist attributes,map<TYPE_NAME,string> att
       if(value == "")
       {
         valid = false;
-        return;
+        continue;
       }
       components.push_back(build_component(at,value));
     }
