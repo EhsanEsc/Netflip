@@ -126,8 +126,8 @@ map<COMMAND_TYPE,pair<string,string>> command_method_cache = {
   {COMMAND_TYPE::SIGNUP, {"POST","signup"}},
   {COMMAND_TYPE::LOGIN, {"POST","login"}},
   {COMMAND_TYPE::POSTFILM, {"POST","films"}},
-  {COMMAND_TYPE::EDITFILM, {"PUT","films"}},
-  {COMMAND_TYPE::DELETEFILM, {"DELETE","films"}},
+  {COMMAND_TYPE::EDITFILM, {"POST","put_films"}},
+  {COMMAND_TYPE::DELETEFILM, {"POST","delete_films"}},
   {COMMAND_TYPE::SHOWFOLOWERS, {"GET","followers"}},
   {COMMAND_TYPE::GETPROFIT, {"POST","money"}},
   {COMMAND_TYPE::FOLLOW, {"POST","followers"}},
@@ -140,7 +140,7 @@ map<COMMAND_TYPE,pair<string,string>> command_method_cache = {
   {COMMAND_TYPE::RATEFILM, {"POST","rate"}},
   {COMMAND_TYPE::ADDCOMMENT, {"POST","comments"}},
   {COMMAND_TYPE::REPLYCOMMENT, {"POST","replies"}},
-  {COMMAND_TYPE::DELETECOMMENT, {"DELETE","comments"}},
+  {COMMAND_TYPE::DELETECOMMENT, {"POST","delete_comments"}},
   {COMMAND_TYPE::SHOWNOTI, {"GET","notifications"}},
   {COMMAND_TYPE::SHOWSEENNOTI, {"GET","notifications read"}}
 };
