@@ -37,6 +37,9 @@ Server* Server::get_instance()
 
 void Server::check_validate(COMMAND_TYPE ct, Parametrs params)
 {
+  if(current_user != NULL)
+    if(ct == COMMAND_TYPE::SIGNUP || ct == COMMAND_TYPE::LOGIN)
+      throw Error(BAD_REQUEST_MSG);
   if(current_user == NULL)
     if(ct != COMMAND_TYPE::SIGNUP && ct != COMMAND_TYPE::LOGIN)
       throw Error(PERMISSION_DENIED_MSG);
@@ -258,8 +261,8 @@ void Server::buy_film(Parametrs params)
     recomender->add_weight(fl->get_id(), purchased_film_ids);
 
     current_user->buy_film(fl, admin);
+    send_noti_film(current_user, fl , NOTI_TYPE::BUYFILM);
   }
-  send_noti_film(current_user, fl , NOTI_TYPE::BUYFILM);
 }
 
 void Server::rate_film(Parametrs params)

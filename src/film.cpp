@@ -41,15 +41,15 @@ User* Film::get_publisher()
 void Film::pay_publisher(User* admin)
 {
   int profit = get_component<Number>(TYPE_NAME::MONEY)->get();
-  publisher->add_money(calc_paid_money(profit));
-  admin->spend_money(calc_paid_money(profit));
+  publisher->add_money(profit);
+  admin->spend_money(profit);
   get_component<Number>(TYPE_NAME::MONEY)->set(0);
 }
 
 void Film::sold_out()
 {
   int price = get_component<Number>(TYPE_NAME::PRICE)->get();
-  get_component<Number>(TYPE_NAME::MONEY)->add(price);
+  get_component<Number>(TYPE_NAME::MONEY)->add(calc_paid_money(price));
 }
 
 int Film::calc_paid_money(int profit)
