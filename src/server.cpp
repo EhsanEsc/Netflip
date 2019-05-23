@@ -42,7 +42,7 @@ void Server::check_validate(COMMAND_TYPE ct, Parametrs params)
       throw Error(BAD_REQUEST_MSG);
   if(current_user == NULL)
     if(ct != COMMAND_TYPE::SIGNUP && ct != COMMAND_TYPE::LOGIN)
-      throw Error(PERMISSION_DENIED_MSG);
+      throw Error(BAD_REQUEST_MSG);
   if(current_user != NULL && current_user->is_publisher() == false)
     if(ct == COMMAND_TYPE::POSTFILM || ct == COMMAND_TYPE::EDITFILM || ct == COMMAND_TYPE::DELETEFILM
     || ct == COMMAND_TYPE::GETPROFIT || ct == COMMAND_TYPE::SEARCHPOSTED || ct == COMMAND_TYPE::REPLYCOMMENT
