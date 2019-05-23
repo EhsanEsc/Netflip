@@ -1,0 +1,51 @@
+POST signup ? username admin password idk age 1 email it@will.fail
+POST signup ? username pub password pw age 10 email m@m.m publisher true
+
+POST films ? name film1 year 463 length 18 price 100 summary adam director cakeman
+POST films ? name film2 year 463 length 18 price 100 summary wakeupgrafbhsfd director serj
+POST films ? name film3 year 463 length 18 price 100 summary trywalkinglikejesus director dayerekamel
+POST films ? name film4 year 463 length 18 price 100 summary allhopeisgone director coreytaylor
+POST films ? name film5 year 463 length 18 price 100 summary seaofdreams director bojack
+POST films ? name film6 year 463 length 18 price 100 summary musclemuseuem director mattbellamy
+POST logout
+
+POST signup ? username cus password pw age 10 email m@m.m publisher false
+POST money ? amount 4000
+POST buy ? film_id 1
+POST buy ? film_id 2
+POST buy ? film_id 5
+POST buy ? film_id 3
+POST logout
+
+POST signup ? username cus2 password pw age 10 email m@m.m publisher false
+POST money ? amount 1000
+POST buy ? film_id 2
+POST buy ? film_id 4
+POST buy ? film_id 5
+POST comments ? film_id 4 content wellfindaway
+POST logout
+
+POST login ? username pub password pw
+POST delete_films ? film_id 5
+POST put_films ? film_id 1 name film1edited director davidgilmour summary lightwasbrighter
+POST delete_comments ? film_id 4 comment_id 1
+POST money
+GET money
+POST money ? amount 1000
+POST buy ? film_id 1
+POST buy ? film_id 2
+POST buy ? film_id 6
+POST buy ? film_id 4
+POST buy ? film_id 5
+POST logout
+
+POST login ? username admin password admin
+GET money
+
+POST login ? username pub password pw
+POST logout
+
+POST signup ? username david password themanwhosoldtheworld age 70 email bowie@oddity.com
+GET films ? film_id 1
+GET films ? film_id 4
+GET films ? film_id 5

@@ -1,12 +1,14 @@
-Permission Denied
+Bad Request
 OK
 OK
 #. Film Id | Film Name | Film Length | Film price | Rate | Production Year | Film Director
 1. 1 | film1 | 120 | 10000 | 0 | 1999 | director_of_film1
 OK
+OK
 #. Film Id | Film Name | Film Length | Film price | Rate | Production Year | Film Director
 1. 1 | film1 | 120 | 10000 | 0 | 1999 | director_of_film1
 Permission Denied
+OK
 Bad Request
 OK
 Bad Request
@@ -25,6 +27,7 @@ OK
 OK
 List of Followers
 #. User Id | User Username | User Email
+OK
 OK
 #. Film Id | Film Name | Film Length | Film price | Rate | Production Year | Film Director
 OK
@@ -55,6 +58,7 @@ OK
 #. Film Id | Film Name | Film Length | Film price | Rate | Production Year | Film Director
 1. 2 | the_second_film | 120 | 20000 | 10 | 2000 | director_of_film2
 OK
+OK
 #. Notification Message
 1. User customer with id 2 comment on your film the_second_film with id 2.
 2. User customer with id 2 comment on your film the_second_film with id 2.
@@ -69,6 +73,7 @@ OK
 OK
 OK
 #. Notification Message
+OK
 OK
 #. Notification Message
 1. Publisher pub with id 1 reply to your comment.

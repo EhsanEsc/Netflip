@@ -3,10 +3,13 @@ POST films ? name film1 year 1999 length 120 price 10000 summary summary|of|film
 POST signup ? username pub password 123 email pub@gmail.com age 20 publisher true
 POST films ? name film1 year 1999 length 120 price 10000 summary summary|of|film1 director director_of_film1
 GET published
+POST logout
 
 POST signup ? username customer password 123 email user@gmail.com age 20
 GET films
 POST delete_films ? film_id 1
+POST logout
+
 
 POST login ? username pub password 122
 POST login ? username pub password 123
@@ -20,6 +23,7 @@ POST put_films ? film_id 2 name the_second_film
 GET published
 POST delete_films ? film_id 1
 GET followers
+POST logout
 
 POST login ? username customer password 123
 GET purchased
@@ -34,6 +38,7 @@ POST rate ? film_id 2 score 10
 POST comments ? film_id 2 content perfeeeect.
 POST comments ? film_id 2 content Perfection
 GET purchased
+POST logout
 
 POST login ? username pub password 123
 GET notifications
@@ -43,6 +48,7 @@ POST delete_comments ? film_id 2 comment_id 1
 POST replies ? film_id 2 comment_id 2 content Tnx
 POST money
 GET notifications
+POST logout
 
 POST login ? username customer password 123
 GET notifications

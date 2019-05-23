@@ -10,16 +10,22 @@ POST buy ? film_id 2
 POST buy ? film_id 3
 POST buy ? film_id 4
 POST buy ? film_id 5
+POST logout
+
 POST signup ? username u1 password 123 email pub@gmail.com age 20 publisher true
 POST money ? amount 100000
 POST buy ? film_id 2
 POST buy ? film_id 3
 POST buy ? film_id 4
 POST buy ? film_id 5
+POST logout
+
 POST signup ? username u2 password 123 email pub@gmail.com age 20 publisher true
 POST money ? amount 100000
 POST buy ? film_id 4
 POST buy ? film_id 5
 GET films ? film_id 5
+POST logout
+
 POST signup ? username u3 password 123 email pub@gmail.com age 20 publisher true
 GET films ? film_id 4

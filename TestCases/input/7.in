@@ -1,0 +1,47 @@
+POST signup ? username pub password pw age 10 email m@m.m publisher true
+
+POST films ? name film1 year 463 length 18 price 100 summary adam director cakeman
+POST films ? name film2 year 463 length 18 price 1000 summary wakeupgrafbhsfd director serj
+POST films ? name film3 year 463 length 18 price 10000 summary trywalkinglikejesus director dayerekamel
+POST films ? name film4 year 463 length 18 price 100000 summary allhopeisgone director coreytaylor
+POST logout
+
+POST signup ? username cus password pw age 10 email m@m.m publisher false
+POST money ? amount 400000
+POST buy ? film_id 1
+POST buy ? film_id 2
+POST buy ? film_id 3
+POST buy ? film_id 4
+POST rate ? film_id 1 score 3
+POST rate ? film_id 2 score 6
+POST rate ? film_id 3 score 9
+POST logout
+
+POST login ? username pub password pw
+POST money
+GET money
+POST logout
+
+POST login ? username admin password admin
+GET money
+POST logout
+
+POST signup ? username cus2 password pw age 10 email m@m.m publisher false
+POST money ? amount 400000
+POST buy ? film_id 1
+POST buy ? film_id 2
+POST buy ? film_id 3
+POST buy ? film_id 4
+POST logout
+
+POST login ? username pub password pw
+POST money
+GET money
+POST logout
+
+POST login ? username admin password admin
+GET money
+
+POST login ? username pub password pw
+POST logout
+POST logout

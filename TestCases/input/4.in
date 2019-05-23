@@ -1,5 +1,7 @@
 POST signup ? username pub password 123 email pub@gmail.com age 20 publisher true
 POST films ? name film1 year 1999 length 120 price 100 summary summary|of|film1 director director_of_film1
+POST logout
+
 POST signup ? username u1 password 123 email pub@gmail.com age 20 publisher true
 POST money ? amount 100000
 GET money
@@ -7,11 +9,16 @@ POST buy ? film_id 1
 GET money
 POST logout
 GET money
+
 POST login ? username admin password admin
 GET money
+POST logout
+
 POST login ? username pub password 123
 GET money
 POST money
 GET money
+POST logout
+
 POST login ? username admin password admin
 GET money

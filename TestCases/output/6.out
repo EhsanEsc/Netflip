@@ -1,0 +1,76 @@
+Bad Request
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+560
+OK
+OK
+OK
+OK
+OK
+Not Found
+OK
+OK
+540
+Bad Request
+OK
+OK
+Details of Film film1edited
+Id = 1
+Director = davidgilmour
+Length = 18
+Year = 463
+Summary = lightwasbrighter
+Rate = 0
+Price = 100
+
+Comments
+
+Recommendation Film
+#. Film Id | Film Name | Film Length | Film Director
+1. 2 | film2 | 18 | serj
+2. 3 | film3 | 18 | dayerekamel
+3. 4 | film4 | 18 | coreytaylor
+4. 6 | film6 | 18 | mattbellamy
+Details of Film film4
+Id = 4
+Director = coreytaylor
+Length = 18
+Year = 463
+Summary = allhopeisgone
+Rate = 0
+Price = 100
+
+Comments
+
+Recommendation Film
+#. Film Id | Film Name | Film Length | Film Director
+1. 2 | film2 | 18 | serj
+2. 1 | film1edited | 18 | davidgilmour
+3. 6 | film6 | 18 | mattbellamy
+4. 3 | film3 | 18 | dayerekamel
+Not Found
