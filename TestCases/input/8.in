@@ -1,0 +1,183 @@
+POST signup ? username publisher1 password 123 email pub@gmail.com age 20 publisher true
+POST films ? name film1 year 1999 length 120 price 10000 summary summary|of|film1 director film1_director
+POST films ? name film2 year 1999 length 120 price 10000 summary summary|of|film2 director film2_director
+POST films ? name film3 year 1999 length 120 price 10000 summary summary|of|film3 director film3_director
+POST films ? name film4 year 1999 length 120 price 10000 summary summary|of|film4 director film4_director
+POST films ? name film5 year 1999 length 120 price 10000 summary summary|of|film5 director film5_director
+POST films ? name film6 year 1999 length 120 price 10000 summary summary|of|film6 director film6_director
+POST films ? name film7 year 1999 length 120 price 10000 summary summary|of|film7 director film7_director
+POST films ? name film8 year 1999 length 120 price 10000 summary summary|of|film8 director film8_director
+POST logout
+POST signup ? username user01 password 123 email pub@gmail.com age 20
+POST logout
+POST signup ? username user02 password 123 email pub@gmail.com age 20
+POST logout
+POST signup ? username user03 password 123 email pub@gmail.com age 20
+POST logout
+POST signup ? username user04 password 123 email pub@gmail.com age 20
+POST logout
+POST signup ? username user05 password 123 email pub@gmail.com age 20
+POST logout
+POST signup ? username user06 password 123 email pub@gmail.com age 20
+POST logout
+POST signup ? username user07 password 123 email pub@gmail.com age 20
+POST logout
+POST signup ? username user08 password 123 email pub@gmail.com age 20
+POST logout
+POST signup ? username user09 password 123 email pub@gmail.com age 20
+POST logout
+POST signup ? username user10 password 123 email pub@gmail.com age 20
+POST logout
+POST signup ? username user11 password 123 email pub@gmail.com age 20
+POST logout
+POST signup ? username user12 password 123 email pub@gmail.com age 20
+POST logout
+POST signup ? username user13 password 123 email pub@gmail.com age 20
+POST logout
+POST signup ? username user14 password 123 email pub@gmail.com age 20
+POST logout
+POST signup ? username user15 password 123 email pub@gmail.com age 20
+POST logout
+POST signup ? username user16 password 123 email pub@gmail.com age 20
+POST logout
+POST login ? username user01 password 123
+POST money ? amount 999999
+POST logout
+POST login ? username user02 password 123
+POST money ? amount 999999
+POST logout
+POST login ? username user03 password 123
+POST money ? amount 999999
+POST logout
+POST login ? username user04 password 123
+POST money ? amount 999999
+POST logout
+POST login ? username user05 password 123
+POST money ? amount 999999
+POST logout
+POST login ? username user06 password 123
+POST money ? amount 999999
+POST logout
+POST login ? username user07 password 123
+POST money ? amount 999999
+POST logout
+POST login ? username user08 password 123
+POST money ? amount 999999
+POST logout
+POST login ? username user09 password 123
+POST money ? amount 999999
+POST logout
+POST login ? username user10 password 123
+POST money ? amount 999999
+POST logout
+POST login ? username user11 password 123
+POST money ? amount 999999
+POST logout
+POST login ? username user12 password 123
+POST money ? amount 999999
+POST logout
+POST login ? username user13 password 123
+POST money ? amount 999999
+POST logout
+POST login ? username user14 password 123
+POST money ? amount 999999
+POST logout
+POST login ? username user15 password 123
+POST money ? amount 999999
+POST logout
+POST login ? username user16 password 123
+POST money ? amount 999999
+POST logout
+POST login ? username user01 password 123
+POST buy ? film_id 1
+POST buy ? film_id 2
+POST buy ? film_id 3
+POST buy ? film_id 5
+POST buy ? film_id 6
+POST logout 
+POST login ? username user02 password 123
+POST buy ? film_id 1
+POST buy ? film_id 2
+POST buy ? film_id 3
+POST buy ? film_id 5
+POST buy ? film_id 6
+POST logout 
+POST login ? username user03 password 123
+POST buy ? film_id 1
+POST buy ? film_id 2
+POST buy ? film_id 3
+POST buy ? film_id 5
+POST buy ? film_id 6
+POST logout 
+POST login ? username user04 password 123
+POST buy ? film_id 1
+POST buy ? film_id 2
+POST buy ? film_id 3
+POST buy ? film_id 5
+POST buy ? film_id 6
+POST logout 
+POST login ? username user05 password 123
+POST buy ? film_id 1
+POST buy ? film_id 2
+POST buy ? film_id 3
+POST buy ? film_id 5
+POST buy ? film_id 6
+POST logout 
+POST login ? username user06 password 123
+POST buy ? film_id 1
+POST buy ? film_id 2
+POST buy ? film_id 3
+POST buy ? film_id 5
+POST buy ? film_id 6
+POST logout 
+POST login ? username user07 password 123
+POST buy ? film_id 1
+POST buy ? film_id 2
+POST buy ? film_id 3
+POST buy ? film_id 5
+POST buy ? film_id 6
+POST logout 
+POST login ? username user08 password 123
+POST buy ? film_id 1
+POST buy ? film_id 2
+POST buy ? film_id 3
+POST buy ? film_id 5
+POST buy ? film_id 6
+POST logout 
+POST login ? username user09 password 123
+POST buy ? film_id 1
+POST buy ? film_id 2
+POST buy ? film_id 3
+POST buy ? film_id 5
+POST buy ? film_id 6
+POST logout
+POST login ? username user10 password 123
+POST buy ? film_id 1
+POST buy ? film_id 2
+POST buy ? film_id 5
+POST buy ? film_id 6
+POST logout
+POST login ? username user11 password 123
+POST buy ? film_id 1
+POST buy ? film_id 2
+POST logout
+POST login ? username user12 password 123
+POST buy ? film_id 1
+POST buy ? film_id 2
+POST logout
+POST login ? username user13 password 123
+POST buy ? film_id 1
+POST buy ? film_id 2
+POST logout
+POST login ? username user14 password 123
+POST buy ? film_id 1
+POST buy ? film_id 2
+POST logout
+POST login ? username user15 password 123
+POST buy ? film_id 1
+POST buy ? film_id 2
+POST logout
+POST login ? username user16 password 123
+POST buy ? film_id 1
+GET films ? film_id 1
+POST logout

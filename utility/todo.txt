@@ -1,2 +1,3 @@
-check with huge test case
-start phase2
+add shared_ptr , deleting and stuff
+add iterator and deleting sort algorithm and refactor
+try to refactor component and entity
