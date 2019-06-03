@@ -8,6 +8,7 @@
 #include<iostream>
 #include <algorithm>
 #include <iomanip>
+#include <sstream>
 using namespace std;
 
 MeServer::MeServer()
@@ -15,8 +16,6 @@ MeServer::MeServer()
   noti_handler = NotiHandler::get_instance();
   filter = Filter::get_instance();
   recomender = Recomender::get_instance();
-
-  cout << setprecision(2);
 
   admin = new User(Parametrs{
     new Number("0",TYPE_NAME::USERID),
@@ -59,20 +58,22 @@ void MeServer::check_validate(COMMAND_TYPE ct, Parametrs params)
   }
 }
 
-void MeServer::add_user(Parametrs params)
+Respond MeServer::add_user(Parametrs params)
 {
   Component* cid = filter->search(params, TYPE_NAME::USER_NAME);
   User* us = filter->find_exact(users,cid);
   if(us != NULL)
-    throw Error(BAD_REQUEST_MSG);
+    throw Error("This username is already exist!");
   us = new User(params);
   if(us->is_ok() == false)
     throw Error(BAD_REQUEST_MSG);
   current_user = us;
   users.push_back(current_user);
+
+  return SUCCESS_RESPOND;
 }
 
-void MeServer::add_film(Parametrs params)
+Respond MeServer::add_film(Parametrs params)
 {
   Film* new_film = new Film(params, current_user);
   if(new_film->is_ok() == false)
@@ -83,9 +84,11 @@ void MeServer::add_film(Parametrs params)
   send_noti_new_film(current_user);
   int fid = new_film->get_component<Number>(TYPE_NAME::FILMID)->get();
   recomender->add_node(fid);
+
+  return SUCCESS_RESPOND;
 }
 
-void MeServer::edit_film(Parametrs params)
+Respond MeServer::edit_film(Parametrs params)
 {
   Component* cid = filter->search(params, TYPE_NAME::FILMID);
   Film* fl = filter->find_exact(films, cid);
@@ -97,9 +100,11 @@ void MeServer::edit_film(Parametrs params)
       Component* cp = fl->get_component_bytype(u->get_type());
       cp->edit(u->get_value());
     }
+
+  return SUCCESS_RESPOND;
 }
 
-void MeServer::delete_film(Parametrs params)
+Respond MeServer::delete_film(Parametrs params)
 {
   for(int i=0;i<int(films.size());i++)
   {
@@ -109,34 +114,36 @@ void MeServer::delete_film(Parametrs params)
         throw Error(PERMISSION_DENIED_MSG);
       recomender->delete_node(films[i]->get_component<Number>(TYPE_NAME::FILMID)->get());
       films.erase(films.begin()+i);
-      return ;
+
+      return SUCCESS_RESPOND;
     }
   }
 }
 
-void MeServer::show_followers(Parametrs params)
+Respond MeServer::show_followers(Parametrs params)
 {
   Typelist format{TYPE_NAME::USERID, TYPE_NAME::USER_NAME, TYPE_NAME::EMAIL};
   vector<User*> luser = current_user->get_followers();
   luser = filter->sort(luser, TYPE_NAME::USERID);
 
-  cout << "List of Followers" << endl;
   string title = "#. User Id | User Username | User Email";
-  print_entities(title, transform_to_entity(luser), format);
+  return print_entities(title, transform_to_entity(luser), format);
 }
 
-void MeServer::get_profit(Parametrs params)
+Respond MeServer::get_profit(Parametrs params)
 {
   for(auto& fl : current_user->get_posted_films())
     fl->pay_publisher(admin);
+  return SUCCESS_RESPOND;
 }
 
-void MeServer::add_money(Parametrs params)
+Respond MeServer::add_money(Parametrs params)
 {
   current_user->charge_account(stoi(params[0]->get_value()));
+  return SUCCESS_RESPOND;
 }
 
-void MeServer::follow_user(Parametrs params)
+Respond MeServer::follow_user(Parametrs params)
 {
   User* us = filter->find_exact(users, params[0]);
   if(us == NULL)
@@ -148,13 +155,14 @@ void MeServer::follow_user(Parametrs params)
 
   User* rr = filter->find_exact(us->get_followers(), current_user->get_component_bytype(TYPE_NAME::USERID));
   if(rr != NULL)
-    return;
+    return NULL_RESPOND;
 
   current_user->follow(us);
   us->add_follower(current_user);
+  return SUCCESS_RESPOND;
 }
 
-void MeServer::login(Parametrs params)
+Respond MeServer::login(Parametrs params)
 {
   Name* username = filter->search_exact<Name>(params, TYPE_NAME::USER_NAME);
   Password* pass = filter->search_exact<Password>(params, TYPE_NAME::PASSWORD);
@@ -167,63 +175,76 @@ void MeServer::login(Parametrs params)
     current_user = us;
   else
     throw Error(BAD_REQUEST_MSG);
+  return SUCCESS_RESPOND;
 }
 
-void MeServer::logout(Parametrs params)
+Respond MeServer::logout(Parametrs params)
 {
   if(current_user == NULL)
     throw Error(BAD_REQUEST_MSG);
   current_user = NULL;
+  return SUCCESS_RESPOND;
 }
 
-void MeServer::show_posted_films(Parametrs params)
+Respond MeServer::show_posted_films(Parametrs params)
 {
-  show_films(current_user->get_posted_films(), params);
+  return show_films(current_user->get_posted_films(), params);
 }
 
-void MeServer::show_all_films(Parametrs params)
+Respond MeServer::show_all_films(Parametrs params)
 {
-  show_films(films, params);
+  return show_films(films, params);
 }
 
-void MeServer::show_purchased_films(Parametrs params)
+Respond MeServer::show_purchased_films(Parametrs params)
 {
-  show_films(current_user->get_purchased_films(), params);
+  return show_films(current_user->get_purchased_films(), params);
 }
 
-void MeServer::show_film_detail(Parametrs params)
+Respond MeServer::show_film_detail(Parametrs params)
 {
   Film* fl = filter->find_exact(films, params[0]);
+  Respond res;
 
-  cout << "Details of Film " << fl->get_component<Name>(TYPE_NAME::NAME)->get_value() << endl;
-  fl->print_details();
-  cout << endl;
+  stringstream ss;
+  ss << "Details of Film " << fl->get_component<Name>(TYPE_NAME::NAME)->get_value() << endl;
+  res.push_back(ss.str()); ss.str(" ");
+  Respond tmp = fl->print_details();
+  res.insert(res.end(), tmp.begin(), tmp.end());
 
-  cout << "Comments" << endl;
-  fl->print_comments();
-  cout << endl;
+  ss << "Comments" << endl;
+  res.push_back(ss.str()); ss.str(" ");
+  tmp = fl->print_comments();
+  res.insert(res.end(), tmp.begin(), tmp.end());
 
-  cout << "Recommendation Film" << endl;
-  show_reccomendation_films(current_user,fl);
+  ss << "Recommendation Film" << endl;
+  res.push_back(ss.str()); ss.str(" ");
+  tmp = show_reccomendation_films(current_user,fl);
+  res.insert(res.end(), tmp.begin(), tmp.end());
+
+  return res;
 }
 
-void MeServer::print_entities(string title, vector<Entity*> list, Typelist format)
+Respond MeServer::print_entities(string title, vector<Entity*> list, Typelist format)
 {
-  cout << title << endl;
+  vector<string> res;
+  res.push_back(title);
   for(int j=0;j<int(list.size());j++)
   {
-    cout << j+1 << ". ";
+    stringstream ss;
+    ss << j+1 << ". ";
     for(int i=0;i<int(format.size());i++)
     {
-      cout << list[j]->get_component_bytype(format[i])->get_value() ;
+      ss << list[j]->get_component_bytype(format[i])->get_value() ;
       if(i+1<int(format.size()))
-        cout << " | ";
+        ss << " | ";
     }
-    cout << endl;
+    res.push_back(ss.str());
   }
+  return res;
 }
 
-void MeServer::show_films(std::vector<Film*>list, Parametrs params)
+Respond MeServer::show_films(std::vector<Film*>list, Parametrs params)
 {
   for(auto& u:params)
     list = filter->filter(list, u);
@@ -231,10 +252,10 @@ void MeServer::show_films(std::vector<Film*>list, Parametrs params)
   Typelist format{TYPE_NAME::FILMID, TYPE_NAME::NAME, TYPE_NAME::LENGTH, TYPE_NAME::PRICE,
     TYPE_NAME::FILMRATE, TYPE_NAME::YEAR, TYPE_NAME::DIRECTOR};
   string title = "#. Film Id | Film Name | Film Length | Film price | Rate | Production Year | Film Director";
-  print_entities(title, transform_to_entity(list) , format);
+  return print_entities(title, transform_to_entity(list) , format);
 }
 
-void MeServer::show_reccomendation_films(User* us, Film* fl)
+Respond MeServer::show_reccomendation_films(User* us, Film* fl)
 {
   vector<int> restricted_film_ids = get_film_ids(us->get_purchased_films());
   vector<int> best_ids = recomender->get_recomend_ids(fl->get_id(), restricted_film_ids);
@@ -247,10 +268,10 @@ void MeServer::show_reccomendation_films(User* us, Film* fl)
 
   Typelist format = {TYPE_NAME::FILMID, TYPE_NAME::NAME, TYPE_NAME::LENGTH, TYPE_NAME::DIRECTOR};
   string title = "#. Film Id | Film Name | Film Length | Film Director";
-  print_entities(title, transform_to_entity(res), format);
+  return print_entities(title, transform_to_entity(res), format);
 }
 
-void MeServer::buy_film(Parametrs params)
+Respond MeServer::buy_film(Parametrs params)
 {
   Film* fl = filter->find_exact(films, params[0]);
 
@@ -263,9 +284,10 @@ void MeServer::buy_film(Parametrs params)
     current_user->buy_film(fl, admin);
     send_noti_film(current_user, fl , NOTI_TYPE::BUYFILM);
   }
+  return SUCCESS_RESPOND;
 }
 
-void MeServer::rate_film(Parametrs params)
+Respond MeServer::rate_film(Parametrs params)
 {
   Component* cid = filter->search(params, TYPE_NAME::FILMID);
   int score = filter->search_exact<Number>(params, TYPE_NAME::RATE)->get();
@@ -282,9 +304,10 @@ void MeServer::rate_film(Parametrs params)
   current_user->add_rate(fl, score);
 
   send_noti_film(current_user, fl , NOTI_TYPE::RATEFILM);
+  return SUCCESS_RESPOND;
 }
 
-void MeServer::add_comment(Parametrs params)
+Respond MeServer::add_comment(Parametrs params)
 {
   Component* cid = filter->search(params, TYPE_NAME::FILMID);
   string content = filter->search(params, TYPE_NAME::CONTENT)->get_value();
@@ -294,9 +317,10 @@ void MeServer::add_comment(Parametrs params)
   fl->add_comment(content, current_user);
 
   send_noti_film(current_user, fl , NOTI_TYPE::COMMENT);
+  return SUCCESS_RESPOND;
 }
 
-void MeServer::reply_comment(Parametrs params)
+Respond MeServer::reply_comment(Parametrs params)
 {
   Component* cid = filter->search(params, TYPE_NAME::FILMID);
   string content = filter->search(params, TYPE_NAME::CONTENT)->get_value();
@@ -308,9 +332,10 @@ void MeServer::reply_comment(Parametrs params)
 
   User* wr = fl->get_comment_writer(cmid);
   send_noti_reply_comment(current_user, wr);
+  return SUCCESS_RESPOND;
 }
 
-void MeServer::delete_comment(Parametrs params)
+Respond MeServer::delete_comment(Parametrs params)
 {
   Component* cfid = filter->search(params, TYPE_NAME::FILMID);
   Component* cmid = filter->search(params, TYPE_NAME::COMMENTID);
@@ -318,22 +343,26 @@ void MeServer::delete_comment(Parametrs params)
   if(fl->get_publisher() != current_user)
     throw Error(PERMISSION_DENIED_MSG);
   fl->delete_comment(cmid);
+  return SUCCESS_RESPOND;
 }
 
-void MeServer::show_notis(Parametrs params)
+Respond MeServer::show_notis(Parametrs params)
 {
+  // Maybe fix this later;
   current_user->show_notis();
+  return SUCCESS_RESPOND;
 }
 
-void MeServer::show_seen_notis(Parametrs params)
+Respond MeServer::show_seen_notis(Parametrs params)
 {
   int limit = filter->search_exact<Number>(params, TYPE_NAME::LIMIT)->get();
   current_user->show_seen_notis(limit);
+  return SUCCESS_RESPOND;
 }
 
-void MeServer::show_money(Parametrs params)
+Respond MeServer::show_money(Parametrs params)
 {
-  cout << current_user->get_component<Number>(TYPE_NAME::MONEY)->get() << endl;
+  return Respond{current_user->get_component<Number>(TYPE_NAME::MONEY)->get()};
 }
 
 pair<std::string,std::string> MeServer::get_info(User* us)

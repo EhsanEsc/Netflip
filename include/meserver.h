@@ -43,34 +43,39 @@ enum class COMMAND_TYPE
   UNDEFINED
 };
 
+typedef std::vector<std::string> Respond;
+const Respond SUCCESS_RESPOND = std::vector<std::string>{"OK"};
+const Respond FAIL_RESPOND = std::vector<std::string>{"FAIL"};
+const Respond NULL_RESPOND = std::vector<std::string>{};
+
 class MeServer
 {
 public:
   MeServer();
   static MeServer* get_instance();
 
-  void add_user(Parametrs params);
-  void add_film(Parametrs params);
-  void edit_film(Parametrs params);
-  void delete_film(Parametrs params);
-  void show_followers(Parametrs params);
-  void get_profit(Parametrs params);
-  void follow_user(Parametrs params);
-  void login(Parametrs params);
-  void logout(Parametrs params);
-  void show_posted_films(Parametrs params);
-  void show_all_films(Parametrs params);
-  void show_purchased_films(Parametrs params);
-  void show_film_detail(Parametrs params);
-  void add_money(Parametrs params);
-  void buy_film(Parametrs params);
-  void rate_film(Parametrs params);
-  void add_comment(Parametrs params);
-  void reply_comment(Parametrs params);
-  void delete_comment(Parametrs params);
-  void show_notis(Parametrs params);
-  void show_seen_notis(Parametrs params);
-  void show_money(Parametrs params);
+  Respond add_user(Parametrs params);
+  Respond add_film(Parametrs params);
+  Respond edit_film(Parametrs params);
+  Respond delete_film(Parametrs params);
+  Respond show_followers(Parametrs params);
+  Respond get_profit(Parametrs params);
+  Respond follow_user(Parametrs params);
+  Respond login(Parametrs params);
+  Respond logout(Parametrs params);
+  Respond show_posted_films(Parametrs params);
+  Respond show_all_films(Parametrs params);
+  Respond show_purchased_films(Parametrs params);
+  Respond show_film_detail(Parametrs params);
+  Respond add_money(Parametrs params);
+  Respond buy_film(Parametrs params);
+  Respond rate_film(Parametrs params);
+  Respond add_comment(Parametrs params);
+  Respond reply_comment(Parametrs params);
+  Respond delete_comment(Parametrs params);
+  Respond show_notis(Parametrs params);
+  Respond show_seen_notis(Parametrs params);
+  Respond show_money(Parametrs params);
 
   void check_validate(COMMAND_TYPE ct, Parametrs params);
 private:
@@ -83,9 +88,9 @@ private:
   User* current_user=NULL;
   User* admin = NULL;
 
-  void show_films(std::vector<Film*> list, Parametrs params);
-  void show_reccomendation_films(User* us, Film* fl);
-  void print_entities(std::string title, std::vector<Entity*> list, Typelist format);
+  Respond show_films(std::vector<Film*> list, Parametrs params);
+  Respond show_reccomendation_films(User* us, Film* fl);
+  Respond print_entities(std::string title, std::vector<Entity*> list, Typelist format);
   void send_noti_new_film(User* user);
   void send_noti_follow_user(User* us1, User* us2);
   void send_noti_film(User* user, Film* fl , NOTI_TYPE nt);

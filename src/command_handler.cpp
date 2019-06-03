@@ -15,11 +15,11 @@ CommandHandler* CommandHandler::get_instance()
   return instance;
 }
 
-void CommandHandler::run_command(std::string line)
+Respond CommandHandler::run_command(std::string line)
 {
   MeServer* server = MeServer::get_instance();
   try{
-    if(line=="") return;
+    if(line=="") return NULL_RESPOND;
     vector<string> command = split_line(line);
     Parametrs input = get_parametrs(command);
     COMMAND_TYPE ctype = get_command_type(command,input);
@@ -28,70 +28,71 @@ void CommandHandler::run_command(std::string line)
     switch(ctype)
     {
       case COMMAND_TYPE::SIGNUP:
-        server->add_user(input);
+        return server->add_user(input);
         break;
       case COMMAND_TYPE::LOGIN:
-        server->login(input);
+        return server->login(input);
         break;
       case COMMAND_TYPE::LOGOUT:
-        server->logout(input);
+        return server->logout(input);
         break;
       case COMMAND_TYPE::POSTFILM:
-        server->add_film(input);
+        return server->add_film(input);
         break;
       case COMMAND_TYPE::EDITFILM:
-        server->edit_film(input);
+        return server->edit_film(input);
         break;
       case COMMAND_TYPE::DELETEFILM:
-        server->delete_film(input);
+        return server->delete_film(input);
         break;
       case COMMAND_TYPE::SHOWFOLOWERS:
-        server->show_followers(input);
+        return server->show_followers(input);
         break;
       case COMMAND_TYPE::GETPROFIT:
-        server->get_profit(input);
+        return server->get_profit(input);
         break;
       case COMMAND_TYPE::FOLLOW:
-        server->follow_user(input);
+        return server->follow_user(input);
         break;
       case COMMAND_TYPE::SEARCHPOSTED:
-        server->show_posted_films(input);
+        return server->show_posted_films(input);
         break;
       case COMMAND_TYPE::SEARCHFILMS:
-        server->show_all_films(input);
+        return server->show_all_films(input);
         break;
       case COMMAND_TYPE::SEARCHPURCHASED:
-        server->show_purchased_films(input);
+        return server->show_purchased_films(input);
         break;
       case COMMAND_TYPE::GETFILM:
-        server->show_film_detail(input);
+        cout << "#IN" << endl;
+        return server->show_film_detail(input);
         break;
       case COMMAND_TYPE::ADDMONEY:
-        server->add_money(input);
+        return server->add_money(input);
         break;
       case COMMAND_TYPE::BUYFILM:
-        server->buy_film(input);
+        return server->buy_film(input);
         break;
       case COMMAND_TYPE::RATEFILM:
-        server->rate_film(input);
+        return server->rate_film(input);
         break;
       case COMMAND_TYPE::ADDCOMMENT:
-        server->add_comment(input);
+        return server->add_comment(input);
         break;
       case COMMAND_TYPE::REPLYCOMMENT:
-        server->reply_comment(input);
+        return server->reply_comment(input);
         break;
       case COMMAND_TYPE::DELETECOMMENT:
-        server->delete_comment(input);
+        return server->delete_comment(input);
         break;
       case COMMAND_TYPE::SHOWNOTI:
-        server->show_notis(input);
+        return server->show_notis(input);
         break;
       case COMMAND_TYPE::SHOWSEENNOTI:
-        server->show_seen_notis(input);
+        return server->show_seen_notis(input);
         break;
       case COMMAND_TYPE::SHOWMONEY:
-        server->show_money(input);
+        return server->show_money(input);
         break;
       case COMMAND_TYPE::UNDEFINED:
         throw Error(BAD_REQUEST_MSG);
@@ -100,11 +101,12 @@ void CommandHandler::run_command(std::string line)
 
     if(ctype != COMMAND_TYPE::SEARCHPOSTED && ctype != COMMAND_TYPE::SHOWFOLOWERS && ctype != COMMAND_TYPE::SEARCHFILMS
       && ctype != COMMAND_TYPE::GETFILM && ctype != COMMAND_TYPE::SEARCHPURCHASED && ctype != COMMAND_TYPE::SHOWNOTI
-      && ctype != COMMAND_TYPE::SHOWSEENNOTI && ctype != COMMAND_TYPE::SHOWMONEY)
-      cout << SUCCESS_COMMAND_MSG << endl;
+      && ctype != COMMAND_TYPE::SHOWSEENNOTI && ctype != COMMAND_TYPE::SHOWMONEY);
+      // cout << SUCCESS_COMMAND_MSG << endl;
   } catch(Error& err) {
     throw Server::Exception(err.what());
   }
+  return vector<string>();
 }
 
 vector<string> CommandHandler::split_line(string line)

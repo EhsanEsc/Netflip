@@ -14,8 +14,8 @@ public:
 
   void pay_publisher(User* admin);
   void sold_out();
-  void print_details();
-  void print_comments();
+  std::vector<std::string> print_details();
+  std::vector<std::string> print_comments();
 
   void add_comment(std::string content, User* writer);
   void reply_comment(Component* cmid, std::string content);

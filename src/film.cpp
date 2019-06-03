@@ -4,6 +4,7 @@
 #include "comment.h"
 #include "filter.h"
 #include <iostream>
+#include <sstream>
 using namespace std;
 
 Typelist FILM_ATTRIBUTE = {TYPE_NAME::FILMID,TYPE_NAME::NAME,TYPE_NAME::YEAR,TYPE_NAME::LENGTH,
@@ -63,21 +64,34 @@ int Film::calc_paid_money(int profit)
     return profit*95/100;
 }
 
-void Film::print_details()
+std::vector<std::string> Film::print_details()
 {
-  cout << "Id = " << get_component<Number>(TYPE_NAME::FILMID)->get_value() << endl;
-  cout << "Director = " << get_component<Name>(TYPE_NAME::DIRECTOR)->get_value() << endl;
-  cout << "Length = " << get_component<Number>(TYPE_NAME::LENGTH)->get_value() << endl;
-  cout << "Year = " << get_component<Number>(TYPE_NAME::YEAR)->get_value() << endl;
-  cout << "Summary = " << get_component<Name>(TYPE_NAME::SUMMARY)->get_value() << endl;
-  cout << "Rate = " << get_component<Vint>(TYPE_NAME::FILMRATE)->get_average() << endl;
-  cout << "Price = " << get_component<Number>(TYPE_NAME::PRICE)->get_value() << endl;
+  vector<string> res;
+  stringstream ss;
+  ss << "Id = " << get_component<Number>(TYPE_NAME::FILMID)->get_value();
+  res.push_back(ss.str()) , ss.str(" ");
+  ss << "Director = " << get_component<Name>(TYPE_NAME::DIRECTOR)->get_value();
+  res.push_back(ss.str()) , ss.str(" ");
+  ss << "Length = " << get_component<Number>(TYPE_NAME::LENGTH)->get_value();
+  res.push_back(ss.str()) , ss.str(" ");
+  ss << "Year = " << get_component<Number>(TYPE_NAME::YEAR)->get_value();
+  res.push_back(ss.str()) , ss.str(" ");
+  ss << "Summary = " << get_component<Name>(TYPE_NAME::SUMMARY)->get_value();
+  res.push_back(ss.str()) , ss.str(" ");
+  ss << "Rate = " << get_component<Vint>(TYPE_NAME::FILMRATE)->get_average();
+  res.push_back(ss.str()) , ss.str(" ");
+  ss << "Price = " << get_component<Number>(TYPE_NAME::PRICE)->get_value();
+  res.push_back(ss.str()) , ss.str(" ");
+
+  return res;
 }
 
-void Film::print_comments()
+std::vector<std::string> Film::print_comments()
 {
+  vector<string> res;
   for(auto& u:comments)
-    u->print();
+    res.push_back(u->print());
+  return res;
 }
 
 void Film::add_comment(std::string content, User* writer)

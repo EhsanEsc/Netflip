@@ -15,7 +15,7 @@ public:
   User* get_writer();
   bool is_reply();
   void add_reply(Comment* cm);
-  void print();
+  std::string print();
   int get_new_reply_comment_id();
 private:
   User* writer;

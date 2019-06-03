@@ -2,6 +2,8 @@
 #include "comment.h"
 #include "user.h"
 #include <iostream>
+#include <sstream>
+
 using namespace std;
 
 Typelist COMMENT_ATTRIBUTE = {TYPE_NAME::COMMENTID,TYPE_NAME::CONTENT} ;
@@ -30,18 +32,20 @@ void Comment::add_reply(Comment* cm)
   replys.push_back(cm);
 }
 
-void Comment::print()
+std::string Comment::print()
 {
   int id = get_component<Number>(TYPE_NAME::COMMENTID)->get();
   string content = get_component<Name>(TYPE_NAME::CONTENT)->get_value();
-  cout << id << ". " << content << endl;
+  stringstream ss;
+  ss << id << ". " << content << endl;
   for(int i=0 ; i<int(replys.size()) ; i++)
   {
     Comment* cm = replys[i];
-    cout << id << ".";
-    cout << cm->get_component<Number>(TYPE_NAME::COMMENTID)->get() << ". ";
-    cout << cm->get_component<Name>(TYPE_NAME::CONTENT)->get_value() << endl;
+    ss << id << ".";
+    ss << cm->get_component<Number>(TYPE_NAME::COMMENTID)->get() << ". ";
+    ss << cm->get_component<Name>(TYPE_NAME::CONTENT)->get_value() << endl;
   }
+  return ss.str();
 }
 
 int Comment::get_new_reply_comment_id()

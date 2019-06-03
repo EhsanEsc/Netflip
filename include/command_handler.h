@@ -13,7 +13,7 @@ class CommandHandler
 {
 public:
   static CommandHandler* get_instance();
-  void run_command(std::string line);
+  Respond run_command(std::string line);
 private:
   static CommandHandler* instance;
 
