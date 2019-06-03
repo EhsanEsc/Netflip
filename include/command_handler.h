@@ -5,7 +5,7 @@
 #include<vector>
 #include<string>
 #include "error.h"
-#include "server.h"
+#include "meserver.h"
 
 class Component;
 
@@ -13,7 +13,7 @@ class CommandHandler
 {
 public:
   static CommandHandler* get_instance();
-  void run();
+  void run_command(std::string line);
 private:
   static CommandHandler* instance;
 

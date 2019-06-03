@@ -1,0 +1,65 @@
+H:\Programming\C++\AP\Netflip\APHTTP-template-engine\utils\utilities.cpp: In function 'int readMapFromFile(std::string, std::map<std::basic_string<char>, std::basic_string<char> >*)':
+H:\Programming\C++\AP\Netflip\APHTTP-template-engine\utils\utilities.cpp:221:36: error: no matching function for call to 'getline(char**, size_t*, FILE**)'
+   while (getline(&buf, &buflen, &fp) > 0) {
+                                    ^
+H:\Programming\C++\AP\Netflip\APHTTP-template-engine\utils\utilities.cpp:221:36: note: candidates are:
+In file included from C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++/string:53:0,
+                 from C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++/stdexcept:39,
+                 from C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++/array:38,
+                 from C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++/tuple:39,
+                 from C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++/bits/stl_map.h:63,
+                 from C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++/map:61,
+                 from H:\Programming\C++\AP\Netflip\APHTTP-template-engine\utils\utilities.hpp:4,
+                 from H:\Programming\C++\AP\Netflip\APHTTP-template-engine\utils\utilities.cpp:1:
+C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++/bits/basic_string.tcc:1068:5: note: template<class _CharT, class _Traits, class _Alloc> std::basic_istream<_CharT, _Traits>& std::getline(std::basic_istream<_CharT, _Traits>&, std::basic_string<_CharT, _Traits, _Alloc>&, _CharT)
+     getline(basic_istream<_CharT, _Traits>& __in,
+     ^
+C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++/bits/basic_string.tcc:1068:5: note:   template argument deduction/substitution failed:
+H:\Programming\C++\AP\Netflip\APHTTP-template-engine\utils\utilities.cpp:221:36: note:   mismatched types 'std::basic_istream<_CharT, _Traits>' and 'char**'
+   while (getline(&buf, &buflen, &fp) > 0) {
+                                    ^
+In file included from C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++/string:52:0,
+                 from C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++/stdexcept:39,
+                 from C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++/array:38,
+                 from C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++/tuple:39,
+                 from C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++/bits/stl_map.h:63,
+                 from C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++/map:61,
+                 from H:\Programming\C++\AP\Netflip\APHTTP-template-engine\utils\utilities.hpp:4,
+                 from H:\Programming\C++\AP\Netflip\APHTTP-template-engine\utils\utilities.cpp:1:
+C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++/bits/basic_string.h:2812:5: note: template<class _CharT, class _Traits, class _Alloc> std::basic_istream<_CharT, _Traits>& std::getline(std::basic_istream<_CharT, _Traits>&, std::basic_string<_CharT, _Traits, _Alloc>&)
+     getline(basic_istream<_CharT, _Traits>& __is,
+     ^
+C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++/bits/basic_string.h:2812:5: note:   template argument deduction/substitution failed:
+H:\Programming\C++\AP\Netflip\APHTTP-template-engine\utils\utilities.cpp:221:36: note:   mismatched types 'std::basic_istream<_CharT, _Traits>' and 'char**'
+   while (getline(&buf, &buflen, &fp) > 0) {
+                                    ^
+In file included from C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++/string:52:0,
+                 from C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++/stdexcept:39,
+                 from C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++/array:38,
+                 from C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++/tuple:39,
+                 from C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++/bits/stl_map.h:63,
+                 from C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++/map:61,
+                 from H:\Programming\C++\AP\Netflip\APHTTP-template-engine\utils\utilities.hpp:4,
+                 from H:\Programming\C++\AP\Netflip\APHTTP-template-engine\utils\utilities.cpp:1:
+C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++/bits/basic_string.h:2820:5: note: template<class _CharT, class _Traits, class _Alloc> std::basic_istream<_CharT, _Traits>& std::getline(std::basic_istream<_CharT, _Traits>&&, std::basic_string<_CharT, _Traits, _Alloc>&, _CharT)
+     getline(basic_istream<_CharT, _Traits>&& __is,
+     ^
+C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++/bits/basic_string.h:2820:5: note:   template argument deduction/substitution failed:
+H:\Programming\C++\AP\Netflip\APHTTP-template-engine\utils\utilities.cpp:221:36: note:   mismatched types 'std::basic_istream<_CharT, _Traits>' and 'char**'
+   while (getline(&buf, &buflen, &fp) > 0) {
+                                    ^
+In file included from C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++/string:52:0,
+                 from C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++/stdexcept:39,
+                 from C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++/array:38,
+                 from C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++/tuple:39,
+                 from C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++/bits/stl_map.h:63,
+                 from C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++/map:61,
+                 from H:\Programming\C++\AP\Netflip\APHTTP-template-engine\utils\utilities.hpp:4,
+                 from H:\Programming\C++\AP\Netflip\APHTTP-template-engine\utils\utilities.cpp:1:
+C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++/bits/basic_string.h:2827:5: note: template<class _CharT, class _Traits, class _Alloc> std::basic_istream<_CharT, _Traits>& std::getline(std::basic_istream<_CharT, _Traits>&&, std::basic_string<_CharT, _Traits, _Alloc>&)
+     getline(basic_istream<_CharT, _Traits>&& __is,
+     ^
+C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++/bits/basic_string.h:2827:5: note:   template argument deduction/substitution failed:
+H:\Programming\C++\AP\Netflip\APHTTP-template-engine\utils\utilities.cpp:221:36: note:   mismatched types 'std::basic_istream<_CharT, _Traits>' and 'char**'
+   while (getline(&buf, &buflen, &fp) > 0) {
+                                    ^

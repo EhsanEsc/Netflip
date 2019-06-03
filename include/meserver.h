@@ -1,5 +1,5 @@
-#ifndef SERVER_H
-#define SERVER_H
+#ifndef MeServer_H
+#define MeServer_H
 
 #include "error.h"
 #include "component.h"
@@ -43,11 +43,11 @@ enum class COMMAND_TYPE
   UNDEFINED
 };
 
-class Server
+class MeServer
 {
 public:
-  Server();
-  static Server* get_instance();
+  MeServer();
+  static MeServer* get_instance();
 
   void add_user(Parametrs params);
   void add_film(Parametrs params);
@@ -74,7 +74,7 @@ public:
 
   void check_validate(COMMAND_TYPE ct, Parametrs params);
 private:
-  static Server* instance;
+  static MeServer* instance;
   NotiHandler* noti_handler;
   Filter* filter;
   Recomender* recomender;
