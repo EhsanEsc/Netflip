@@ -20,9 +20,14 @@ int main(int argc, char **argv) {
     server.get("/logout", new Logout());
 
     server.get("/addfilm", new ShowPage("static/addfilm.html"));
+    server.get("/showfilm", new ShowFilm());
     server.post("/addfilm", new AddFilmHandler());
+    server.get("/deletefilm", new DeleteFilm());
+    server.post("/addmoney", new AddMoney());
 
     server.get("/showuser", new ShowUser());
+    server.get("/showpub", new ShowPub());
+    server.get("/showprofile", new ShowProfile());
     server.get("/", new ShowPage("static/home.html"));
     server.run();
   } catch (Server::Exception e) {

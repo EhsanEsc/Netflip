@@ -26,6 +26,36 @@ public:
   Response *callback(Request *);
 };
 
+class ShowPub : public RequestHandler {
+public:
+  Response *callback(Request *);
+};
+
+class ShowProfile : public RequestHandler {
+public:
+  Response *callback(Request *);
+};
+
+class AddMoney : public RequestHandler {
+public:
+  Response *callback(Request *);
+};
+
+class AddFilmHandler : public RequestHandler {
+public:
+  Response *callback(Request *);
+};
+
+class DeleteFilm : public RequestHandler {
+public:
+  Response *callback(Request *);
+};
+
+class ShowFilm : public RequestHandler {
+public:
+  Response *callback(Request *);
+};
+
 class ColorHandler : public TemplateHandler {
 public:
   ColorHandler(std::string filePath);
