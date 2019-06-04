@@ -1,14 +1,33 @@
 <!DOCTYPE html>
 <html>
-  <body style="text-align: center;">
-    <h1>Netflip</h1>
-    <div style="background-color: lightblue; padding: 1%; max-width: 300px; border-radius: 3px; margin: auto; ">
-      <form action="/login" method="post">
-        <p>Login</p>
-        <input name="username" type="text" placeholder="Username" style="display:block; margin: auto; margin-bottom: 10px; padding: 5px; width: 94%;" />
-        <input name="password" type="password" placeholder="Password" style="display:block; margin: auto; margin-bottom: 10px; padding: 5px; width: 94%;" />
-        <button type="submit" style="display:block; width: 100%; padding: 7px;">Login</button>
-      </form>
+  <head>
+    <link href="mui.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <div class="mui-appbar">
+      <table width="100%">
+        <tr style="vertical-align:middle;">
+          <td class="mui--appbar-height">
+            <a href="/">  <button class="mui-btn mui-btn--danger">Home</button> </a>
+          </td>
+        </tr>
+      </table>
     </div>
+
+    <br><br>
+    <form action="/login" method="post" class="mui-form"
+    style="background-color: LIGHTSALMON; padding: 1%; max-width: 300px; border-radius: 3px; margin: auto;">
+    <legend style="color: FIREBRICK; text-align: center;">Login form</legend>
+    <div class="mui-textfield" style=";display:block; margin: auto; margin-bottom: 10px; padding: 5px; width: 94%;">
+      <input name="username" type="text">
+      <label>Username</label>
+    </div>
+    <div class="mui-textfield" style=";display:block; margin: auto; margin-bottom: 10px; padding: 5px; width: 94%;">
+      <input name="password" type="password">
+      <label>Password</label>
+    </div>
+    <button type="submit" class="mui-btn--raised mui-btn--accent" style="display:block; width: 100%; padding: 7px;">login</button>
+    </form>
+
   </body>
 </html>

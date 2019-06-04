@@ -1,18 +1,53 @@
 <!DOCTYPE html>
 <html>
-  <body style="text-align: center;">
-    <h1>Netflip addFilm</h1>
-    <div style="background-color: lightblue; padding: 1%; max-width: 300px; border-radius: 3px; margin: auto; ">
-      <form action="/addfilm" method="post">
-        <p>Add film</p>
-        <input name="name" type="text" placeholder="Name" style="display:block; margin: auto; margin-bottom: 10px; padding: 5px; width: 94%;" />
-        <input name="price" type="text" placeholder="Price" style="display:block; margin: auto; margin-bottom: 10px; padding: 5px; width: 94%;" />
-        <input name="year" type="text" placeholder="Year" style="display:block; margin: auto; margin-bottom: 10px; padding: 5px; width: 94%;" />
-        <input name="length" type="text" placeholder="Length" style="display:block; margin: auto; margin-bottom: 10px; padding: 5px; width: 94%;" />
-        <input name="director" type="text" placeholder="Director Name" style="display:block; margin: auto; margin-bottom: 10px; padding: 5px; width: 94%;" />
-        <input name="summary" type="text" placeholder="Summary" style="display:block; margin: auto; margin-bottom: 10px; padding: 5px; width: 94%;" />
-        <button type="submit" style="display:block; width: 100%; padding: 7px;">Add Film</button>
-      </form>
+  <head>
+    <link href="mui.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <div class="mui-appbar">
+      <table width="100%">
+        <tr style="vertical-align:middle;">
+          <td class="mui--appbar-height">
+            <a href="/">  <button class="mui-btn mui-btn--danger">Home</button> </a>
+          </td>
+          <td class="mui--appbar-height" align="right">
+            <a href="/logout">  <button class="mui-btn mui-btn--danger">Logout</button> </a>
+          </td>
+        </tr>
+      </table>
     </div>
+
+    <br><br>
+    <form action="/addfilm" method="post" class="mui-form"
+    style="background-color: LIGHTSALMON; padding: 1%; max-width: 300px; border-radius: 3px; margin: auto;">
+    <legend style="color: FIREBRICK; text-align: center;">Add film form</legend>
+
+    <div class="mui-textfield" style=";display:block; margin: auto; margin-bottom: 10px; padding: 5px; width: 94%;">
+      <input name="name" type="text">
+      <label>Name</label>
+    </div>
+
+    <div class="mui-textfield" style=";display:block; margin: auto; margin-bottom: 10px; padding: 5px; width: 94%;">
+      <input name="year" type="text">
+      <label>Production year</label>
+    </div>
+
+    <div class="mui-textfield" style=";display:block; margin: auto; margin-bottom: 10px; padding: 5px; width: 94%;">
+      <input name="length" type="text">
+      <label>Film length</label>
+    </div>
+
+    <div class="mui-textfield" style=";display:block; margin: auto; margin-bottom: 10px; padding: 5px; width: 94%;">
+      <input name="director" type="text">
+      <label>Director name</label>
+    </div>
+
+    <div class="mui-textfield" style=";display:block; margin: auto; margin-bottom: 10px; padding: 5px; width: 94%;">
+      <input name="summary" type="text">
+      <label>Film summary</label>
+    </div>
+
+    <button type="submit" class="mui-btn--raised mui-btn--accent" style="display:block; width: 100%; padding: 7px;">Add film!</button>
+    </form>
   </body>
 </html>

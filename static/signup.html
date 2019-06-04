@@ -1,17 +1,53 @@
 <!DOCTYPE html>
 <html>
-  <body style="text-align: center;">
-    <h1>Netflip SIGNUP</h1>
-    <div style="background-color: lightblue; padding: 1%; max-width: 300px; border-radius: 3px; margin: auto; ">
-      <form action="/signup" method="post">
-        <p>Signup</p>
-        <input name="username" type="text" placeholder="Username" style="display:block; margin: auto; margin-bottom: 10px; padding: 5px; width: 94%;" />
-        <input name="password" type="password" placeholder="Password" style="display:block; margin: auto; margin-bottom: 10px; padding: 5px; width: 94%;" />
-        <input name="age" type="text" placeholder="Your Age" style="display:block; margin: auto; margin-bottom: 10px; padding: 5px; width: 94%;" />
-        <input name="email" type="email" placeholder="email@example.com" style="display:block; margin: auto; margin-bottom: 10px; padding: 5px; width: 94%;" />
-        Publisher? <input name="is_publisher" type="checkbox" value="is_pub" style="display:block; margin: auto; margin-bottom: 10px; padding: 5px; width: 94%;" />
-        <button type="submit" style="display:block; width: 100%; padding: 7px;">Signup</button>
-      </form>
+  <head>
+    <link href="mui.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <div class="mui-appbar">
+      <table width="100%">
+        <tr style="vertical-align:middle;">
+          <td class="mui--appbar-height">
+            <a href="/">  <button class="mui-btn mui-btn--danger">Home</button> </a>
+          </td>
+        </tr>
+      </table>
     </div>
+
+    <br><br>
+    <form action="/signup" method="post" class="mui-form"
+    style="background-color: LIGHTSALMON; padding: 1%; max-width: 300px; border-radius: 3px; margin: auto;">
+    <legend style="color: FIREBRICK; text-align: center;">Signup form</legend>
+
+    <div class="mui-textfield" style=";display:block; margin: auto; margin-bottom: 10px; padding: 5px; width: 94%;">
+      <input name="username" type="text">
+      <label>Username</label>
+    </div>
+
+    <div class="mui-textfield" style=";display:block; margin: auto; margin-bottom: 10px; padding: 5px; width: 94%;">
+      <input name="password" type="password">
+      <label>Password</label>
+    </div>
+
+    <div class="mui-textfield" style=";display:block; margin: auto; margin-bottom: 10px; padding: 5px; width: 94%;">
+      <input name="age" type="text">
+      <label>Age</label>
+    </div>
+
+    <div class="mui-textfield" style=";display:block; margin: auto; margin-bottom: 10px; padding: 5px; width: 94%;">
+      <input name="email" type="email" placeholder="email@example.com">
+      <label>Email</label>
+    </div>
+
+    <div class="mui-checkbox">
+    <label>
+      <input name="is_publisher" type="checkbox" value="is_pub">
+      Publisher
+    </label>
+  </div>
+
+    <button type="submit" class="mui-btn--raised mui-btn--accent" style="display:block; width: 100%; padding: 7px;">signup</button>
+    </form>
+
   </body>
 </html>
