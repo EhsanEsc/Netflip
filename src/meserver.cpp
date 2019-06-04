@@ -211,16 +211,19 @@ Respond MeServer::show_film_detail(Parametrs params)
   res.push_back(ss.str()); ss.str(" ");
   Respond tmp = fl->print_details();
   res.insert(res.end(), tmp.begin(), tmp.end());
+  res.push_back("");
 
   ss << "Comments" << endl;
   res.push_back(ss.str()); ss.str(" ");
   tmp = fl->print_comments();
   res.insert(res.end(), tmp.begin(), tmp.end());
+  res.push_back("");
 
   ss << "Recommendation Film" << endl;
   res.push_back(ss.str()); ss.str(" ");
   tmp = show_reccomendation_films(current_user,fl);
   res.insert(res.end(), tmp.begin(), tmp.end());
+  res.push_back("");
 
   return res;
 }

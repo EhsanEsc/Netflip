@@ -54,6 +54,18 @@ Response *Logout::callback(Request *req) {
   return res;
 }
 
+Response *BuyFilmHandler::callback(Request *req) {
+  CommandHandler* handler = CommandHandler::get_instance();
+
+  string input = "POST buy ? film_id " + req->getQueryParam("film_id");
+
+  handler->run_command(input);
+  cout << "Successfully Film Bought!" << endl;
+
+  Response *res = Response::redirect("/showuser");
+  return res;
+}
+
 Response *AddFilmHandler::callback(Request *req) {
   CommandHandler* handler = CommandHandler::get_instance();
 
