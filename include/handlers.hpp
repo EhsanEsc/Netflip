@@ -26,11 +26,6 @@ public:
   Response *callback(Request *);
 };
 
-class ShowPub : public RequestHandler {
-public:
-  Response *callback(Request *);
-};
-
 class ShowProfile : public RequestHandler {
 public:
   Response *callback(Request *);
@@ -52,6 +47,21 @@ public:
 };
 
 class ShowFilm : public RequestHandler {
+public:
+  Response *callback(Request *);
+};
+
+class BuyFilmHandler : public RequestHandler {
+public:
+  Response *callback(Request *);
+};
+
+class AddCommentHandler : public RequestHandler {
+public:
+  Response *callback(Request *);
+};
+
+class RateFilmHandler : public RequestHandler {
 public:
   Response *callback(Request *);
 };
