@@ -66,6 +66,11 @@ public:
   Response *callback(Request *);
 };
 
+class HomeHandler : public RequestHandler {
+public:
+  Response *callback(Request *);
+};
+
 class ColorHandler : public TemplateHandler {
 public:
   ColorHandler(std::string filePath);

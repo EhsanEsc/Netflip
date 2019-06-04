@@ -31,7 +31,8 @@ int main(int argc, char **argv) {
 
     server.get("/showuser", new ShowUser());
     server.get("/showprofile", new ShowProfile());
-    server.get("/", new ShowPage("static/home.html"));
+    server.get("/", new HomeHandler());
+    server.get("/home", new ShowPage("static/home.html"));
     server.get("/mui.css", new ShowPage("static/mui.css"));
     
     server.run();

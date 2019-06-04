@@ -1,6 +1,84 @@
 #include "handlers.hpp"
 #include "command_handler.h"
+#include <sstream>
 using namespace std;
+
+string build_header()
+{
+ stringstream body;
+ body << "<!DOCTYPE html>"
+ << "<html><head><link href=\"mui.css\" rel=\"stylesheet\" type=\"text/css\" />"
+ << "</head><body>"
+ <<   "<div class=\"mui-appbar\"><table width=\"100%\">"
+ <<       "<tr style=\"vertical-align:middle;\"><td class=\"mui--appbar-height\">"
+ <<   "<a href=\"/\">  <button class=\"mui-btn mui-btn--danger\">Home</button> </a>"
+ <<   "<a href=\"/showprofile\">  <button class=\"mui-btn mui-btn--danger\">Profile</button> </a>"
+ <<    "</td><td class=\"mui--appbar-height\" align=\"right\">"
+ <<      "<a href=\"/logout\">  <button class=\"mui-btn mui-btn--danger\">Logout</button> </a>"
+  <<       " </td></tr></table></div> "; 
+  return body.str();
+}
+
+string find_film_id(string str)
+{
+  string film_id;
+  for(int i=3; i <str.size() ; i++) 
+  {
+    if(str[i] == '|')
+      break;
+    film_id += str[i];
+  }
+  return film_id;
+}
+
+string build_table(vector<string> rr)
+{
+  string body;
+  body += "<table class=\"mui-table mui-table--bordered\"  style=\"width:70%;\">";
+  body +=  "<thead><tr>";
+  int st=0,en;
+  for(;st<rr[0].size();st++)
+  {
+    if(rr[0][st] == ' ' || rr[0][st] == '|')
+      continue;
+    en=st;
+    while( !(rr[0][en] == '|') ) { en++; }
+    body += "<th>" + rr[0].substr(st,en-st) + "</th>";
+    st=en;
+  }
+  body += " </tr></thead>";
+  body += " <tbody>";
+
+  for(int j=1 ; j<rr.size() ; j++)
+  {
+    body += "<tr>";
+    string s = rr[j];
+
+    string film_id = find_film_id(s);
+
+    body += "<td><a href=\"/showfilm?film_id=" + film_id + "\">";
+    body += "";
+    for(int i=0;i<s.size();i++)
+    {
+      if(s[i] == '.')
+      {
+        body += "</a></td><td>";
+        continue;
+      }
+      if(s[i] == '|')
+        body += "</td><td>";
+      else
+        body += s[i];
+    }
+    body += "</td>";
+
+    body += "</tr>";
+  }
+  body += "</tbody>";
+  body += "</table>";
+  body += "<br><br>";
+  return body;
+}
 
 Response *LoginHandler::callback(Request *req) {
   CommandHandler* handler = CommandHandler::get_instance();
@@ -14,6 +92,16 @@ Response *LoginHandler::callback(Request *req) {
 
   Response *res = Response::redirect("/showuser");
   res->setSessionId(req->getBodyParam("username"));
+  return res;
+}
+
+Response *HomeHandler::callback(Request *req) {
+  Response *res;
+  cout << req->getSessionId() << endl;
+  if(req->getSessionId().size())
+    res = Response::redirect("/showuser");
+  else
+    res = Response::redirect("/home");
   return res;
 }
 
@@ -91,8 +179,6 @@ Response *AddCommentHandler::callback(Request *req) {
   input += "film_id " + req->getBodyParam("film_id") + " ";
   input += "content " + req->getBodyParam("comment_text") + " ";
 
-  cout << "$$$ " << input << endl;
-
   handler->run_command(input);
   cout << "Successfully Added comment!" << endl;
 
@@ -107,8 +193,6 @@ Response *RateFilmHandler::callback(Request *req) {
   string input = "POST rate ? ";
   input += "film_id " + req->getBodyParam("film_id") + " ";
   input += "score " + req->getBodyParam("score") + " ";
-
-  cout << "### " << input << endl;
 
   handler->run_command(input);
   cout << "Successfully Rated!" << endl;
@@ -152,24 +236,33 @@ Response *ShowFilm::callback(Request *req) {
 
   Response *res = new Response;
   res->setHeader("Content-Type", "text/html");
-  string body;
-  body += "<!DOCTYPE html>";
-  body += "<html>";
-  body += "<body style=\"text-align: center;\">";
-  body += "<h1>NetFlip Film Page!</h1>";
-  body += "<p>";
-  body += "</p>";
-  body += "<p>";
-  body += "<a href=\"/logout\">Logout!!!</a><br>";
+  string body = build_header();
+  body += "<center><br><br><div class=\"mui--text-body2\"";
+  body += "<br><br><p class=\"mui--text-display1\">" + string("Film Details!") + "</p><br>";
 
+  vector<string> films;
   for(auto s:rr)
+  {
+    if(s[0] == '#')
+      films.clear();
+    if(s != "")
+      films.push_back(s);
+  }
+  for(auto s:rr)
+  {    
+    if(s[0] == '#')
+      break;
     body += s + "<br>";
+  }
+  films[0][2]='|';
+  body += build_table(films);
+
   body += "<br><br>";
 
-  body += "<a href=\"/buyfilm?film_id=" + req->getQueryParam("film_id") + "\">Buy Film!!!</a><br><br>";
-  
+  body += "<a href=\"/buyfilm?film_id=" + req->getQueryParam("film_id") + 
+    "\">" + "<button class=\"mui-btn mui-btn--danger\">" +"Buy Film</button></a><br><br>";
+
   body += "<form action=\"/addcomment\" method=\"post\">";
-  body += "<p>Add Comment</p><br>";
   body += "<input name=\"comment_text\" type=\"text\" placeholder=\"Write your comment...\"/>";
   body += "<input name=\"film_id\" type=\"hidden\" value=\"" +
     req->getQueryParam("film_id") + "\"/>";
@@ -177,14 +270,15 @@ Response *ShowFilm::callback(Request *req) {
   body += "</form><br>";
 
   body += "<form action=\"/ratefilm\" method=\"post\">";
-  body += "<p>Rate film </p>";
   body += "<input name=\"score\" type=\"text\" placeholder=\"Rate this film...\"/>";
   body += "<input name=\"film_id\" type=\"hidden\" value=\"" +
     req->getQueryParam("film_id") + "\"/>";
   body += "<button type=\"submit\">Rate!</button>";
   body += "</form>";
 
+  body += "</div>";
   body += "</p>";
+  body += "</center>";
   body += "</body>";
   body += "</html>";
   res->setBody(body);
@@ -196,22 +290,12 @@ Response *ShowUser::callback(Request *req) {
   CommandHandler* handler = CommandHandler::get_instance();
   string director_name = req->getQueryParam("director_name");
 
-  cout << "**** " << director_name << endl;
-
   Response *res = new Response;
   res->setHeader("Content-Type", "text/html");
-  string body;
-  body += "<!DOCTYPE html>";
-  body += "<html>";
-  body += "<body style=\"text-align: center;\">";
-  body += "<h1>NetFlip User Page!</h1>";
-  body += "<p>";
-  body += "</p>";
-  body += "<p>";
-  body += "<a href=\"/logout\">Logout!!!</a><br>";
-  body += "<a href=\"/showprofile\">Profile!!!</a><br>";
-  if(is_pub)
-    body += "<a href=\"/addfilm\">ADDFILM!!!</a><br><br><br>";
+  string body = build_header();
+  body += "<br><div class=\"mui--text-display3\" style=\"text-align:center;\">NetFlip User Page!</div>";
+  body += "<center>";
+  body += "<br><br>";
 
   body += "<br><form action=\"/showuser\" method=\"get\">";
   body += "<p>Filter films by Director Name</p>";
@@ -221,40 +305,31 @@ Response *ShowUser::callback(Request *req) {
 
   string input;
   if(is_pub)
-    input = "GET published"; 
+    input = "GET published";
   else
     input = "GET films";
-
   if(director_name != "")
     input += " ? director " + director_name;
 
   Respond rr = handler->run_command(input);
-  for(auto s: rr)
-  {
-    if(s[0] == '#')
-    {
-      body += s + "<br>";
-      continue;
-    }
-
-    string film_id;
-    for(int i=3; i <s.size() ; i++)
-    {
-      if(s[i] == '|')
-        break;
-      film_id += s[i];
-    }
-
-    body += "<a href=\"/showfilm?film_id=" + film_id + "\">";
-    body += s ;
-    body += "</a>";
-    if(is_pub)
-      body += "<a href=\"/deletefilm?film_id=" + film_id + "\"> @delete@ </a>";
-
-    body += "<br>";
+  rr[0][2] = '|';
+  if(is_pub)
+  { 
+    rr[0] += " | delete";
+    for(int i=1;i<rr.size();i++)
+      rr[i] += " | <a href=\"/deletefilm?film_id=" + find_film_id(rr[i]) + "\"> delete </a>";
   }
 
-  body += "</p>";
+  body += "<div class=\"mui--text-display1\">" +
+    (is_pub==true ? string("Published films!") : string("All films!")) + "</div>";
+  body += build_table(rr);
+
+  if(is_pub)
+  { 
+    body += "<a href=\"/addfilm\" ><button class=\"mui-btn mui-btn--danger\">";
+    body += "Add new film</button> </a>";
+  }
+  body += "</center>";
   body += "</body>";
   body += "</html>";
   res->setBody(body);
@@ -266,45 +341,23 @@ Response *ShowProfile::callback(Request *req) {
 
   Response *res = new Response;
   res->setHeader("Content-Type", "text/html");
-  string body;
-  body += "<!DOCTYPE html>";
-  body += "<html>";
-  body += "<body style=\"text-align: center;\">";
-  body += "<h1>NetFlip Profile Page!</h1>";
-  body += "<p>";
-  body += "</p>";
-  body += "<p>";
-  body += "<a href=\"/logout\">Logout!!!</a><br>";
+  string body = build_header();
+  body += "<center>";
 
+  body += "<br><br>";
   body += "<form action=\"/addmoney\" method=\"post\"> ";
-  body += "<input name=\"amount\" type=\"text\" placeholder=\"Your money\" /><br>";
+  body += "<input name=\"amount\" type=\"text\" placeholder=\"Your money\" />";
   body += "<button type=\"submit\">addMoney</button>";
   body += "</form><br><br>";
 
+  body += "<div class=\"mui--text-display1\"> Purchased films </div>";
   string input = "GET purchased";
   Respond rr = handler->run_command(input);
-  for(auto s: rr)
-  {
-    if(s[0] == '#')
-    {
-      body += s + "<br>";
-      continue;
-    }
-
-    string film_id;
-    for(int i=3; i <s.size() ; i++)
-    {
-      if(s[i] == '|')
-        break;
-      film_id += s[i];
-    }
-
-    body += "<a href=\"/showfilm?film_id=" + film_id + "\">";
-    body += s ;
-    body += "</a>";
-  }
+  rr[0][2]='|';
+  body += build_table(rr);
 
   body += "</p>";
+  body += "</center>";
   body += "</body>";
   body += "</html>";
   res->setBody(body);
