@@ -1,4 +1,0 @@
-aya lazem ast dar ebtedaye har function yek validate input ra begozarim ya kheir ?
-behtar kardan makefile
-why makefile no?
-tarif component baraye kamkardan functionha va bejaye yek khat neveshtan tabe kardan onha?!!

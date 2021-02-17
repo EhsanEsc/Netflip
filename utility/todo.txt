@@ -1,3 +1,0 @@
-add shared_ptr , deleting and stuff
-add iterator and deleting sort algorithm and refactor
-try to refactor component and entity

@@ -1,4 +1,4 @@
-*.o
 TestCases/oo/*.out
 Netflip.out
 in.txt
+build
